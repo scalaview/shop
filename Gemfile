@@ -35,7 +35,7 @@ gem "mysql2", "~> 0.3.13"
 
 # gem 'shoppe', :git => 'git@github.com:scalaview/shoppe.git'
 
-gem 'shoppe', :path => '/home/cps/dev/shoppe'
+gem 'shoppe', :path => '../shoppe'
 
 
 group :development, :test do
@@ -51,8 +51,6 @@ group :development do
   gem 'spring'
 
   gem 'pry-rails'
-
-  gem 'shoppe', :path => '/home/cps/dev/shoppe'
 
   gem 'view_inspect'
 

@@ -15,4 +15,7 @@
 /log/*
 !/log/.keep
 /tmp
+/config/*.example
+/public/attachment
 /config/database.yml
+/vendor/assets/bower_components
