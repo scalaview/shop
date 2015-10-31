@@ -11,7 +11,14 @@
 // about supported directives.
 //
 //= require jquery
+//= require flexisel/js/jquery.flexisel
 //= require bootstrap/dist/js/bootstrap.min
 //= require jquery_ujs
 //= require turbolinks
+//= require memenu
+//= require flexslider/jquery.flexslider-min
+//= require jquery-ui/jquery-ui.min
+//= require simpleCart.min
+//= require home
+//= require products
 //= require_tree .
