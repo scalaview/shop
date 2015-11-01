@@ -1,0 +1,6 @@
+<div class="feature-grids">
+  <% products.each_with_index do |product, index| %>
+    <%= render "shared/products/grid", :product => product, :column_size => column_size, :jewel => (index % 2) == 0 %>
+  <% end %>
+  <div class="clearfix"></div>
+</div>

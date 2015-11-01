@@ -19,9 +19,9 @@
         </div>
      </div>
      <div class="single-right">
-        <h3>American Diamond Famina Ruby Copper, Brass Jewel Set</h3>
+        <h3><%= @product.name %></h3>
         <div class="id">
-           <h4>ID: SB2379</h4>
+           <h4>Model: <%= @product.sku %></h4>
         </div>
         <form action="" class="sky-form">
            <fieldset>
@@ -45,9 +45,9 @@
         <div class="cost">
            <div class="prdt-cost">
               <ul>
-                 <li>MRP: <del>Rs 55000</del></li>
+                 <li>MRP: <del><%= current_price @product.price %></del></li>
                  <li>Sellling Price:</li>
-                 <li class="active">Rs 35000</li>
+                 <li class="active"><%= current_price @product.cost_price %></li>
                  <a href="#">BUY NOW</a>
               </ul>
            </div>
@@ -62,33 +62,22 @@
            </div>
            <div class="clearfix"></div>
         </div>
-        <div class="item-list">
-           <ul>
-              <li>Material: Silver,Gold</li>
-              <li>Color: Red</li>
-              <li>Type: Earring & Pendant Set</li>
-              <li>Brand: American Diamond</li>
-              <li><a href="#">Click here for more details</a></li>
-           </ul>
-        </div>
+        <% if @attributes.present? %>
+          <div class="item-list">
+             <ul>
+                <%= render 'products/attributes', :attributes => @attributes %>
+             </ul>
+          </div>
+        <% end %>
         <div class="single-bottom1">
            <h6>Details</h6>
-           <p class="prod-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam. Ut wisi enim ad minim veniam iriure dolor in hendrerit in vulputate velit esse molestie consequat.</p>
+           <p class="prod-desc"><%= @product.short_description %></p>
         </div>
      </div>
      <div class="clearfix"></div>
      <div class="sofaset-info">
         <h4>Product Summary: American Diamond Famina Ruby Copper, Brass Jewel Set</h4>
-        <ul>
-           <li>Classic and vibrant detailing</li>
-           <li>Design: Exquisitely crafted necklace set to suit your festive mood</li>
-           <li>Stones Used: Synthetic stones and beads</li>
-           <li>Colour: Brown Jute, Sheron Brown</li>
-           <li>Recommended Wear: Festive</li>
-           <li>Note: The image has been enlarged for better viewing</li>
-           <li>Contents: 4 Pc</li>
-           <li>Delivery Time: 7 to 10 days from the Day of Dispatch</li>
-        </ul>
+        <%= @product.description %>
      </div>
      <div class="product-table">
         <h3>Specifications of American Diamond Famina Ruby Copper, Brass Jewel Set</h3>
