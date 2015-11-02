@@ -71,22 +71,26 @@
         <% end %>
 
         <div class="space-1"></div>
-
-        <div class="row">
-          <div class="col-md-offset-1 col-xs-offset-1">
-            <div class="row add-to-cart">
-              <div class="numbers-row col-md-2 col-xs-9">
-                <input type="text" value="3" class="form-control">
+        <%= form_tag(add_to_cart_path, method: :POST , remote: true) do %>
+          <div class="row">
+            <div class="col-md-offset-1 col-xs-offset-1">
+              <div class="row add-to-cart">
+                <div class="numbers-row col-md-2 col-xs-9">
+                  <%= text_field_tag :quantity, 1, :class => 'form-control' %>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="space-1"></div>
+          <div class="space-1"></div>
 
-        <div class="row">
-          <div class="col-md-3 col-xs-6"><button type="button" class="col-xs-12 btn btn-warning">BUY NOW</button></div>
-          <div class="col-md-3 col-xs-6"><button type="button" class="col-xs-12 btn btn-danger">ADD TO CART</button></div>
-        </div>
+          <div class="row">
+            <%= hidden_field_tag :product_id, @product.id %>
+            <div class="col-md-3 col-xs-6">
+              <%= link_to "BUY NOW", "#", :class => "col-xs-12 btn btn-warning" %>
+            </div>
+            <div class="col-md-3 col-xs-6"><button type="submit" class="col-xs-12 btn btn-danger">ADD TO CART</button></div>
+          </div>
+        <% end %>
 
         <div class="single-bottom1">
            <h6>Details</h6>

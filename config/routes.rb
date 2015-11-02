@@ -75,6 +75,7 @@ Rails.application.routes.draw do
 
   get 'categories/:id/:name' => 'categories#show', :as => 'categories'
 
+  post 'add_to_cart' => 'shopping_cart#add_to_cart', :as => 'add_to_cart'
 
   get 'checkout/shipping' => 'checkout#shipping', :as => 'checkout_shipping'
 
