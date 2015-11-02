@@ -22,3 +22,32 @@
 //= require home
 //= require products
 //= require_tree .
+
+
+function addToCartBinding() {
+  $(".numbers-row").before('<div class="dec button">-</div>')
+  $(".numbers-row").after('<div class="inc button">+</div>')
+    $(".add-to-cart .button").on("click", function() {
+
+      var $button = $(this);
+      var oldValue = $button.parent().find("input").val();
+
+      if ($button.text() == "+") {
+        var newVal = parseFloat(oldValue) + 1;
+      } else {
+       // Don't allow decrementing below zero
+        if (oldValue > 0) {
+          var newVal = parseFloat(oldValue) - 1;
+        } else {
+          newVal = 0;
+        }
+      }
+
+      $button.parent().find("input").val(newVal);
+
+    });
+}
+
+$(function() {
+  addToCartBinding();
+})

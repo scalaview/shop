@@ -1,0 +1,21 @@
+.space-1 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.add-to-cart .button {
+  text-align: center;
+  width: 23px;
+  height: 23px;
+  border-radius: 15px;
+  padding: 3px;
+  border: 1px solid #ccc;
+  line-height: 16px;
+  float: left;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  margin: 4px;
+}
+.dec {
+  background-position: 0 -29px;
+}

@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def login
-    @customer = Shoppe::Customer.new(params[:customer])
+    @customer = Shoppe::Customer.new({ :email => params[:email] })
   end
 
   def sign_in
@@ -19,7 +19,8 @@ class SessionsController < ApplicationController
   end
 
   def register
-    @customer = Shoppe::Customer.new(params[:customer])
+    @customer = Shoppe::Customer.new({ :email => params[:email], :first_name => params[:first_name], :last_name => params[:last_name],
+      :mobile => params[:mobile] })
   end
 
   def sign_up
@@ -32,7 +33,8 @@ class SessionsController < ApplicationController
       end
     else
       flash[:error] = I18n.t('sign_in.email_or_password_error')
-      redirect_to register_path(:params => { :backurl => params[:backurl], :customer => customer_params_withou_password })
+      redirect_to register_path(:params => { :backurl => params[:backurl], :email => customer_params[:email],
+        :first_name => customer_params[:first_name], :last_name => customer_params[:last_name], :mobile => customer_params[:mobile] })
     end
   end
 
@@ -41,11 +43,11 @@ class SessionsController < ApplicationController
   end
 
   def customer_params
-    params.require(:customer).permit(:first_name, :last_name, :email, :password, :phone, :password_confirmation)
+    params.require(:customer).permit(:first_name, :last_name, :email, :password, :mobile, :password_confirmation)
   end
 
   def customer_params_withou_password
-    params[:customer].permit(:first_name, :last_name, :email, :phone)
+    params[:customer].permit(:first_name, :last_name, :email, :mobile)
   end
 
 end

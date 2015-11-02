@@ -10,8 +10,16 @@
       </div>
       <div class="top_left">
         <ul>
-          <li class="top_link">Email:<a href="mailto:info@example.com">mail@example.com</a></li>|
-          <li class="top_link"><a href="login.html">My Account</a></li>
+          <% if logged_in? %>
+            <li class="top_link">Email:<a href="javascript:void(0);"><%= current_customer.email %></a></li>|
+          <% end %>
+          <li class="top_link">
+            <% if logged_in? %>
+              <%= link_to current_customer.full_name, "#" %>
+            <% else %>
+              <a href="/login">My Account</a>
+            <% end %>
+          </li>
         </ul>
       </div>
         <div class="clearfix"> </div>

@@ -37,7 +37,7 @@ gem "mysql2", "~> 0.3.13"
 
 gem 'shoppe', :path => '../shoppe'
 
-gem 'html5_validators'
+gem 'html5_validators', '~> 1.3.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
