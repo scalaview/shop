@@ -58,9 +58,11 @@ Rails.application.routes.draw do
   #   end
 
   # customer
-  get 'account' => 'customers#new', :as => 'customer_register'
-  get 'login' => 'customers#login', :as => 'customer_login'
-  get 'contact' => 'customers#contact', :as => 'contact_us'
+  get 'register' => 'sessions#register', :as => 'register'
+  post 'sign_up' => 'sessions#sign_up', :as => 'sign_up'
+  get 'login' => 'sessions#login', :as => 'login'
+  post 'login' => 'sessions#sign_in', :as => 'sign_in'
+  get 'contact' => 'sessions#contact', :as => 'contact_us'
 
   #
   # Product browising
