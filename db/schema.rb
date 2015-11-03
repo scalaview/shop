@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151101164437) do
+ActiveRecord::Schema.define(version: 20151103103512) do
 
   create_table "nifty_key_value_store", force: :cascade do |t|
     t.integer "parent_id",   limit: 4
@@ -49,6 +49,17 @@ ActiveRecord::Schema.define(version: 20151101164437) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "shoppe_basket_items", force: :cascade do |t|
+    t.integer  "customer_id", limit: 4,             null: false
+    t.integer  "product_id",  limit: 4,             null: false
+    t.integer  "quantity",    limit: 4, default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shoppe_basket_items", ["customer_id"], name: "index_shoppe_basket_items_on_customer_id", using: :btree
+  add_index "shoppe_basket_items", ["product_id"], name: "index_shoppe_basket_items_on_product_id", using: :btree
 
   create_table "shoppe_countries", force: :cascade do |t|
     t.string  "name",      limit: 255
