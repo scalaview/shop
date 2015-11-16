@@ -242,8 +242,8 @@ ActiveRecord::Schema.define(version: 20151103103512) do
   create_table "shoppe_product_category_translations", force: :cascade do |t|
     t.integer  "shoppe_product_category_id", limit: 4,     null: false
     t.string   "locale",                     limit: 255,   null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.string   "name",                       limit: 255
     t.string   "permalink",                  limit: 255
     t.text     "description",                limit: 65535
@@ -255,8 +255,8 @@ ActiveRecord::Schema.define(version: 20151103103512) do
   create_table "shoppe_product_translations", force: :cascade do |t|
     t.integer  "shoppe_product_id", limit: 4,     null: false
     t.string   "locale",            limit: 255,   null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "name",              limit: 255
     t.string   "permalink",         limit: 255
     t.text     "description",       limit: 65535
