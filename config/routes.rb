@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  mount Shoppe::Engine => "/shoppe"
 
+
+  mount Shoppe::Engine => "/shoppe"
   root :to => 'pages#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -76,6 +77,8 @@ Rails.application.routes.draw do
   get 'categories/:id/:name' => 'categories#show', :as => 'categories'
 
   post 'add_to_cart' => 'shopping_cart#add_to_cart', :as => 'add_to_cart'
+
+  get 'shopping_cart' => 'shopping_cart#show', :as => 'shopping_cart'
 
   get 'checkout/shipping' => 'checkout#shipping', :as => 'checkout_shipping'
 
