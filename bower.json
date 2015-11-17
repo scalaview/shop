@@ -20,6 +20,7 @@
     "flexisel": "~0.1.1",
     "flexslider": "~2.5.0",
     "install": "~1.0.4",
-    "jquery-ui": "~1.11.4"
+    "jquery-ui": "~1.11.4",
+    "weui": "*"
   }
 }

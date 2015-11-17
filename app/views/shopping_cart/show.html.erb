@@ -1,7 +1,41 @@
-<h2> Your shopping bag  </h2>
+
+<div class="container " style="min-height: 555px;">
+                <div class="content clearfix js-page-content">
+
+<div class="tabber tabber-n4 tabber-double-11 clearfix">
+	<a class="active" href="http://wap.koudaitong.com/v2/trade/cart?source=&amp;kdt_id=14425349">购物车</a>
+    <a class="" href="http://wap.koudaitong.com/v2/trade/record/index?source=&amp;kdt_id=14425349">购物记录</a>
+    <a class="" href="http://wap.koudaitong.com/v2/trade/record/luckymoney?source=&amp;kdt_id=14425349">我的红包</a>
+    <a class="" href="http://wap.koudaitong.com/v2/trade/record/backs?source=&amp;kdt_id=14425349">我的返现</a>
+</div>
+
+	<div id="cart-container">
+<div class="empty-list " style="margin-top:30px;">
+    <!-- 文本 -->
+    <div class="empty-list-header">
+        <h4>购物车快饿瘪了 T.T</h4>
+
+            <span>快给我挑点宝贝</span>
+        <h2> Your shopping bag  </h2>
 <p>
     The items listed below are currently in your shopping bag. If you're ready to place your order
     just click the 'Checkout' button on the right and we'll ask for a few details and place the order.
 </p>
+    </div>
+    <!-- 自定义html，和上面的可以并存 -->
 
-  <%= render 'orders/show', :order => @current_order %>
+        <div class="empty-list-content"><a href="http://wap.koudaitong.com/v2/showcase/homepage?kdt_id=14425349" class="js-go-home home-page tag tag-big tag-orange">去逛逛</a></div>
+
+
+</div>
+</div>
+
+	<div class="js-bottom-opts bottom-fix" style="padding: 0px; display: none;">
+		<div class="bottom-cart clear-fix">
+			<div class="select-all"><span class="check"></span>全选</div>
+			<div class="total-price">合计：<span class="js-total-price">0</span>元</div>
+			<button href="javascript:;" class="js-go-pay btn btn-orange-dark font-size-14" disabled="true">结算</button>
+			<button href="javascript:;" class="j-delete-goods btn font-size-14 btn-red hide" disabled="true">删除</button>
+		</div>
+	</div>
+	</div>    </div>
