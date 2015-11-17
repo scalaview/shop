@@ -21,7 +21,6 @@
 //= require simpleCart.min
 //= require home
 //= require products
-//= require_tree .
 
 
 function addToCartBinding() {

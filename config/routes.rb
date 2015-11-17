@@ -79,6 +79,8 @@ Rails.application.routes.draw do
 
   get 'shopping_cart' =>  'shopping_cart#show', :as  => 'shopping_cart'
 
+  get 'demo' =>  'shopping_cart#demo', :as  => 'demo'
+
   get 'checkout/shipping' => 'checkout#shipping', :as => 'checkout_shipping'
 
 end

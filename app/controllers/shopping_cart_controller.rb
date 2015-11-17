@@ -19,4 +19,9 @@ class ShoppingCartController < ApplicationController
       format.js
     end
   end
+
+  def demo
+
+  end
+
 end
