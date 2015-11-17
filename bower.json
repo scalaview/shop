@@ -21,6 +21,8 @@
     "flexslider": "~2.5.0",
     "install": "~1.0.4",
     "jquery-ui": "~1.11.4",
-    "weui": "*"
+    "angular": "~1.4.7",
+    "weui": "*",
+    "angular-bootstrap": "~0.14.3"
   }
 }
