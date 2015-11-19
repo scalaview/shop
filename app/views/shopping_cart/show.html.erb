@@ -5,6 +5,26 @@ body{
 }
 p{
     margin: 0;
+    font-size: 15px;
+}
+a{
+    font-size: 15px;
+}
+.weui_cells{
+    font-size: 15px;
+    margin-top: 0.6em;
+}
+.weui_cell{
+    padding: 10px 10px;
+}
+.weui_cell_buttom{
+    padding: 0px 0px 0px 10px;
+}
+.weui_btn{
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 0px;
+    font-size: 15px;
 }
 </style>
 
@@ -23,40 +43,25 @@ p{
             </div>
 
             <div class="weui_cells weui_cells_checkbox">
-                <label class="weui_cell weui_check_label" for="s11">
+                <label class="weui_cell weui_check_label" for="s{{item.id}}" ng-repeat="item in items">
                     <div class="weui_cell_hd">
-                        <input type="checkbox" class="weui_check" name="checkbox1" id="s11" checked="checked">
-                        <i class="weui_icon_checked"></i>
-                    </div>
-                    <div class="weui_cell_hd"><img src="http://placehold.it/80x80" alt="" style="width:80px;margin-right:5px;display:block"></div>
-                    <div class="weui_cell_bd weui_cell_primary">
-                       <a href="#">
-                            <p>Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A 13.3英寸宽屏笔记本电脑 256GB</p>
-                        </a>
-                    </div>
-                    <div class="weui_cell_ft">
-                        ￥10188
-                    </div>
-                </label>
-                <label class="weui_cell weui_check_label" for="s12">
-                    <div class="weui_cell_hd">
-                        <input type="checkbox" class="weui_check" name="checkbox1" id="s12" checked="checked">
+                        <input type="checkbox" class="weui_check" name="checkbox1" id="s{{item.id}}" checked="checked">
                         <i class="weui_icon_checked"></i>
                     </div>
                     <div class="weui_cell_hd"><img src="http://placehold.it/80x80" alt="" style="width:80px;margin-right:5px;display:block"></div>
                     <div class="weui_cell_bd weui_cell_primary">
                         <a href="#">
-                            <p>Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A 13.3英寸宽屏笔记本电脑 256GB</p>
+                            <p>{{item.name}}</p>
                         </a>
                     </div>
                     <div class="weui_cell_ft">
-                        ￥10188
+                        ￥{{item.price}}
                     </div>
                 </label>
             </div>
 
             <div class="weui_cells weui_cells_checkbox">
-                <label class="weui_cell weui_check_label" for="s0">
+                <label class="weui_cell weui_check_label weui_cell_buttom" for="s0">
                     <div class="weui_cell_hd">
                         <input type="checkbox" class="weui_check" name="checkbox1" id="s0" checked="checked">
                         <i class="weui_icon_checked"></i>
@@ -64,10 +69,25 @@ p{
                     <div class="weui_cell_bd weui_cell_primary">
                         <p>全选</p>
                     </div>
-                    <div class="weui_cell_ft hurdle_bottom">
+                    <div class="weui_cell_ft">
                         <a class="weui_btn weui_btn_warn" href="javascript:">确定</a>
                     </div>
+                </label>
             </div>
         </div>
     </div>
 </div>
+
+
+<script type="text/javascript">
+angular.module('show', []).controller('shopping_cart', function($scope) {
+$scope.items = [
+{id:1,name:"1 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:8888,num:1 },
+{id:2,name:"2 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:9888,num:1 },
+{id:3,name:"3 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:10888,num:1 },
+{id:4,name:"4 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:11888,num:1 },
+{id:5,name:"5 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:12888,num:1 },
+{id:6,name:"6 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:13888,num:1 }
+];
+})
+</script>
