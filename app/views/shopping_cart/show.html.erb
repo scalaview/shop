@@ -12,6 +12,10 @@ a{
     font-size: 14px;
     font-weight: 500;
 }
+a:hover
+{
+    text-decoration: none;
+}
 .weui_cells{
     font-size: 14px;
     margin-top: 0.6em;
@@ -58,7 +62,7 @@ a{
                         <p>店铺：云购商城</p>
                     </div>
                     <div class="weui_cell_ft">
-                        <a href="#">编辑</a>
+                        <a href="#" ng-click="itemEdit()">{{isEdit}}</a>
                     </div>
                 </div>
             </div>
@@ -69,16 +73,18 @@ a{
                         <input type="checkbox" class="weui_check" name="checkbox1" id="{{item.id}}" ng-model="item.Selected" ng-click="checkOne()">
                         <i class="weui_icon_checked"></i>
                     </div>
-                    <div class="weui_cell_hd"><img src="http://placehold.it/80x80" alt="" style="width:80px;margin-right:5px;display:block"></div>
-                    <div class="weui_cell_bd weui_cell_primary weui_cell_primary_size">
-                        <a href="#">
-                            <p>{{item.name}}</p>
-                        </a>
-                    </div>
-                    <div class="weui_cell_ft weui_cell_ft_size">
-                        <p class="price_font">￥{{item.price}}</p>
-                        <p class="num_font">x{{item.num}}</p>
-                    </div>
+                    <a href="#" class="weui_cell_hd">
+                        <div class="weui_cell_hd"><img src="http://placehold.it/80x80" alt="" style="width:80px;margin-right:5px;display:block"></div>
+                        <div class="weui_cell_bd weui_cell_primary weui_cell_primary_size">
+                                <p ng-show="visible">{{item.name}}</p>
+                                <p ng-hide="visible">{{item.num}}</p>
+                                <p class="num_font">{{item.property}}</p>
+                        </div>
+                        <div class="weui_cell_ft weui_cell_ft_size">
+                            <p class="price_font">￥{{item.price}}</p>
+                            <p class="num_font">x{{item.num}}</p>
+                        </div>
+                    </a>
                 </label>
             </div>
 
@@ -103,6 +109,8 @@ a{
 
 <script type="text/javascript">
 angular.module('show', []).controller('shopping_cart', function($scope) {
+    $scope.visible = true;
+    $scope.isEdit = "编辑";
     $scope.items = [
     {id:1,name:"1 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:8888,num:1 },
     {id:2,name:"2 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:9888,num:1 },
@@ -125,6 +133,10 @@ angular.module('show', []).controller('shopping_cart', function($scope) {
             }
         });
         $scope.selectAll = checkAllFlag;
+    }
+    $scope.itemEdit = function(){
+        $scope.visible = !$scope.visible;
+        $scope.isEdit = $scope.visible?"编辑":"完成";
     }
 })
 </script>
