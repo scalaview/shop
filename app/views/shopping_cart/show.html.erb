@@ -64,9 +64,9 @@ a{
             </div>
 
             <div class="weui_cells weui_cells_checkbox">
-                <label class="weui_cell weui_check_label" for="s{{item.id}}" ng-repeat="item in items">
+                <label class="weui_cell weui_check_label" for="{{item.id}}" ng-repeat="item in items">
                     <div class="weui_cell_hd">
-                        <input type="checkbox" class="weui_check" name="checkbox1" id="s{{item.id}}" checked="checked">
+                        <input type="checkbox" class="weui_check" name="checkbox1" id="{{item.id}}" ng-model="item.Selected" ng-click="checkOne()">
                         <i class="weui_icon_checked"></i>
                     </div>
                     <div class="weui_cell_hd"><img src="http://placehold.it/80x80" alt="" style="width:80px;margin-right:5px;display:block"></div>
@@ -83,16 +83,16 @@ a{
             </div>
 
             <div class="weui_cells weui_cells_checkbox weui_cell_height">
-                <label class="weui_cell weui_check_label weui_cell_buttom" for="s0">
+                <label class="weui_cell weui_check_label weui_cell_buttom" >
                     <div class="weui_cell_hd">
-                        <input type="checkbox" class="weui_check" name="checkbox1" id="s0" checked="checked">
+                        <input type="checkbox" class="weui_check" name="checkbox1"  ng-model="selectAll" ng-click="checkAll()">
                         <i class="weui_icon_checked"></i>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
                         <p>全选</p>
                     </div>
                     <div class="weui_cell_ft">
-                        <a class="weui_btn weui_btn_warn" href="javascript:">确定</a>
+                        <button class="weui_btn weui_btn_warn" onclick="javascript:" >结算</button>
                     </div>
                 </label>
             </div>
@@ -103,13 +103,28 @@ a{
 
 <script type="text/javascript">
 angular.module('show', []).controller('shopping_cart', function($scope) {
-$scope.items = [
-{id:1,name:"1 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:8888,num:1 },
-{id:2,name:"2 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:9888,num:1 },
-{id:3,name:"3 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:10888,num:1 },
-{id:4,name:"4 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:11888,num:1 },
-{id:5,name:"5 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:12888,num:1 },
-{id:6,name:"6 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:13888,num:1 }
-];
+    $scope.items = [
+    {id:1,name:"1 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:8888,num:1 },
+    {id:2,name:"2 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:9888,num:1 },
+    {id:3,name:"3 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:10888,num:1 },
+    {id:4,name:"4 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:11888,num:1 },
+    {id:5,name:"5 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:12888,num:1 },
+    {id:6,name:"6 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:13888,num:1 }
+    ];
+
+    $scope.checkAll = function(){
+        angular.forEach($scope.items, function (item) {
+            item.Selected = $scope.selectAll;
+        });
+    }
+    $scope.checkOne = function(){
+        var checkAllFlag = true;
+        angular.forEach($scope.items, function (item) {
+            if(!item.Selected){
+                checkAllFlag = false;
+            }
+        });
+        $scope.selectAll = checkAllFlag;
+    }
 })
 </script>
