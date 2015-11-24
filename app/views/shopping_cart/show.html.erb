@@ -68,6 +68,20 @@ a:hover
     padding-left: 10px;
     padding-right: 10px;
 }
+.cart_edit_button {
+  text-align: center;
+  width: 23px;
+  height: 23px;
+  border-radius: 15px;
+  padding: 3px;
+  border: 1px solid #ccc;
+  line-height: 16px;
+  float: left;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  margin: 4px;
+}
 </style>
 
 <div class="container js_container">
@@ -94,8 +108,14 @@ a:hover
                         <div class="weui_cell_hd"><img src="http://placehold.it/80x80" alt="" style="width:80px;margin-right:5px;display:block"></div>
                         <div class="weui_cell_bd weui_cell_primary weui_cell_primary_size">
                                 <div ng-show="visible"><p>{{item.name}}</p></div>
-                                <div ng-hide="visible"><div class="cart_edit_plus">-</div><div class="cart_edit_num">{{item.num}}</div><div class="cart_edit_plus">+</div></div>
-                                <div><p class="num_font">{{item.property}}</p></div>
+                                <div ng-hide="visible">
+                                    <div class="dec cart_edit_button">-</div>
+                                    <div class="numbers-row" style="float: left;width: 50%">
+                                        <input type="text" value={{item.num}} class="form-control">
+                                    </div>
+                                    <div class="inc cart_edit_button">+</div>
+                                </div>
+                                <div class="num_font" style="clear:both;float:none;">{{item.property}}</div>
                         </div>
                         <div class="weui_cell_ft weui_cell_ft_size">
                             <p class="price_font">￥{{item.price}}</p>
