@@ -76,6 +76,7 @@ Rails.application.routes.draw do
   get 'categories/:id/:name' => 'categories#show', :as => 'categories'
 
   post 'add_to_cart' => 'shopping_cart#add_to_cart', :as => 'add_to_cart'
+  put 'shopping_cart' => 'shopping_cart#update', :as => 'update_shopping_cart'
 
   get 'shopping_cart' =>  'shopping_cart#show', :as  => 'shopping_cart'
 

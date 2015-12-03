@@ -18,6 +18,11 @@ class ShoppingCartController < ApplicationController
     end
   end
 
+  def update
+    @basket_item = current_customer.basket_items.find params[:id]
+    @basket_item
+  end
+
   def demo
 
   end
