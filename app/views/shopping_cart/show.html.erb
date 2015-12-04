@@ -31,7 +31,7 @@ a:hover
 .weui_cell_buttom{
     padding: 0px 0px 0px 10px;
 }
-.weui_btn{
+.weui_btn_checkout{
     padding-left: 20px;
     padding-right: 20px;
     border-radius: 0px;
@@ -82,6 +82,14 @@ a:hover
   color: #333;
   margin: 4px;
 }
+.weui_btn_del{
+    padding-right: 10px;
+    padding-left: 10px;
+    height: 80px;
+    border-radius: 0px;
+    font-size: 12px;
+    font-weight: 500;
+}
 </style>
 
 <div class="container js_container">
@@ -117,11 +125,14 @@ a:hover
                                 </div>
                                 <div class="num_font" style="clear:both;float:none;">{{item.property}}</div>
                         </div>
-                        <div class="weui_cell_ft weui_cell_ft_size">
-                            <p class="price_font">￥{{item.price}}</p>
-                            <p class="num_font">x{{item.num}}</p>
+                        <div class="weui_cell_ft weui_cell_ft_size" ng-show="visible">
+                                <p class="price_font">￥{{item.price}}</p>
+                                <p class="num_font">x{{item.num}}</p>
                         </div>
                     </a>
+                    <div class="weui_cell_ft" ng-hide="visible">
+                        <button class="weui_btn weui_btn_warn weui_btn_del" onclick="javascript:" >删除</button>
+                    </div>
                 </label>
             </div>
 
@@ -135,7 +146,7 @@ a:hover
                         <p>全选</p>
                     </div>
                     <div class="weui_cell_ft">
-                        <button class="weui_btn weui_btn_warn" onclick="javascript:" >结算</button>
+                        <button class="weui_btn weui_btn_warn weui_btn_checkout" onclick="javascript:" >结算</button>
                     </div>
                 </label>
             </div>
