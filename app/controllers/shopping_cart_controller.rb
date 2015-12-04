@@ -1,5 +1,7 @@
 class ShoppingCartController < ApplicationController
 
+  layout "shopping_cart"
+
   before_filter :logged_in?
 
   def add_to_cart
