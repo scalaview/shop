@@ -20,7 +20,16 @@ class ShoppingCartController < ApplicationController
 
   def update
     @basket_item = current_customer.basket_items.find params[:id]
-    @basket_item
+    @done = @basket_item.update_quantity(params[:quantity])
+    if @done
+      @message = "update success"
+    else
+      @message ="update fail"
+    end
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def demo
