@@ -109,11 +109,11 @@ a:hover
                         <div class="weui_cell_bd weui_cell_primary weui_cell_primary_size">
                                 <div ng-show="visible"><p>{{item.name}}</p></div>
                                 <div ng-hide="visible">
-                                    <div class="dec cart_edit_button" ng-click="decrease($index)">-</div>
+                                    <div class="dec cart_edit_button" ng-click="decrease($event)">-</div>
                                     <div class="numbers-row" style="float: left;width: 50%">
-                                        <input type="number" ng-model='quantity' name="quantity" value="{{item.num}}" class="form-control">
+                                        <input type="number" ng-model='quantity' name="quantity" ng-change="update($event)" value="{{item.num}}" class="form-control">
                                     </div>
-                                    <div class="inc cart_edit_button" ng-click="increase($index)">+</div>
+                                    <div class="inc cart_edit_button" ng-click="increase($event)">+</div>
                                 </div>
                                 <div class="num_font" style="clear:both;float:none;">{{item.property}}</div>
                         </div>
@@ -128,7 +128,7 @@ a:hover
             <div class="weui_cells weui_cells_checkbox weui_cell_height">
                 <label class="weui_cell weui_check_label weui_cell_buttom" >
                     <div class="weui_cell_hd">
-                        <input type="checkbox" class="weui_check" name="checkbox1"  ng-model="selectAll" ng-click="checkAll()">
+                        <input type="checkbox" class="weui_check" name="checkbox1" ng-model="selectAll" ng-click="checkAll()">
                         <i class="weui_icon_checked"></i>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
@@ -157,8 +157,10 @@ angular.module('show', []).controller('shopping_cart', function($scope, $http) {
     {id:6,name:"6 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:13888,num:1 }
     ];
 
-    $scope.increase = function(index){
-      var item = $scope.items[index]
+    $scope.update = function(e){
+      var item = this.item
+      if(item.num < 0)
+        return
       $http({
         method: 'PUT',
         url: '/shopping_cart/' + item.id,
@@ -166,30 +168,26 @@ angular.module('show', []).controller('shopping_cart', function($scope, $http) {
          'Accept': "application/json"
         },
         data: {
-          quantity: item.num + 1
+          quantity: item.num
         }
       }).then(function(res){
         item.num = res.data.quantity
-        console.log(res)
       })
     }
 
-    $scope.decrease = function(index){
-      var item = $scope.items[index]
-      $http({
-        method: 'PUT',
-        url: '/shopping_cart/' + item.id,
-        headers: {
-         'Accept': "application/json"
-        },
-        data: {
-          quantity: item.num - 1
-        }
-      }).then(function(res){
-        item.num += 1
-        console.log(res)
-      })
+    $scope.increase = function(e){
+      this.item.num += 1
+      angular.element(e.target).scope().update(e);
     }
+
+    $scope.decrease = function(e){
+      if(this.item.num <= 1)
+        return
+      this.item.num -= 1
+      angular.element(e.target).scope().update(e);
+    }
+
+
 
     $scope.checkAll = function(){
         angular.forEach($scope.items, function (item) {
