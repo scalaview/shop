@@ -109,11 +109,11 @@ a:hover
                         <div class="weui_cell_bd weui_cell_primary weui_cell_primary_size">
                                 <div ng-show="visible"><p>{{item.name}}</p></div>
                                 <div ng-hide="visible">
-                                    <div class="dec cart_edit_button">-</div>
+                                    <div class="dec cart_edit_button" ng-click="decrease($index)">-</div>
                                     <div class="numbers-row" style="float: left;width: 50%">
-                                        <input type="text" value={{item.num}} class="form-control">
+                                        <input type="number" ng-model='quantity' name="quantity" value="{{item.num}}" class="form-control">
                                     </div>
-                                    <div class="inc cart_edit_button">+</div>
+                                    <div class="inc cart_edit_button" ng-click="increase($index)">+</div>
                                 </div>
                                 <div class="num_font" style="clear:both;float:none;">{{item.property}}</div>
                         </div>
@@ -145,7 +145,7 @@ a:hover
 
 
 <script type="text/javascript">
-angular.module('show', []).controller('shopping_cart', function($scope) {
+angular.module('show', []).controller('shopping_cart', function($scope, $http) {
     $scope.visible = true;
     $scope.isEdit = "编辑";
     $scope.items = [
@@ -156,6 +156,40 @@ angular.module('show', []).controller('shopping_cart', function($scope) {
     {id:5,name:"5 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:12888,num:1 },
     {id:6,name:"6 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:13888,num:1 }
     ];
+
+    $scope.increase = function(index){
+      var item = $scope.items[index]
+      $http({
+        method: 'PUT',
+        url: '/shopping_cart/' + item.id,
+        headers: {
+         'Accept': "application/json"
+        },
+        data: {
+          quantity: item.num + 1
+        }
+      }).then(function(res){
+        item.num = res.data.quantity
+        console.log(res)
+      })
+    }
+
+    $scope.decrease = function(index){
+      var item = $scope.items[index]
+      $http({
+        method: 'PUT',
+        url: '/shopping_cart/' + item.id,
+        headers: {
+         'Accept': "application/json"
+        },
+        data: {
+          quantity: item.num - 1
+        }
+      }).then(function(res){
+        item.num += 1
+        console.log(res)
+      })
+    }
 
     $scope.checkAll = function(){
         angular.forEach($scope.items, function (item) {
@@ -175,5 +209,9 @@ angular.module('show', []).controller('shopping_cart', function($scope) {
         $scope.visible = !$scope.visible;
         $scope.isEdit = $scope.visible?"编辑":"完成";
     }
-})
+}).config(function ($httpProvider) {
+  if(document.getElementsByName('csrf-token')[0] && document.getElementsByName('csrf-token')[0].getAttribute('content')){
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] = document.getElementsByName('csrf-token')[0].getAttribute('content')
+  }
+});
 </script>
