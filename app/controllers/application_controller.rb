@@ -5,7 +5,17 @@ class ApplicationController < ActionController::Base
 
   def login_required
     unless logged_in?
-      redirect_to login_path
+      respond_to do |format|
+        format.html{
+          redirect_to login_path and return
+        }
+        format.json{
+          { errors: "authoritarian fail" }.to_json
+        }
+        format.js{
+          { errors: "authoritarian fail" }.to_js
+        }
+      end
     end
   end
 

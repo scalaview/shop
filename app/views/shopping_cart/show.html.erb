@@ -1,0 +1,298 @@
+
+<style type="text/css">
+body{
+    background-color: #FBF9FE;
+}
+.row-nopadding {
+  [class*="col-"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+.container {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+p{
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+a{
+    font-size: 14px;
+    font-weight: 500;
+}
+a:hover
+{
+    text-decoration: none;
+}
+.weui_cells{
+    font-size: 14px;
+    margin-top: 0.6em;
+    font-weight: 500;
+}
+.weui_cell{
+    padding: 10px 10px;
+}
+.weui_cell_buttom{
+    padding: 0px 0px 0px 10px;
+}
+.weui_btn{
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 0px;
+    font-size: 14px;
+}
+.weui_cell_height{
+    height: 35px;
+}
+.price_font{
+    font-size: 12px;
+    color: #e4393c;
+    font-weight: 500;
+}
+.num_font{
+    font-size: 10px;
+    font-weight: 500;
+}
+.weui_cell_ft_size{
+    vertical-align: top;
+}
+.weui_cell_primary_size{
+    vertical-align: top;
+}
+.cart_edit_num{
+    font-size: 17px;
+    border:1px;
+    background-color: #FBF9FE;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+.cart_edit_plus{
+    border:1px;
+    background-color: #FBF9FE;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.cart_edit_button {
+  text-align: center;
+  width: 23px;
+  height: 23px;
+  border-radius: 15px;
+  padding: 3px;
+  border: 1px solid #ccc;
+  line-height: 16px;
+  float: left;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  margin: 4px;
+}
+</style>
+
+<div class="container js_container">
+<div class="page cell">
+        <div class="bd">
+            <div class="weui_cells">
+                <div class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>店铺：云购商城</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        <a href="#" ng-click="itemEdit()">{{isEdit}}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui_cells weui_cells_checkbox">
+                <label class="weui_cell weui_check_label" for="{{item.id}}" ng-repeat="item in items">
+                    <div class="weui_cell_hd">
+                        <input type="checkbox" class="weui_check" name="checkbox1" id="{{item.id}}" ng-model="item.Selected" ng-click="checkOne()">
+                        <i class="weui_icon_checked"></i>
+                    </div>
+                    <a href="#" class="weui_cell_hd">
+                        <div class="weui_cell_hd"><img src="http://placehold.it/80x80" alt="" style="width:80px;margin-right:5px;display:block"></div>
+                        <div class="weui_cell_bd weui_cell_primary weui_cell_primary_size">
+                                <div ng-show="visible"><p>{{item.name}}</p></div>
+                                <div ng-hide="visible">
+                                    <div class="dec cart_edit_button" ng-click="decrease($event)">-</div>
+                                    <div class="numbers-row nopadding col-xs-4 col-md-2" style="float: left;">
+                                        <input type="number" id="item-{{item.id}}" ng-model='quantity' name="quantity" ng-change="update()" value="{{item.num}}" class="form-control">
+                                    </div>
+                                    <div class="inc cart_edit_button" ng-click="increase($event)">+</div>
+                                </div>
+                                <div class="num_font" style="clear:both;float:none;">{{item.property}}</div>
+                        </div>
+                        <div class="weui_cell_ft weui_cell_ft_size">
+                            <p class="price_font">￥{{item.price}}</p>
+                            <p class="num_font">x{{item.num}}</p>
+                        </div>
+                    </a>
+                </label>
+            </div>
+
+            <div class="weui_cells weui_cells_checkbox weui_cell_height">
+                <label class="weui_cell weui_check_label weui_cell_buttom" >
+                    <div class="weui_cell_hd">
+                        <input type="checkbox" class="weui_check" name="checkbox1" ng-model="selectAll" ng-click="checkAll()">
+                        <i class="weui_icon_checked"></i>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>全选</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        <button class="weui_btn weui_btn_warn" ng-click="checkout()" >结算</button>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+String.prototype.toI = function(){
+  return (this == undefined || this == null) ? NaN : parseInt(this.toString())
+}
+
+Array.prototype.compact = function (array) {
+  if(this instanceof Array && array == undefined){
+    array = this
+  }
+
+  var index = -1,
+      length = array ? array.length : 0,
+      resIndex = -1,
+      result = [];
+
+  while (++index < length) {
+    var value = array[index];
+    if (value !== undefined && value !== null && value !== '' ) {
+      result[++resIndex] = value;
+    }
+  }
+  return result;
+}
+
+Array.prototype.clear = function (array) {
+  if(this instanceof Array && array == undefined){
+    array = this
+  }
+  array.splice(0, array.length)
+}
+
+angular.module('show', []).controller('shopping_cart', function($scope, $http) {
+    $scope.checked = []
+    $scope.visible = true;
+    $scope.isEdit = "编辑";
+    $scope.items = [
+    {id:1,name:"1 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:8888,num:1 },
+    {id:2,name:"2 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"15.6英寸宽屏笔记本电脑 256GB",price:9888,num:1 },
+    {id:3,name:"3 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:10888,num:1 },
+    {id:4,name:"4 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:11888,num:1 },
+    {id:5,name:"5 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:12888,num:1 },
+    {id:6,name:"6 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:13888,num:1 }
+    ];
+
+    $scope.update = function(sync){
+      var item = this.item,
+          e = document.getElementById('item-'+item.id)
+          $e = angular.element(e)
+      if(isNaN($e.val().toI()) || $e.val().toI() < 1){
+        $e.val(1)
+        return
+      }
+      if(!sync)
+        item.num = $e.val().toI()
+      $http({
+        method: 'PUT',
+        url: '/shopping_cart/' + item.id,
+        headers: {
+         'Accept': "application/json"
+        },
+        data: {
+          quantity: item.num
+        }
+      }).then(function(res){
+        item.num = res.data.quantity
+        $e.val(item.num)
+      })
+    }
+
+    $scope.increase = function(e){
+      this.item.num += 1
+      angular.element(e.target).scope().update(true);
+    }
+
+    $scope.decrease = function(e){
+      if(this.item.num <= 1)
+        return
+      this.item.num -= 1
+      angular.element(e.target).scope().update(true);
+    }
+
+    $scope.checkAll = function(){
+        if(!$scope.selectAll){
+          $scope.checked.clear()
+        }
+        angular.forEach($scope.items, function (item) {
+            item.Selected = $scope.selectAll;
+            if($scope.selectAll && $scope.checked.indexOf(item.id) == -1){
+              $scope.checked.push(item.id)
+            }
+        });
+    }
+
+    $scope.checkOne = function(){
+        var checkAllFlag = true;
+        angular.forEach($scope.items, function (item) {
+            var idx = $scope.checked.indexOf(item.id)
+            if(!item.Selected){
+                checkAllFlag = false;
+                if(idx > -1){
+                  $scope.checked.splice(idx, 1);
+                }
+            }else{
+              var idx = $scope.checked.indexOf(item.id)
+              if(idx == -1){
+                $scope.checked.push(item.id)
+              }
+            }
+        });
+        $scope.selectAll = checkAllFlag;
+    }
+
+    $scope.checkout = function(){
+      if($scope.checked.length < 1){
+        return
+      }
+      $http({
+        method: 'POST',
+        url: '/checkout_prepare',
+        headers: {
+         'Accept': "application/json"
+        },
+        data: {
+          item_ids: $scope.checked
+        }
+      }).then(function(res){
+        item.num = res.data.quantity
+        $e.val(item.num)
+      })
+      console.log($scope.checked)
+    }
+
+    $scope.itemEdit = function(){
+        $scope.visible = !$scope.visible;
+        $scope.isEdit = $scope.visible?"编辑":"完成";
+    }
+}).config(function ($httpProvider) {
+  if(document.getElementsByName('csrf-token')[0] && document.getElementsByName('csrf-token')[0].getAttribute('content')){
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] = document.getElementsByName('csrf-token')[0].getAttribute('content')
+  }
+});
+</script>
