@@ -92,4 +92,8 @@ Rails.application.routes.draw do
     end
   end
 
+  #
+  # checkout
+  get 'checkout' => 'checkout#show', :as => 'checkout'
+  #
 end

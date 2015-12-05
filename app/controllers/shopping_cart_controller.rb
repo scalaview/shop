@@ -45,6 +45,12 @@ class ShoppingCartController < ApplicationController
         messages << 'only #{item.product.stock} in stock, requested : #{self.quantity}, not enough'
       end
     end
+
+    if checked && current_customer.current_order.init_order_items(@basket_items)
+      redirect_to checkout_path
+    else
+
+    end
   end
 
   def demo
