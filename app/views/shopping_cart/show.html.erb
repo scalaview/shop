@@ -1,5 +1,15 @@
 
 <style type="text/css">
+.row-nopadding {
+  [class*="col-"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
 .container {
     padding-right: 0px;
     padding-left: 0px;
@@ -124,8 +134,8 @@ a:hover
                                 <div ng-show="visible"><p>{{item.name}}</p></div>
                                 <div ng-hide="visible">
                                     <div class="cart_edit_button" ng-click="decrease($event)">-</div>
-                                    <div class="numbers-row" style="float: left;width: 50%">
-                                        <input type="number" ng-model='quantity' name="quantity" ng-change="update($event)" value="{{item.num}}" class="form-control">
+                                    <div class="numbers-row nopadding col-xs-4 col-md-2" style="float: left;">
+                                        <input type="number" id="item-{{item.id}}" ng-model='quantity' name="quantity" ng-change="update()" value="{{item.num}}" class="form-control">
                                     </div>
                                     <div class="cart_edit_button" ng-click="increase($event)">+</div>
                                 </div>
@@ -164,6 +174,10 @@ a:hover
 
 
 <script type="text/javascript">
+String.prototype.toI = function(){
+  return (this == undefined || this == null) ? NaN : parseInt(this.toString())
+}
+
 angular.module('show', []).controller('shopping_cart', function($scope, $http) {
     $scope.visible = true;
     $scope.isEdit = "编辑";
@@ -179,10 +193,16 @@ angular.module('show', []).controller('shopping_cart', function($scope, $http) {
     {id:9,name:"9 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:12888,num:1 }
     ];
 
-    $scope.update = function(e){
-      var item = this.item
-      if(item.num < 0)
+    $scope.update = function(sync){
+      var item = this.item,
+          e = document.getElementById('item-'+item.id)
+          $e = angular.element(e)
+      if(isNaN($e.val().toI()) || $e.val().toI() < 1){
+        $e.val(1)
         return
+      }
+      if(!sync)
+        item.num = $e.val().toI()
       $http({
         method: 'PUT',
         url: '/shopping_cart/' + item.id,
@@ -194,19 +214,20 @@ angular.module('show', []).controller('shopping_cart', function($scope, $http) {
         }
       }).then(function(res){
         item.num = res.data.quantity
+        $e.val(item.num)
       })
     }
 
     $scope.increase = function(e){
       this.item.num += 1
-      angular.element(e.target).scope().update(e);
+      angular.element(e.target).scope().update(true);
     }
 
     $scope.decrease = function(e){
       if(this.item.num <= 1)
         return
       this.item.num -= 1
-      angular.element(e.target).scope().update(e);
+      angular.element(e.target).scope().update(true);
     }
 
 
