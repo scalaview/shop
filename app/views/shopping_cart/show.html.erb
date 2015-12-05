@@ -1,8 +1,5 @@
 
 <style type="text/css">
-body{
-    background-color: #FBF9FE;
-}
 .row-nopadding {
   [class*="col-"] {
     padding-left: 0 !important;
@@ -41,14 +38,11 @@ a:hover
 .weui_cell_buttom{
     padding: 0px 0px 0px 10px;
 }
-.weui_btn{
+.weui_btn_checkout{
     padding-left: 20px;
     padding-right: 20px;
     border-radius: 0px;
     font-size: 14px;
-}
-.weui_cell_height{
-    height: 35px;
 }
 .price_font{
     font-size: 12px;
@@ -65,40 +59,72 @@ a:hover
 .weui_cell_primary_size{
     vertical-align: top;
 }
-.cart_edit_num{
-    font-size: 17px;
-    border:1px;
-    background-color: #FBF9FE;
-    padding-left: 40px;
-    padding-right: 40px;
-}
-.cart_edit_plus{
-    border:1px;
-    background-color: #FBF9FE;
-    padding-left: 10px;
-    padding-right: 10px;
-}
 .cart_edit_button {
   text-align: center;
   width: 23px;
   height: 23px;
-  border-radius: 15px;
   padding: 3px;
-  border: 1px solid #ccc;
   line-height: 16px;
   float: left;
   cursor: pointer;
-  font-size: 14px;
-  color: #333;
+  font-size: 20px;
+  font-weight: 100;
+  color: #646464;
   margin: 4px;
+  background-color: #FFFFFF;
+}
+.weui_btn_del{
+    padding-right: 10px;
+    padding-left: 10px;
+    height: 80px;
+    border-radius: 0px;
+    font-size: 12px;
+    font-weight: 500;
+}
+.cart_container_background{
+    background-color: #DDDDDD;
+}
+.cart_cells_background{
+    background-color: #f3f3f3;
+}
+.cart_weui_cells_top_zero{
+    margin-top:0;
+}
+.cart_weui_cells_bottom_zero{
+    margin-bottom:0;
+}
+.cart_weui_cells_bottom{
+    margin-bottom: 3px;
+}
+.cart_div_position_bottom{
+    position:fixed;
+    bottom:0;
+}
+.cart_weui_cell_color{
+    background-color: #FBF9FE;
+}
+.cart_div_last{
+    height: 29px;
+}
+.cart_div_number{
+    float: left;
+}
+.cart_div_number_input{
+    border:0;
+    border-radius:0;
+    padding:0;
+    height: 23px;
+    margin-top: 4px;
+    box-shadow:none;
+    text-align: center;
 }
 </style>
 
 <div class="container js_container">
 <div class="page cell">
         <div class="bd">
-            <div class="weui_cells">
-                <div class="weui_cell">
+            <div class="weui_cells cart_weui_cells_top_zero">
+                <div class="weui_cell cart_weui_cell_color">
                     <div class="weui_cell_bd weui_cell_primary">
                         <p>店铺：云购商城</p>
                     </div>
@@ -108,8 +134,8 @@ a:hover
                 </div>
             </div>
 
-            <div class="weui_cells weui_cells_checkbox">
-                <label class="weui_cell weui_check_label" for="{{item.id}}" ng-repeat="item in items">
+            <div class="weui_cells weui_cells_checkbox cart_weui_cells_top_zero">
+                <label class="weui_cell weui_check_label cart_cells_background cart_weui_cells_top_zero cart_weui_cells_bottom" for="{{item.id}}" ng-repeat="item in items">
                     <div class="weui_cell_hd">
                         <input type="checkbox" class="weui_check" name="checkbox1" id="{{item.id}}" ng-model="item.Selected" ng-click="checkOne()">
                         <i class="weui_icon_checked"></i>
@@ -119,24 +145,27 @@ a:hover
                         <div class="weui_cell_bd weui_cell_primary weui_cell_primary_size">
                                 <div ng-show="visible"><p>{{item.name}}</p></div>
                                 <div ng-hide="visible">
-                                    <div class="dec cart_edit_button" ng-click="decrease($event)">-</div>
-                                    <div class="numbers-row nopadding col-xs-4 col-md-2" style="float: left;">
-                                        <input type="number" id="item-{{item.id}}" ng-model='quantity' name="quantity" ng-change="update()" value="{{item.num}}" class="form-control">
+                                    <div class="cart_edit_button" ng-click="decrease($event)">-</div>
+                                    <div class="numbers-row nopadding col-xs-4 col-md-2 cart_div_number">
+                                        <input type="number" id="item-{{item.id}}" ng-model='quantity' name="quantity" ng-change="update()" value="{{item.num}}" class="form-control cart_div_number_input">
                                     </div>
-                                    <div class="inc cart_edit_button" ng-click="increase($event)">+</div>
+                                    <div class="cart_edit_button" ng-click="increase($event)">+</div>
                                 </div>
                                 <div class="num_font" style="clear:both;float:none;">{{item.property}}</div>
                         </div>
-                        <div class="weui_cell_ft weui_cell_ft_size">
-                            <p class="price_font">￥{{item.price}}</p>
-                            <p class="num_font">x{{item.num}}</p>
+                        <div class="weui_cell_ft weui_cell_ft_size" ng-show="visible">
+                                <p class="price_font">￥{{item.price}}</p>
+                                <p class="num_font">x{{item.num}}</p>
                         </div>
                     </a>
+                    <div class="weui_cell_ft" ng-hide="visible">
+                        <button class="weui_btn weui_btn_warn weui_btn_del" onclick="javascript:" >删除</button>
+                    </div>
                 </label>
             </div>
 
-            <div class="weui_cells weui_cells_checkbox weui_cell_height">
-                <label class="weui_cell weui_check_label weui_cell_buttom" >
+            <div class="weui_cells weui_cells_checkbox cart_div_position_bottom cart_weui_cells_top_zero cart_weui_cells_bottom_zero">
+                <label class="weui_cell weui_check_label weui_cell_buttom cart_weui_cells_bottom_zero cart_weui_cell_color" >
                     <div class="weui_cell_hd">
                         <input type="checkbox" class="weui_check" name="checkbox1" ng-model="selectAll" ng-click="checkAll()">
                         <i class="weui_icon_checked"></i>
@@ -149,6 +178,8 @@ a:hover
                     </div>
                 </label>
             </div>
+            <!-- last div -->
+            <div class="cart_div_last"></div>
         </div>
     </div>
 </div>
@@ -195,7 +226,10 @@ angular.module('show', []).controller('shopping_cart', function($scope, $http) {
     {id:3,name:"3 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:10888,num:1 },
     {id:4,name:"4 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:11888,num:1 },
     {id:5,name:"5 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:12888,num:1 },
-    {id:6,name:"6 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:13888,num:1 }
+    {id:6,name:"6 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:12888,num:1 },
+    {id:7,name:"7 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:12888,num:1 },
+    {id:8,name:"8 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:12888,num:1 },
+    {id:9,name:"9 Apple 配备 Retina 显示屏的 MacBook Pro MF840CH/A", property:"13.3英寸宽屏笔记本电脑 256GB",price:12888,num:1 }
     ];
 
     $scope.update = function(sync){
