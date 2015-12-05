@@ -75,14 +75,21 @@ Rails.application.routes.draw do
 
   get 'categories/:id/:name' => 'categories#show', :as => 'categories'
 
+  # shopping cart
   post 'add_to_cart' => 'shopping_cart#add_to_cart', :as => 'add_to_cart'
   put 'shopping_cart/:id' => 'shopping_cart#update', :as => 'update_shopping_cart'
   post 'checkout_prepare' => 'shopping_cart#checkout_prepare', :as => 'checkout_prepare'
-
   get 'shopping_cart' =>  'shopping_cart#show', :as  => 'shopping_cart'
+
 
   get 'demo' =>  'shopping_cart#demo', :as  => 'demo'
 
   get 'checkout/shipping' => 'checkout#shipping', :as => 'checkout_shipping'
+
+  resources :addresses do
+    member do
+      post 'set_default'
+    end
+  end
 
 end

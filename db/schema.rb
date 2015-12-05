@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151103103512) do
+ActiveRecord::Schema.define(version: 20151205072513) do
 
   create_table "nifty_key_value_store", force: :cascade do |t|
     t.integer "parent_id",   limit: 4
@@ -33,6 +33,10 @@ ActiveRecord::Schema.define(version: 20151103103512) do
     t.integer  "country_id",   limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "province",     limit: 255
+    t.string   "city",         limit: 255
+    t.string   "area",         limit: 255
+    t.string   "street",       limit: 255
   end
 
   add_index "shoppe_addresses", ["customer_id"], name: "index_shoppe_addresses_on_customer_id", using: :btree
