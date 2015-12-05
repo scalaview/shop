@@ -145,7 +145,7 @@ a:hover
                         <p>全选</p>
                     </div>
                     <div class="weui_cell_ft">
-                        <button class="weui_btn weui_btn_warn" onclick="javascript:" >结算</button>
+                        <button class="weui_btn weui_btn_warn" ng-click="checkout()" >结算</button>
                     </div>
                 </label>
             </div>
@@ -159,7 +159,34 @@ String.prototype.toI = function(){
   return (this == undefined || this == null) ? NaN : parseInt(this.toString())
 }
 
+Array.prototype.compact = function (array) {
+  if(this instanceof Array && array == undefined){
+    array = this
+  }
+
+  var index = -1,
+      length = array ? array.length : 0,
+      resIndex = -1,
+      result = [];
+
+  while (++index < length) {
+    var value = array[index];
+    if (value !== undefined && value !== null && value !== '' ) {
+      result[++resIndex] = value;
+    }
+  }
+  return result;
+}
+
+Array.prototype.clear = function (array) {
+  if(this instanceof Array && array == undefined){
+    array = this
+  }
+  array.splice(0, array.length)
+}
+
 angular.module('show', []).controller('shopping_cart', function($scope, $http) {
+    $scope.checked = []
     $scope.visible = true;
     $scope.isEdit = "编辑";
     $scope.items = [
@@ -208,22 +235,57 @@ angular.module('show', []).controller('shopping_cart', function($scope, $http) {
       angular.element(e.target).scope().update(true);
     }
 
-
-
     $scope.checkAll = function(){
+        if(!$scope.selectAll){
+          $scope.checked.clear()
+        }
         angular.forEach($scope.items, function (item) {
             item.Selected = $scope.selectAll;
+            if($scope.selectAll && $scope.checked.indexOf(item.id) == -1){
+              $scope.checked.push(item.id)
+            }
         });
     }
+
     $scope.checkOne = function(){
         var checkAllFlag = true;
         angular.forEach($scope.items, function (item) {
+            var idx = $scope.checked.indexOf(item.id)
             if(!item.Selected){
                 checkAllFlag = false;
+                if(idx > -1){
+                  $scope.checked.splice(idx, 1);
+                }
+            }else{
+              var idx = $scope.checked.indexOf(item.id)
+              if(idx == -1){
+                $scope.checked.push(item.id)
+              }
             }
         });
         $scope.selectAll = checkAllFlag;
     }
+
+    $scope.checkout = function(){
+      if($scope.checked.length < 1){
+        return
+      }
+      $http({
+        method: 'POST',
+        url: '/checkout_prepare',
+        headers: {
+         'Accept': "application/json"
+        },
+        data: {
+          item_ids: $scope.checked
+        }
+      }).then(function(res){
+        item.num = res.data.quantity
+        $e.val(item.num)
+      })
+      console.log($scope.checked)
+    }
+
     $scope.itemEdit = function(){
         $scope.visible = !$scope.visible;
         $scope.isEdit = $scope.visible?"编辑":"完成";
