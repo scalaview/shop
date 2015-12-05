@@ -106,6 +106,18 @@ a:hover
 .cart_div_last{
     height: 29px;
 }
+.cart_div_number{
+    float: left;
+}
+.cart_div_number_input{
+    border:0;
+    border-radius:0;
+    padding:0;
+    height: 23px;
+    margin-top: 4px;
+    box-shadow:none;
+    text-align: center;
+}
 </style>
 
 <div class="container js_container">
@@ -134,8 +146,8 @@ a:hover
                                 <div ng-show="visible"><p>{{item.name}}</p></div>
                                 <div ng-hide="visible">
                                     <div class="cart_edit_button" ng-click="decrease($event)">-</div>
-                                    <div class="numbers-row nopadding col-xs-4 col-md-2" style="float: left;">
-                                        <input type="number" id="item-{{item.id}}" ng-model='quantity' name="quantity" ng-change="update()" value="{{item.num}}" class="form-control">
+                                    <div class="numbers-row nopadding col-xs-4 col-md-2 cart_div_number">
+                                        <input type="number" id="item-{{item.id}}" ng-model='quantity' name="quantity" ng-change="update()" value="{{item.num}}" class="form-control cart_div_number_input">
                                     </div>
                                     <div class="cart_edit_button" ng-click="increase($event)">+</div>
                                 </div>
