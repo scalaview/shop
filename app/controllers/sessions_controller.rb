@@ -34,7 +34,7 @@ class SessionsController < ApplicationController
     else
       flash[:error] = I18n.t('sign_in.email_or_password_error')
       redirect_to register_path(:params => { :backurl => params[:backurl], :email => customer_params[:email],
-        :first_name => customer_params[:first_name], :last_name => customer_params[:last_name], :mobile => customer_params[:mobile] })
+        :first_name => customer_params[:first_name], :last_name => customer_params[:last_name], :phone => customer_params[:phone] })
     end
   end
 
@@ -43,11 +43,11 @@ class SessionsController < ApplicationController
   end
 
   def customer_params
-    params.require(:customer).permit(:first_name, :last_name, :email, :password, :mobile, :password_confirmation)
+    params.require(:customer).permit(:first_name, :last_name, :email, :password, :phone, :password_confirmation)
   end
 
   def customer_params_withou_password
-    params[:customer].permit(:first_name, :last_name, :email, :mobile)
+    params[:customer].permit(:first_name, :last_name, :email, :phone)
   end
 
 end

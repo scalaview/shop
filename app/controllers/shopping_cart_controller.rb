@@ -2,7 +2,7 @@ class ShoppingCartController < ApplicationController
 
   layout "shopping_cart"
 
-  before_filter :logged_in?
+  before_filter :login_required
 
   def add_to_cart
     @product = Shoppe::Product.find_by_id params[:product_id]
@@ -17,6 +17,21 @@ class ShoppingCartController < ApplicationController
     end
     respond_to do |format|
       format.js
+    end
+  end
+
+  def update
+    @basket_item = current_customer.basket_items.find params[:id]
+    @done = @basket_item.update_quantity(params[:quantity])
+    if @done
+      @message = "update success"
+    else
+      @message = @basket_item.errors.full_messages.join('')
+      @basket_item.reload
+    end
+
+    respond_to do |format|
+      format.json { render json: @basket_item }
     end
   end
 
