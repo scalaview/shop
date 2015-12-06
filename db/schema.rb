@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151205072513) do
+ActiveRecord::Schema.define(version: 20151205132511) do
 
   create_table "nifty_key_value_store", force: :cascade do |t|
     t.integer "parent_id",   limit: 4
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20151205072513) do
     t.string   "city",         limit: 255
     t.string   "area",         limit: 255
     t.string   "street",       limit: 255
+    t.string   "location",     limit: 255
   end
 
   add_index "shoppe_addresses", ["customer_id"], name: "index_shoppe_addresses_on_customer_id", using: :btree
@@ -246,8 +247,8 @@ ActiveRecord::Schema.define(version: 20151205072513) do
   create_table "shoppe_product_category_translations", force: :cascade do |t|
     t.integer  "shoppe_product_category_id", limit: 4,     null: false
     t.string   "locale",                     limit: 255,   null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.string   "name",                       limit: 255
     t.string   "permalink",                  limit: 255
     t.text     "description",                limit: 65535
@@ -259,8 +260,8 @@ ActiveRecord::Schema.define(version: 20151205072513) do
   create_table "shoppe_product_translations", force: :cascade do |t|
     t.integer  "shoppe_product_id", limit: 4,     null: false
     t.string   "locale",            limit: 255,   null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "name",              limit: 255
     t.string   "permalink",         limit: 255
     t.text     "description",       limit: 65535

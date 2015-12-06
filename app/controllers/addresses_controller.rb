@@ -1,5 +1,5 @@
 class AddressesController < ApplicationController
-
+  layout  "shopping_cart"
   # before_filter :login_required
   before_filter :init, :only => [:edit, :update, :set_default, :destroy]
 
