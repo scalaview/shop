@@ -1,0 +1,121 @@
+<style type="text/css">
+.address_div_float{
+  float:left;
+  padding: 0;
+  position: absolute;
+  width: 75%;
+  margin-left: 90px;
+}
+.address_div_float_area{
+  float:left;
+  padding: 0;
+  width: 25%;
+  margin-left: 5px;
+}
+.address_div_float_area_first{
+  float:left;
+  padding: 0;
+  width: 25%;
+  position: absolute;
+  margin-left: 90px;
+}
+.address_label_float{
+  float:left;
+  padding-top:7px;
+  padding-bottom: 7px;
+  margin: 0;
+}
+.address_group_margin_top{
+  margin-top: 15px;
+}
+.address_div_bottom{
+  margin-top: 20px;
+  margin-left: 0;
+  position:fixed;
+  bottom:0;
+  width: 100%;
+
+}
+.address_button_bottom{
+  border-radius: 0;
+}
+a:hover
+{
+    text-decoration: none;
+}
+</style>
+<div class="container">
+<!--
+收货人姓名
+手机号码
+所在区域
+街道
+详细地址
+邮政编码
+ -->
+  <form class="form-horizontal">
+    <div class="form-group address_group_margin_top">
+      <label for="inputPassword" class="col-sm-2 control-label address_label_float">收货人姓名</label>
+      <div class="col-sm-10 address_div_float">
+        <input type="text" class="form-control" id="inputPassword" placeholder="收货人姓名">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputPassword" class="col-sm-2 control-label address_label_float">手机号码</label>
+      <div class="col-sm-10 address_div_float">
+        <input type="text" class="form-control" id="inputPassword" placeholder="手机号码">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputPassword" class="col-sm-2 control-label address_label_float">所在地区</label>
+      <div class="col-sm-10 address_div_float_area" ng-controller="areaSelect">
+        <select class="form-control" ng-model="province" ng-options="m.name for m in area" placeholder="--省份--"></select>
+        <select class="form-control" ng-model="city" ng-options="m.name for m in province.city" placeholder="--地市--"></select>
+        <select class="form-control" ng-model="district" ng-options="m.name for m in city.district" placeholder="--区县--"></select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputPassword" class="col-sm-2 control-label address_label_float">详细地址</label>
+      <div class="col-sm-10 address_div_float">
+        <input type="text" class="form-control" id="inputPassword" placeholder="详细地址">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputPassword" class="col-sm-2 control-label address_label_float">邮政编码</label>
+      <div class="col-sm-10 address_div_float">
+        <input type="text" class="form-control" id="inputPassword" placeholder="邮政编码">
+      </div>
+    </div>
+</form>
+</div>
+<div class="navbar-fixed-bottom">
+    <a class="weui_btn weui_btn_warn weui_btn_primary address_button_bottom" href="javascript:">保存地址</a>
+</div>
+
+
+<script type="text/javascript">
+angular.module('index', []).controller('addresses', function($scope) {
+$scope.areaSelect = function(){
+  $scope.area=[
+    {"id":1,"name":"北京市","city":[
+    {"id":2,"name":"市辖区","district":[
+    {"id":3,"name":"东城区"},
+    {"id":4,"name":"西城区"},
+    {"id":5,"name":"崇文区",}]}
+    ]},
+    {"id":1,"name":"北京市2","city":[
+    {"id":2,"name":"市辖区2","district":[
+    {"id":3,"name":"东城区2"},
+    {"id":4,"name":"西城区2"},
+    {"id":5,"name":"崇文区2",}]}
+    ]}
+  ]
+}
+
+
+});
+
+
+
+
+</script>
