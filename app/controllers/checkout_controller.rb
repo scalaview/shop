@@ -1,9 +1,10 @@
 class CheckoutController < ApplicationController
 
   before_filter :login_required
+  # before_filter :ready, :only => [:show]
 
   def show
-    @order = current_customer.current_order
+
   end
 
 
@@ -22,8 +23,17 @@ class CheckoutController < ApplicationController
       redirect_to new_address_path and return
     end
 
+    @order = current_customer.current_order
 
+    @delivery_address = @order.delivery_address
 
+    unless @address.match?(@delivery_address)
+      unless @address.generate_order_address(order, Shoppe::Address.TYPES[:delivery])
+        redirect_to shopping_cart_path
+      end
+    end
+
+    # order, delivery address init ok
   end
 
 end

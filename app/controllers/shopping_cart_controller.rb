@@ -46,11 +46,17 @@ class ShoppingCartController < ApplicationController
       end
     end
 
-    if checked && current_customer.current_order.init_order_items(@basket_items)
-      redirect_to checkout_path
-    else
-
+    respond_to do |format|
+      if checked && current_customer.current_order.init_order_items(@basket_items)
+        format.html{ redirect_to checkout_path }
+      else
+        format.html{
+          flash[:errors] = messages.join('</br>')
+          redirect_to action: :show
+        }
+      end
     end
+
   end
 
   def demo
