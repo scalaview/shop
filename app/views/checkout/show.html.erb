@@ -12,16 +12,14 @@
                       <div class='row'>
                         <div class='col-xs-12 info'>
                           <span>收货人：</span>
-                          <span>xxx</span>
-                          <span class='tel'>12345678901</span>
+                          <span><%= @delivery_address.receiver_name %></span>
+                          <span class='tel'><%= @delivery_address.phone %></span>
                         </div>
                         <div class='col-xs-12 detail'>
                           <span>收货地址：</span>
-                          <span>广东</span>
-                          <span>广州</span>
-                          <span>荔湾</span>
-                          <span>龙津</span>
-                          <span>康王中路602号343房</span>
+                          <% full_address(@delivery_address).each do |att| %>
+                            <span><%= att %></span>
+                          <% end %>
                         </div>
                         <div class='col-xs-12'></div>
                       </div>

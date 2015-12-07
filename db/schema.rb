@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151205155552) do
+ActiveRecord::Schema.define(version: 20151207153751) do
 
   create_table "nifty_key_value_store", force: :cascade do |t|
     t.integer "parent_id",   limit: 4
@@ -22,22 +22,25 @@ ActiveRecord::Schema.define(version: 20151205155552) do
   end
 
   create_table "shoppe_addresses", force: :cascade do |t|
-    t.integer  "customer_id",  limit: 4
-    t.string   "address_type", limit: 255
+    t.integer  "customer_id",   limit: 4
+    t.string   "address_type",  limit: 255
     t.boolean  "default"
-    t.string   "address1",     limit: 255
-    t.string   "address2",     limit: 255
-    t.string   "address3",     limit: 255
-    t.string   "address4",     limit: 255
-    t.string   "postcode",     limit: 255
-    t.integer  "country_id",   limit: 4
+    t.string   "address1",      limit: 255
+    t.string   "address2",      limit: 255
+    t.string   "address3",      limit: 255
+    t.string   "address4",      limit: 255
+    t.string   "postcode",      limit: 255
+    t.integer  "country_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "province",     limit: 255
-    t.string   "city",         limit: 255
-    t.string   "area",         limit: 255
-    t.string   "street",       limit: 255
-    t.string   "md5",          limit: 255
+    t.string   "province",      limit: 255
+    t.string   "city",          limit: 255
+    t.string   "area",          limit: 255
+    t.string   "street",        limit: 255
+    t.string   "md5",           limit: 255
+    t.string   "location",      limit: 255
+    t.string   "phone",         limit: 255
+    t.string   "receiver_name", limit: 255
   end
 
   add_index "shoppe_addresses", ["customer_id"], name: "index_shoppe_addresses_on_customer_id", using: :btree
@@ -121,24 +124,23 @@ ActiveRecord::Schema.define(version: 20151205155552) do
   add_index "shoppe_delivery_services", ["active"], name: "index_shoppe_delivery_services_on_active", using: :btree
 
   create_table "shoppe_order_addresses", force: :cascade do |t|
-    t.integer  "customer_id",  limit: 4
-    t.string   "address_type", limit: 255
-    t.boolean  "default"
-    t.string   "province",     limit: 255
-    t.string   "city",         limit: 255
-    t.string   "area",         limit: 255
-    t.string   "street",       limit: 255
-    t.string   "location",     limit: 255
-    t.string   "postcode",     limit: 255
-    t.integer  "country_id",   limit: 4
-    t.integer  "address_id",   limit: 4
-    t.string   "md5",          limit: 255
+    t.string   "address_type",  limit: 255
+    t.string   "province",      limit: 255
+    t.string   "city",          limit: 255
+    t.string   "area",          limit: 255
+    t.string   "street",        limit: 255
+    t.string   "location",      limit: 255
+    t.string   "postcode",      limit: 255
+    t.integer  "country_id",    limit: 4
+    t.integer  "address_id",    limit: 4
+    t.string   "md5",           limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "phone",         limit: 255
+    t.string   "receiver_name", limit: 255
   end
 
   add_index "shoppe_order_addresses", ["address_id"], name: "index_shoppe_order_addresses_on_address_id", using: :btree
-  add_index "shoppe_order_addresses", ["customer_id"], name: "index_shoppe_order_addresses_on_customer_id", using: :btree
 
   create_table "shoppe_order_items", force: :cascade do |t|
     t.integer  "order_id",          limit: 4
@@ -170,7 +172,7 @@ ActiveRecord::Schema.define(version: 20151205155552) do
     t.integer  "billing_country_id",        limit: 4
     t.string   "email_address",             limit: 255
     t.string   "phone_number",              limit: 255
-    t.integer  "status",                    limit: 4,                             default: 0,     null: false
+    t.string   "status",                    limit: 255,                           default: "0",   null: false
     t.datetime "received_at"
     t.datetime "accepted_at"
     t.datetime "shipped_at"
