@@ -1,81 +1,170 @@
-<div class="checkout">
-   <div class="container">
-     <div class="col-md-9 product-price1">
-       <div class="check-out">
-         <div class=" cart-items">
-           <h3>My Shopping Bag (2)</h3>
-            <script>$(document).ready(function(c) {
-              $('.close1').on('click', function(c){
-                $('.cart-header').fadeOut('slow', function(c){
-                  $('.cart-header').remove();
-                });
-                });
-              });
-             </script>
-          <script>$(document).ready(function(c) {
-              $('.close2').on('click', function(c){
-                $('.cart-header1').fadeOut('slow', function(c){
-                  $('.cart-header1').remove();
-                });
-                });
-              });
-             </script>
-
-           <div class="in-check" >
-              <ul class="unit">
-              <li><span>Item</span></li>
-              <li><span>Product Name</span></li>
-              <li><span>Unit Price</span></li>
-              <li><span>Stock Status</span></li>
-              <li> </li>
-              <div class="clearfix"> </div>
-              </ul>
-              <ul class="cart-header">
-               <div class="close1"> </div>
-              <li class="ring-in"><a href="single.html" ><img src="/images/f1.jpg" class="img-responsive" alt=""></a>
-              </li>
-              <li><span>Woo Dress</span></li>
-              <li><span>$ 60.00</span></li>
-              <li><span>In Stock</span></li>
-              <li> <a href="single.html" class="add-cart cart-check">ADD TO CART</a></li>
-              <div class="clearfix"> </div>
-              </ul>
-              <ul class=" cart-header1">
-               <div class="close2"> </div>
-              <li class="ring-in"><a href="single.html" ><img src="/images/f2.jpg" class="img-responsive" alt=""></a>
-              </li>
-              <li><span>Woo Dress</span></li>
-              <li><span>$ 60.00</span></li>
-              <li><span>In Stock</span></li>
-              <li> <a href="single.html" class="add-cart cart-check">ADD TO CART</a></li>
-              <div class="clearfix"> </div>
-              </ul>
-           </div>
-          </div>
-       </div>
-     </div>
-     <div class="col-md-3 cart-total">
-       <a class="continue" href="#">Continue to basket</a>
-       <div class="price-details">
-         <h3>Price Details</h3>
-         <span>Total</span>
-         <span class="total">350.00</span>
-         <span>Discount</span>
-         <span class="total">---</span>
-         <span>Delivery Charges</span>
-         <span class="total">100.00</span>
-         <div class="clearfix"></div>
-       </div>
-       <h4 class="last-price">TOTAL</h4>
-       <span class="total final">450.00</span>
-       <div class="clearfix"></div>
-       <a class="order" href="#">Place Order</a>
-       <div class="total-item">
-         <h3>OPTIONS</h3>
-         <h4>COUPONS</h4>
-         <a class="cpns" href="#">Apply Coupons</a>
-         <p><a href="#">Log In</a> to use accounts - linked coupons</p>
-       </div>
+<div class="container js_container order">
+      <div class="page cell address-info">
+            <div class="weui_cells weui_cells_access">
+                <a class="weui_cell" href="javascript:;">
+                    <div class="weui_cell_hd">
+                      <div class="order-address">
+                        <div class="icon">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                      <div class='row'>
+                        <div class='col-xs-12 info'>
+                          <span>收货人：</span>
+                          <span>xxx</span>
+                          <span class='tel'>12345678901</span>
+                        </div>
+                        <div class='col-xs-12 detail'>
+                          <span>收货地址：</span>
+                          <span>广东</span>
+                          <span>广州</span>
+                          <span>荔湾</span>
+                          <span>龙津</span>
+                          <span>康王中路602号343房</span>
+                        </div>
+                        <div class='col-xs-12'></div>
+                      </div>
+                    </div>
+                    <div class="weui_cell_ft">
+                        <span class="nav"></span>
+                    </div>
+                </a>
+            </div>
       </div>
-   </div>
-</div>
+
+      <div class="page cell">
+        <div class="weui_cells weui_cells_access product">
+                <a class="weui_cell" href="javascript:;">
+                    <div class="weui_cell_hd">
+                      <div>
+                        <div class="img" style="background-image:url(//gw.alicdn.com/bao/uploaded/i2/TB1TA2nHVXXXXavXXXXXXXXXXXX_!!0-item_pic.jpg_270x270q90.jpg);" data-reactid=".0.1.$=1$home.$confirmOrder_1.$order_b_177559490360.$item_44441163710=284912130726=20.$itemInfo_44441163710=284912130726=20.0.0.0"></div>
+                      </div>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                      <div class='row'>
+                        <div class='col-xs-10 title'>
+                          TOTU 三星s6手机壳 三星s6Edge手机套保护壳 透明 超薄 电镀硬壳
+                        </div>
+                        <div class='col-xs-2 nopadding'>
+                          <div class='price'>￥27.80</div>
+                          <div class='quantity'>x1</div>
+                        </div>
+                        <div class='col-xs-11 sku-info'>
+                          <span>颜色分类</span>
+                          <span>s6曲面屏 金色-送s6专用保护膜</span>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+            </div>
+      </div>
+
+      <div class="page cell order-detail">
+        <div class="weui_cells weui_cells_access">
+                <a class="weui_cell" href="javascript:;">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>配送方式</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        快递 免邮
+                    </div>
+                </a>
+                <a class="weui_cell" href="javascript:;">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>运费险</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        请选择
+                    </div>
+                </a>
+                <a class="weui_cell" href="javascript:;">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>优惠券</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        请选择
+                    </div>
+                </a>
+        </div>
+
+        <div class='weui_cells weui_cells_form'>
+                <div class="weui_cell invoice">
+                    <div class="weui_cell_hd">
+                      <label class="text">发票抬头：</label>
+                      </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="tel" placeholder="请输抬头">
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <textarea class="weui_textarea" placeholder="买家留言：选填，可填写您和卖家达成一致的要求"></textarea>
+                    </div>
+                </div>
+
+          </div>
+
+          <div class='weui_cells order-total'>
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                  <p>总价：</p>
+                </div>
+                <div class="weui_cell_ft">
+                    <span class="total">￥27.90</span>
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                  <p>运费：</p>
+                </div>
+                <div class="weui_cell_ft">
+                    <span class="freight">￥27.90</span>
+                </div>
+            </div>
+          </div>
+
+
+      </div>
+
+      <div class="page cell">
+        <div class="weui_cells weui_cells_form">
+            <div class="weui_cell weui_cell_switch">
+                <div class="weui_cell_hd weui_cell_primary">找朋友代付</div>
+                <div class="weui_cell_ft">
+                    <input class="weui_switch" type="checkbox">
+                </div>
+            </div>
+            <div class="weui_cell weui_cell_switch">
+                <div class="weui_cell_hd weui_cell_primary">找朋友砍价</div>
+                <div class="weui_cell_ft">
+                    <input class="weui_switch" type="checkbox">
+                </div>
+            </div>
+            <div class="weui_cell weui_cell_switch">
+                <div class="weui_cell_hd weui_cell_primary">支付宝安全支付</div>
+                <div class="weui_cell_ft">
+                    <input class="weui_switch" type="checkbox">
+                </div>
+            </div>
+            <div class="weui_cell weui_cell_switch">
+                <div class="weui_cell_hd weui_cell_primary">微信安全支付</div>
+                <div class="weui_cell_ft">
+                    <input class="weui_switch" type="checkbox" checked>
+                </div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row pay navbar-fixed-bottom">
+      <div class='col-xs-8 col-sm-10 nopadding'>
+        <div class='real-pay pull-right'>
+          <span>总金额：</span>
+          <span class="price">￥90.00  </span>
+        </div>
+      </div>
+      <div class="col-xs-4 col-sm-2 nopadding pay-d">
+        <span class="pay-btn">提交订单</span>
+      </div>
+    </div>
