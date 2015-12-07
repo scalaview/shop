@@ -74,6 +74,20 @@ a:hover
         <select class="form-control" ng-model="district" ng-options="m.name for m in city.district" placeholder="--区县--"></select>
       </div>
     </div>
+    <div class='html-tag city-group'>
+      <select class='city-select city-province'>
+        <option>--省份--</option>
+        <%= options_for_select(ChinaCity.list, province) %>
+      </select>
+      <select class='city-select city-city'>
+        <option>--城市--</option>
+        <%= options_for_select(cities, city) %>
+      </select>
+      <select class='city-select city-district'>
+        <option>--地区--</option>
+        <%= options_for_select(districtes, district) %>
+      </select>
+    </div>
     <div class="form-group">
       <label for="inputPassword" class="col-sm-2 control-label address_label_float">详细地址</label>
       <div class="col-sm-10 address_div_float">
