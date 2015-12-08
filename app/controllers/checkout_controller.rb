@@ -18,6 +18,10 @@ class CheckoutController < ApplicationController
     @customer = current_customer
     @order = current_customer.current_order
 
+    if @order.items_empty?
+      redirect_to shopping_cart_path
+    end
+
     unless @order.delivery_address.present?
       # if has the default address use it or redirect to new
       @address = @customer.addresses.default
