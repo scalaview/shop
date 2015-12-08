@@ -6,7 +6,9 @@ class CheckoutController < ApplicationController
   before_filter :ready, :only => [:show]
 
   def show
-
+    @order.ip_address = request.ip
+    @payment_methods = Shoppe::PaymentMethod.all_display.default_sort
+    @delivery_address = @order.delivery_address
   end
 
 
@@ -15,9 +17,8 @@ class CheckoutController < ApplicationController
   def ready
     @customer = current_customer
     @order = current_customer.current_order
-    @delivery_address = @order.delivery_address
 
-    unless @delivery_address.present?
+    unless @order.delivery_address.present?
       # if has the default address use it or redirect to new
       @address = @customer.addresses.default
       unless @address.present?
@@ -27,6 +28,7 @@ class CheckoutController < ApplicationController
       unless @address.generate_order_address(@order, Shoppe::Address::TYPES[:delivery])
         redirect_to shopping_cart_path
       end
+
     end
 
     # order, delivery address init ok

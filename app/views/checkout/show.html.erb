@@ -127,30 +127,14 @@
 
       <div class="page cell">
         <div class="weui_cells weui_cells_form">
+          <% @payment_methods.each do |payment_method| %>
             <div class="weui_cell weui_cell_switch">
-                <div class="weui_cell_hd weui_cell_primary">找朋友代付</div>
+                <div class="weui_cell_hd weui_cell_primary"><%= payment_method.name %></div>
                 <div class="weui_cell_ft">
-                    <input class="weui_switch" type="checkbox">
+                    <input class="weui_switch" name="order[payment_method_id]" value='<%= payment_method.id %>'  data-code="<%= payment_method.code %>" type="checkbox" <%= :checked if payment_method.code.to_sym == :wechatpayment  %> >
                 </div>
             </div>
-            <div class="weui_cell weui_cell_switch">
-                <div class="weui_cell_hd weui_cell_primary">找朋友砍价</div>
-                <div class="weui_cell_ft">
-                    <input class="weui_switch" type="checkbox">
-                </div>
-            </div>
-            <div class="weui_cell weui_cell_switch">
-                <div class="weui_cell_hd weui_cell_primary">支付宝安全支付</div>
-                <div class="weui_cell_ft">
-                    <input class="weui_switch" type="checkbox">
-                </div>
-            </div>
-            <div class="weui_cell weui_cell_switch">
-                <div class="weui_cell_hd weui_cell_primary">微信安全支付</div>
-                <div class="weui_cell_ft">
-                    <input class="weui_switch" type="checkbox" checked>
-                </div>
-            </div>
+          <% end %>
         </div>
       </div>
 

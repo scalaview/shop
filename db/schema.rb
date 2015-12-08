@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151208040556) do
+ActiveRecord::Schema.define(version: 20151208093733) do
 
   create_table "nifty_key_value_store", force: :cascade do |t|
     t.integer "parent_id",   limit: 4
@@ -204,11 +204,23 @@ ActiveRecord::Schema.define(version: 20151208040556) do
     t.integer  "customer_id",               limit: 4
     t.integer  "delivery_address_id",       limit: 4
     t.integer  "billing_address_id",        limit: 4
+    t.integer  "payment_method_id",         limit: 4
   end
 
   add_index "shoppe_orders", ["delivery_service_id"], name: "index_shoppe_orders_on_delivery_service_id", using: :btree
   add_index "shoppe_orders", ["received_at"], name: "index_shoppe_orders_on_received_at", using: :btree
   add_index "shoppe_orders", ["token"], name: "index_shoppe_orders_on_token", using: :btree
+
+  create_table "shoppe_payment_methods", force: :cascade do |t|
+    t.string   "name",        limit: 255,                                        null: false
+    t.string   "code",        limit: 255,                                        null: false
+    t.decimal  "poundage",                precision: 8, scale: 2, default: 0.0
+    t.integer  "currency_id", limit: 4
+    t.boolean  "display",                                         default: true, null: false
+    t.integer  "sort_num",    limit: 4,                           default: 0,    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "shoppe_payments", force: :cascade do |t|
     t.integer  "order_id",          limit: 4
