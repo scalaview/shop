@@ -295,7 +295,7 @@ ActiveRecord::Schema.define(version: 20151208083823) do
   add_index "shoppe_products", ["permalink"], name: "index_shoppe_products_on_permalink", using: :btree
   add_index "shoppe_products", ["sku"], name: "index_shoppe_products_on_sku", using: :btree
 
-  create_table "shoppe_region", force: :cascade do |t|
+  create_table "shoppe_regions", force: :cascade do |t|
     t.string   "code",       limit: 255, null: false
     t.string   "parentcode", limit: 255
     t.string   "name",       limit: 255, null: false
@@ -304,9 +304,9 @@ ActiveRecord::Schema.define(version: 20151208083823) do
     t.datetime "updated_at"
   end
 
-  add_index "shoppe_region", ["code"], name: "index_shoppe_region_on_code", using: :btree
-  add_index "shoppe_region", ["level"], name: "index_shoppe_region_on_level", using: :btree
-  add_index "shoppe_region", ["parentcode"], name: "index_shoppe_region_on_parentcode", using: :btree
+  add_index "shoppe_regions", ["code"], name: "index_shoppe_regions_on_code", using: :btree
+  add_index "shoppe_regions", ["level"], name: "index_shoppe_regions_on_level", using: :btree
+  add_index "shoppe_regions", ["parentcode"], name: "index_shoppe_regions_on_parentcode", using: :btree
 
   create_table "shoppe_settings", force: :cascade do |t|
     t.string "key",        limit: 255
