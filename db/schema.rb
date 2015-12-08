@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151207153751) do
+ActiveRecord::Schema.define(version: 20151208040556) do
 
   create_table "nifty_key_value_store", force: :cascade do |t|
     t.integer "parent_id",   limit: 4
@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 20151207153751) do
     t.string   "city",          limit: 255
     t.string   "area",          limit: 255
     t.string   "street",        limit: 255
-    t.string   "md5",           limit: 255
     t.string   "location",      limit: 255
+    t.string   "md5",           limit: 255
     t.string   "phone",         limit: 255
     t.string   "receiver_name", limit: 255
   end
@@ -172,7 +172,7 @@ ActiveRecord::Schema.define(version: 20151207153751) do
     t.integer  "billing_country_id",        limit: 4
     t.string   "email_address",             limit: 255
     t.string   "phone_number",              limit: 255
-    t.string   "status",                    limit: 255,                           default: "0",   null: false
+    t.string   "status",                    limit: 255,                                           null: false
     t.datetime "received_at"
     t.datetime "accepted_at"
     t.datetime "shipped_at"
