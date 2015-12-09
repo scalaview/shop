@@ -48,7 +48,10 @@ class ShoppingCartController < ApplicationController
 
     respond_to do |format|
       if checked && current_customer.current_order.init_order_items(@basket_items)
-        format.html{ redirect_to checkout_path }
+        format.html { redirect_to checkout_order_path }
+        format.json {
+          {:url => checkout_order_path}.to_json
+        }
       else
         format.html{
           flash[:errors] = messages.join('</br>')

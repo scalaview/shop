@@ -3,14 +3,18 @@ class CheckoutController < ApplicationController
   layout "checkout"
 
   before_filter :login_required
-  before_filter :ready, :only => [:show]
+  before_filter :ready, :only => [:order]
 
-  def show
+  def order
     @order.ip_address = request.ip
     @payment_methods = Shoppe::PaymentMethod.all_display.default_sort
     @delivery_address = @order.delivery_address
   end
 
+
+  def update
+    binding.pry
+  end
 
   private
 

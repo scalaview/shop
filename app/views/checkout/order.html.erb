@@ -1,0 +1,184 @@
+<%= form_for @order, url: checkout_path, method: :POST do |f| %>
+  <div class="container js_container order">
+     <div class="page cell address-info">
+        <div class="weui_cells weui_cells_access">
+           <a class="weui_cell" href="javascript:;">
+              <div class="weui_cell_hd">
+                 <div class="order-address">
+                    <div class="icon">
+                    </div>
+                 </div>
+              </div>
+              <div class="weui_cell_bd weui_cell_primary">
+                 <div class='row'>
+                    <div class='col-xs-12 info'>
+                       <span>收货人：</span>
+                       <span><%= @delivery_address.receiver_name %></span>
+                       <span class='tel'><%= @delivery_address.phone %></span>
+                    </div>
+                    <div class='col-xs-12 detail'>
+                       <span>收货地址：</span>
+                       <% full_address(@delivery_address).each do |att| %>
+                       <span><%= att %></span>
+                       <% end %>
+                    </div>
+                    <div class='col-xs-12'></div>
+                 </div>
+              </div>
+              <div class="weui_cell_ft">
+                 <span class="nav"></span>
+              </div>
+           </a>
+        </div>
+     </div>
+     <div class="page cell">
+        <div class="weui_cells weui_cells_access product" for="{{item.id}}" ng-repeat="item in items">
+           <a class="weui_cell" href="javascript:;">
+              <div class="weui_cell_hd">
+                 <div>
+                    <div class="img" style="background-image:url({{item.image}});"></div>
+                 </div>
+              </div>
+              <div class="weui_cell_bd weui_cell_primary">
+                 <div class='row'>
+                    <div class='col-xs-10 title'>
+                       {{item.name}}
+                    </div>
+                    <div class='col-xs-2 nopadding'>
+                       <div class='price'>{{item.price}}</div>
+                       <div class='quantity'>x{{item.quantity}}</div>
+                    </div>
+                    <div class='col-xs-11 sku-info'>
+                       <span>{{item.property_name}}</span>
+                       <span>{{item.property}}</span>
+                    </div>
+                 </div>
+              </div>
+           </a>
+        </div>
+     </div>
+     <div class="page cell order-detail">
+        <div class="weui_cells weui_cells_access">
+           <a class="weui_cell" href="javascript:;">
+              <div class="weui_cell_bd weui_cell_primary">
+                 <p>配送方式</p>
+              </div>
+              <div class="weui_cell_ft">
+                 快递 免邮
+              </div>
+           </a>
+           <a href="javascript:;" class="weui_cell" id="showInsurance">
+              <div class="weui_cell_bd weui_cell_primary">
+                 <p>运费险</p>
+              </div>
+              <div class="weui_cell_ft">
+                 请选择
+              </div>
+           </a>
+
+           <a class="weui_cell" href="javascript:;">
+              <div class="weui_cell_bd weui_cell_primary">
+                 <p>优惠券</p>
+              </div>
+              <div class="weui_cell_ft">
+                 请选择
+              </div>
+           </a>
+        </div>
+        <div class='weui_cells weui_cells_form'>
+           <div class="weui_cell invoice">
+              <div class="weui_cell_hd">
+                 <label class="text">发票抬头：</label>
+              </div>
+              <div class="weui_cell_bd weui_cell_primary">
+                 <input class="weui_input" type="tel" placeholder="请输抬头">
+              </div>
+           </div>
+           <div class="weui_cell">
+              <div class="weui_cell_bd weui_cell_primary">
+                 <textarea class="weui_textarea" placeholder="买家留言：选填，可填写您和卖家达成一致的要求"></textarea>
+              </div>
+           </div>
+        </div>
+        <div class='weui_cells order-total'>
+           <div class="weui_cell">
+              <div class="weui_cell_bd weui_cell_primary">
+                 <p>总价：</p>
+              </div>
+              <div class="weui_cell_ft">
+                 <span class="total">￥27.90</span>
+              </div>
+           </div>
+           <div class="weui_cell">
+              <div class="weui_cell_bd weui_cell_primary">
+                 <p>运费：</p>
+              </div>
+              <div class="weui_cell_ft">
+                 <span class="freight">￥27.90</span>
+              </div>
+           </div>
+        </div>
+     </div>
+     <div class="page cell">
+        <div class="weui_cells weui_cells_form">
+           <% @payment_methods.each do |payment_method| %>
+           <div class="weui_cell weui_cell_switch">
+              <div class="weui_cell_hd weui_cell_primary"><%= payment_method.name %></div>
+              <div class="weui_cell_ft">
+                 <input class="weui_switch" name="order[payment_method_id]" value='<%= payment_method.id %>'  data-code="<%= payment_method.code %>" type="checkbox" <%= :checked if payment_method.code.to_sym == :wechatpayment  %> >
+              </div>
+           </div>
+           <% end %>
+        </div>
+     </div>
+  </div>
+  <div class="row pay navbar-fixed-bottom">
+     <div class='col-xs-8 col-sm-10 nopadding'>
+        <div class='real-pay pull-right'>
+           <span>总金额：</span>
+           <span class="price">￥90.00  </span>
+        </div>
+     </div>
+     <div class="col-xs-4 col-sm-2 nopadding pay-d">
+        <button type="submit" class="pay-btn btn"><span>提交订单</span></button>
+     </div>
+  </div>
+<% end %>
+
+<!--BEGIN dialog1-->
+  <div class="weui_dialog_confirm" id="dialogInsurance" style="display: none;">
+      <div class="weui_mask"></div>
+      <div class="weui_dialog">
+          <div class="weui_dialog_hd"><strong class="weui_dialog_title">运费险</strong></div>
+          <div class="weui_dialog_bd">
+            <p>购买退货运费险，退货可赔付8元 0.30元
+            </p>
+            <input class="weui_switch" type="checkbox"></div>
+          <div class="weui_dialog_ft">
+              <a href="javascript:;"  class="weui_btn_dialog default">取消</a>
+              <a href="javascript:;" class="weui_btn_dialog primary">确定</a>
+          </div>
+      </div>
+  </div>
+<!--END dialog1-->
+<script type="text/javascript">
+$(function(){
+  var $container = $('.js_container');
+
+  $container.on('click', '#showInsurance', function () {
+        $('#dialogInsurance').show();
+        $('#dialogInsurance').find('.weui_btn_dialog').on('click', function () {
+            $('#dialogInsurance').hide();
+        });
+    });
+})
+angular.module('checkout', []).controller("<%= params[:controller] %>", function($scope, $http) {
+
+  $scope.items = [
+  {id:1, image: '//gw.alicdn.com/bao/uploaded/i2/TB1TA2nHVXXXXavXXXXXXXXXXXX_!!0-item_pic.jpg_270x270q90.jpg', name:"TOTU 三星s6手机壳 三星s6Edge手机套保护壳 透明 超薄 电镀硬壳", property_name:"颜色分类", property: "s6曲面屏 金色-送s6专用保护膜", price: '￥27.80', quantity: 1 }
+  ]
+
+
+
+})
+</script>

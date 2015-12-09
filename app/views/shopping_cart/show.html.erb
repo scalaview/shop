@@ -314,8 +314,9 @@ angular.module('show', []).controller('shopping_cart', function($scope, $http) {
           item_ids: $scope.checked
         }
       }).then(function(res){
-        item.num = res.data.quantity
-        $e.val(item.num)
+        if(res.url){
+          window.location.href = res.url
+        }
       })
       console.log($scope.checked)
     }
