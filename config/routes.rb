@@ -86,6 +86,9 @@ Rails.application.routes.draw do
 
   get 'checkout/shipping' => 'checkout#shipping', :as => 'checkout_shipping'
 
+  post 'region_city' => 'regions#city', :as => 'region_city'
+  post 'region_district' => 'regions#district', :as => 'region_district'
+
   resources :addresses do
     member do
       post 'set_default'

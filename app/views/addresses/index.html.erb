@@ -68,25 +68,15 @@ a:hover
     </div>
     <div class="form-group">
       <label for="inputPassword" class="col-sm-2 control-label address_label_float">所在地区</label>
-      <div class="col-sm-10 address_div_float_area" ng-controller="areaSelect">
-        <select class="form-control" ng-model="province" ng-options="m.name for m in area" placeholder="--省份--"></select>
-        <select class="form-control" ng-model="city" ng-options="m.name for m in province.city" placeholder="--地市--"></select>
-        <select class="form-control" ng-model="district" ng-options="m.name for m in city.district" placeholder="--区县--"></select>
+      <div class="col-sm-10 address_div_float_area" ng-controller="addresses">
+        <select class="form-control" ng-change="provinceChange(current_province)" ng-model="current_province">
+          <%= options_for_select(Shoppe::Region.getProvice.map{|re| [re.name, re.code] }) %>
+        </select>
+        <select class="form-control" ng-change="cityChange(current_city)" ng-model="current_city" ng-options="city.name for city in getCity">
+        </select>
+        <select class="form-control" ng-model="current_district" ng-options="district.name for district in getDistrict">
+        </select>
       </div>
-    </div>
-    <div class='html-tag city-group'>
-      <select class='city-select city-province'>
-        <option>--省份--</option>
-        <%= options_for_select(Areas.list, province) %>
-      </select>
-      <select class='city-select city-city'>
-        <option>--城市--</option>
-        <%= options_for_select(cities, city) %>
-      </select>
-      <select class='city-select city-district'>
-        <option>--地区--</option>
-        <%= options_for_select(districtes, district) %>
-      </select>
     </div>
     <div class="form-group">
       <label for="inputPassword" class="col-sm-2 control-label address_label_float">详细地址</label>
@@ -109,33 +99,38 @@ a:hover
 
 <script type="text/javascript">
 angular.module('index', []).controller('addresses', function($scope,$http) {
-$scope.areaSelect = function(){
-  $http.get('/areas.json').success(function(data, status, headers, config) {
-    $scope.area=data;
-  }).error(function(data, status) {
-    alert("无法获取地区信息");
-  });
-
-  /*$scope.area=[
-    {"id":1,"name":"北京市","city":[
-    {"id":2,"name":"市辖区","district":[
-    {"id":3,"name":"东城区"},
-    {"id":4,"name":"西城区"},
-    {"id":5,"name":"崇文区",}]}
-    ]},
-    {"id":1,"name":"北京市2","city":[
-    {"id":2,"name":"市辖区2","district":[
-    {"id":3,"name":"东城区2"},
-    {"id":4,"name":"西城区2"},
-    {"id":5,"name":"崇文区2",}]}
-    ]}
-  ]*/
-}
-
-
+  $scope.provinceChange = function(current_province){
+    $http({
+        method: 'POST',
+        url: '/region_city',
+        headers: {
+         'Accept': "application/json"
+        },
+        data: {
+          provice: current_province
+        }
+      }).then(function(res){
+        $scope.getCity = res.data
+      })
+  };
+  $scope.cityChange = function(current_city){
+    $http({
+        method: 'POST',
+        url: '/region_district',
+        headers: {
+         'Accept': "application/json"
+        },
+        data: {
+          city: current_city.code
+        }
+      }).then(function(res){
+        $scope.getDistrict = res.data
+      })
+  };
+}).config(function ($httpProvider) {
+  if(document.getElementsByName('csrf-token')[0] && document.getElementsByName('csrf-token')[0].getAttribute('content')){
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] = document.getElementsByName('csrf-token')[0].getAttribute('content')
+  }
 });
-
-
-
 
 </script>
