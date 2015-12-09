@@ -313,10 +313,12 @@ angular.module('show', []).controller('shopping_cart', function($scope, $http) {
         data: {
           item_ids: $scope.checked
         }
-      }).then(function(res){
-        if(res.url){
-          window.location.href = res.url
+      }).then(function success(res){
+        if(res.data.url){
+          window.location.href = res.data.url
         }
+      }, function error(res) {
+        // body...
       })
       console.log($scope.checked)
     }

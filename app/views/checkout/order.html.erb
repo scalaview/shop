@@ -91,12 +91,12 @@
                  <label class="text">发票抬头：</label>
               </div>
               <div class="weui_cell_bd weui_cell_primary">
-                 <input class="weui_input" type="tel" placeholder="请输抬头">
+                 <input class="weui_input" type="tel" placeholder="请输抬头"  >
               </div>
            </div>
            <div class="weui_cell">
               <div class="weui_cell_bd weui_cell_primary">
-                 <textarea class="weui_textarea" placeholder="买家留言：选填，可填写您和卖家达成一致的要求"></textarea>
+                 <textarea class="weui_textarea" placeholder="买家留言：选填，可填写您和卖家达成一致的要求">{{order.comment}}</textarea>
               </div>
            </div>
         </div>
@@ -106,7 +106,7 @@
                  <p>总价：</p>
               </div>
               <div class="weui_cell_ft">
-                 <span class="total">￥27.90</span>
+                 <span class="total">￥{{order.total_before}}</span>
               </div>
            </div>
            <div class="weui_cell">
@@ -114,21 +114,19 @@
                  <p>运费：</p>
               </div>
               <div class="weui_cell_ft">
-                 <span class="freight">￥27.90</span>
+                 <span class="freight">￥{{order.delivery_price}}</span>
               </div>
            </div>
         </div>
      </div>
      <div class="page cell">
         <div class="weui_cells weui_cells_form">
-           <% @payment_methods.each do |payment_method| %>
-           <div class="weui_cell weui_cell_switch">
-              <div class="weui_cell_hd weui_cell_primary"><%= payment_method.name %></div>
+           <div class="weui_cell weui_cell_switch" ng-repeat="method in paymentMethods" >
+              <div class="weui_cell_hd weui_cell_primary">{{method.name}}</div>
               <div class="weui_cell_ft">
-                 <input class="weui_switch" name="order[payment_method_id]" value='<%= payment_method.id %>'  data-code="<%= payment_method.code %>" type="checkbox" <%= :checked if payment_method.code.to_sym == :wechatpayment  %> >
+                 <input class="weui_switch" name="order[payment_method_id]" value='{{method.id}}'  data-code="{{method.code}}" type="checkbox" ng-model="method.checked" ng-click="updateSelection($index, paymentMethods)">
               </div>
            </div>
-           <% end %>
         </div>
      </div>
   </div>
@@ -136,11 +134,11 @@
      <div class='col-xs-8 col-sm-10 nopadding'>
         <div class='real-pay pull-right'>
            <span>总金额：</span>
-           <span class="price">￥90.00  </span>
+           <span class="price">￥{{order.total}}</span>
         </div>
      </div>
      <div class="col-xs-4 col-sm-2 nopadding pay-d">
-        <button type="submit" class="pay-btn btn"><span>提交订单</span></button>
+        <span class="pay-btn btn">提交订单</span>
      </div>
   </div>
 <% end %>
@@ -151,12 +149,18 @@
       <div class="weui_dialog">
           <div class="weui_dialog_hd"><strong class="weui_dialog_title">运费险</strong></div>
           <div class="weui_dialog_bd">
-            <p>购买退货运费险，退货可赔付8元 0.30元
-            </p>
-            <input class="weui_switch" type="checkbox"></div>
+            <div class='row'>
+              <div class="col-xs-12">
+                <p>购买退货运费险，退货可赔付8元 0.30元</p>
+              </div>
+              <div class="col-xs-11">
+                <input class="weui_switch pull-right" ng-model='inSurence' type="checkbox"></div>
+              </div>
+            </div>
+
           <div class="weui_dialog_ft">
               <a href="javascript:;"  class="weui_btn_dialog default">取消</a>
-              <a href="javascript:;" class="weui_btn_dialog primary">确定</a>
+              <a href="javascript:;" ng-click="upInsurence()" class="weui_btn_dialog primary">确定</a>
           </div>
       </div>
   </div>
@@ -178,7 +182,30 @@ angular.module('checkout', []).controller("<%= params[:controller] %>", function
   {id:1, image: '//gw.alicdn.com/bao/uploaded/i2/TB1TA2nHVXXXXavXXXXXXXXXXXX_!!0-item_pic.jpg_270x270q90.jpg', name:"TOTU 三星s6手机壳 三星s6Edge手机套保护壳 透明 超薄 电镀硬壳", property_name:"颜色分类", property: "s6曲面屏 金色-送s6专用保护膜", price: '￥27.80', quantity: 1 }
   ]
 
+  $scope.paymentMethods = <%= @payment_methods.to_json.html_safe %>;
+  jQuery.each($scope.paymentMethods, function(i, e){
+    if(e.code == 'wechatpayment'){
+      e.checked = true
+    }
+  })
 
+  $scope.updateSelection = function(position, entities) {
+    angular.forEach(entities, function(subscription, index) {
+      if (position != index)
+        subscription.checked = false;
+    });
+  }
+
+  $scope.order = {
+    comment: "ok",
+    total : "89.00",
+    total_before: "70.00",
+    delivery_price: "18.00"
+  }
+
+  $scope.upInsurence = function(){
+    console.log($scope.inSurence)
+  }
 
 })
 </script>
