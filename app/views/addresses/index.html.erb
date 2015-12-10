@@ -137,7 +137,7 @@ a:hover
         <div class="weui_cell weui_cell_select">
           <div class="weui_cell_bd weui_cell_primary">
             <select class="weui_select" name="select1" ng-change="provinceChange(current_province)" ng-model="current_province">
-              <option disabled value="0"> -- 请选择省份 -- </option>
+              <option disabled value=""> -- 请选择省份 -- </option>
               <%= options_for_select(Shoppe::Region.getProvice.map{|re| [re.name, re.code] }) %>
             </select>
           </div>
@@ -145,12 +145,14 @@ a:hover
         <div class="weui_cell weui_cell_select">
           <div class="weui_cell_bd weui_cell_primary">
             <select class="weui_select" name="select2" ng-change="cityChange(current_city)" ng-model="current_city" ng-options="select_city.name for select_city in getCity">
+              <option disabled value="">-- 请选择地市 --</option>
             </select>
           </div>
         </div>
         <div class="weui_cell weui_cell_select">
           <div class="weui_cell_bd weui_cell_primary">
             <select class="weui_select" name="select3" ng-model="current_district" ng-options="select_district.name for select_district in getDistrict">
+              <option disabled value="">-- 请选择区县 --</option>
             </select>
           </div>
         </div>
@@ -182,7 +184,6 @@ a:hover
 
 <script type="text/javascript">
 angular.module('index', []).controller('addresses', function($scope,$http) {
-  $scope.current_province = "0";
   $scope.provinceChange = function(current_province){
     $scope.getCity = [];
     $scope.getDistrict = [];
