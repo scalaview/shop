@@ -1,50 +1,109 @@
 <style type="text/css">
-.address_div_float{
-  float:left;
-  padding: 0;
+.container,
+.page {
   position: absolute;
-  width: 75%;
-  margin-left: 90px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0
 }
-.address_div_float_area{
-  float:left;
-  padding: 0;
-  width: 25%;
-  margin-left: 5px;
+.page,
+body {
+  background-color: #FBF9FE
 }
-.address_div_float_area_first{
-  float:left;
-  padding: 0;
-  width: 25%;
-  position: absolute;
-  margin-left: 90px;
-}
-.address_label_float{
-  float:left;
-  padding-top:7px;
-  padding-bottom: 7px;
-  margin: 0;
-}
-.address_group_margin_top{
-  margin-top: 15px;
-}
-.address_div_bottom{
-  margin-top: 20px;
-  margin-left: 0;
-  position:fixed;
-  bottom:0;
-  width: 100%;
 
+.page.button .bd {
+  padding: 0 15px
 }
-.address_button_bottom{
-  border-radius: 0;
+
+.page.button .button_sp_area {
+  padding: 10px 0;
+  width: 60%;
+  margin: 0 auto;
+  text-align: justify;
+  text-justify: distribute-all-lines;
+  font-size: 0
 }
+
+.page.button .button_sp_area:after {
+  display: inline-block;
+  width: 100%;
+  height: 0;
+  font-size: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  content: "."
+}
+
+.page.cell .bd {
+  padding-bottom: 30px
+}
+
+.container {
+  overflow: hidden
+}
+
+.page {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch
+}
+
+.hd {
+  padding: 2em 0
+}
+
+.bd.spacing {
+  padding: 0 15px
+}
+
+.page.button .page_title,
+.page.cell .page_title {
+  color: #225FBA
+}
+
+.page.article,
+.page.dialog,
+.page.icons,
+.page.msg,
+.page.toast {
+  background-color: #FFF
+}
+
+.page.icons {
+  text-align: center
+}
+
+.page.icons .page_title {
+  color: #3E24BD
+}
+
+.page.icons .bd {
+  padding: 30px 0;
+  text-align: center
+}
+
+.page.icons .icon_sp_area {
+  padding: 10px 20px;
+  text-align: left
+}
+
+.page.icons i {
+  margin: 0 5px 10px
+}
+
+.weui_label{
+  width: 6em;
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
 a:hover
 {
     text-decoration: none;
 }
 </style>
-<div class="container">
+<div class="container js_container">
 <!--
 收货人姓名
 手机号码
@@ -53,53 +112,80 @@ a:hover
 详细地址
 邮政编码
  -->
-  <form class="form-horizontal">
-    <div class="form-group address_group_margin_top">
-      <label for="inputPassword" class="col-sm-2 control-label address_label_float">收货人姓名</label>
-      <div class="col-sm-10 address_div_float">
-        <input type="text" class="form-control" id="inputPassword" placeholder="收货人姓名">
+  <div class="page cell">
+    <div class="bd">
+      <div class="weui_cells weui_cells_form">
+        <div class="weui_cell">
+          <div class="weui_cell_hd">
+            <label class="weui_label address_weui_label">收货人姓名</label>
+          </div>
+          <div class="weui_cell_bd weui_cell_primary">
+            <input class="weui_input" type="tel" placeholder="请输入收货人姓名">
+          </div>
+        </div>
+        <div class="weui_cell">
+          <div class="weui_cell_hd">
+            <label class="weui_label">手机号码</label>
+          </div>
+          <div class="weui_cell_bd weui_cell_primary">
+            <input class="weui_input" type="tel" placeholder="请输入手机号码">
+          </div>
+        </div>
+      </div>
+      <div class="weui_cells_title">所在区域</div>
+      <div class="weui_cells weui_cells_split">
+        <div class="weui_cell weui_cell_select">
+          <div class="weui_cell_bd weui_cell_primary">
+            <select class="weui_select" name="select1" ng-change="provinceChange(current_province)" ng-model="current_province">
+              <option disabled value="0"> -- 请选择省份 -- </option>
+              <%= options_for_select(Shoppe::Region.getProvice.map{|re| [re.name, re.code] }) %>
+            </select>
+          </div>
+        </div>
+        <div class="weui_cell weui_cell_select">
+          <div class="weui_cell_bd weui_cell_primary">
+            <select class="weui_select" name="select2" ng-change="cityChange(current_city)" ng-model="current_city" ng-options="select_city.name for select_city in getCity">
+            </select>
+          </div>
+        </div>
+        <div class="weui_cell weui_cell_select">
+          <div class="weui_cell_bd weui_cell_primary">
+            <select class="weui_select" name="select3" ng-model="current_district" ng-options="select_district.name for select_district in getDistrict">
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="weui_cells weui_cells_form">
+        <div class="weui_cell">
+          <div class="weui_cell_hd">
+            <label class="weui_label">详细地址</label>
+          </div>
+          <div class="weui_cell_bd weui_cell_primary">
+            <input class="weui_input" type="tel" placeholder="请输入详细地址">
+          </div>
+        </div>
+        <div class="weui_cell">
+          <div class="weui_cell_hd">
+            <label class="weui_label">邮政编码</label>
+          </div>
+          <div class="weui_cell_bd weui_cell_primary">
+            <input class="weui_input" type="tel" placeholder="请输入邮政编码">
+          </div>
+        </div>
+      </div>
+      <div class="weui_btn_area">
+          <a class="weui_btn weui_btn_primary" href="javascript:">保存地址</a>
       </div>
     </div>
-    <div class="form-group">
-      <label for="inputPassword" class="col-sm-2 control-label address_label_float">手机号码</label>
-      <div class="col-sm-10 address_div_float">
-        <input type="text" class="form-control" id="inputPassword" placeholder="手机号码">
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="inputPassword" class="col-sm-2 control-label address_label_float">所在地区</label>
-      <div class="col-sm-10 address_div_float_area" ng-controller="addresses">
-        <select class="form-control" ng-change="provinceChange(current_province)" ng-model="current_province">
-          <%= options_for_select(Shoppe::Region.getProvice.map{|re| [re.name, re.code] }) %>
-        </select>
-        <select class="form-control" ng-change="cityChange(current_city)" ng-model="current_city" ng-options="city.name for city in getCity">
-        </select>
-        <select class="form-control" ng-model="current_district" ng-options="district.name for district in getDistrict">
-        </select>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="inputPassword" class="col-sm-2 control-label address_label_float">详细地址</label>
-      <div class="col-sm-10 address_div_float">
-        <input type="text" class="form-control" id="inputPassword" placeholder="详细地址">
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="inputPassword" class="col-sm-2 control-label address_label_float">邮政编码</label>
-      <div class="col-sm-10 address_div_float">
-        <input type="text" class="form-control" id="inputPassword" placeholder="邮政编码">
-      </div>
-    </div>
-</form>
+  </div>
 </div>
-<div class="navbar-fixed-bottom">
-    <a class="weui_btn weui_btn_warn weui_btn_primary address_button_bottom" href="javascript:">保存地址</a>
-</div>
-
 
 <script type="text/javascript">
 angular.module('index', []).controller('addresses', function($scope,$http) {
+  $scope.current_province = "0";
   $scope.provinceChange = function(current_province){
+    $scope.getCity = [];
+    $scope.getDistrict = [];
     $http({
         method: 'POST',
         url: '/region_city',
@@ -114,7 +200,9 @@ angular.module('index', []).controller('addresses', function($scope,$http) {
       })
   };
   $scope.cityChange = function(current_city){
-    $http({
+    $scope.getDistrict = [];
+    if(current_city){
+      $http({
         method: 'POST',
         url: '/region_district',
         headers: {
@@ -126,6 +214,7 @@ angular.module('index', []).controller('addresses', function($scope,$http) {
       }).then(function(res){
         $scope.getDistrict = res.data
       })
+    }
   };
 }).config(function ($httpProvider) {
   if(document.getElementsByName('csrf-token')[0] && document.getElementsByName('csrf-token')[0].getAttribute('content')){
