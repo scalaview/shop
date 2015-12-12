@@ -1,0 +1,24 @@
+<div class="list-block media-list order-address">
+  <ul>
+    <li>
+      <%= link_to "#", :class => "#{'item-link' if link_able} item-content address-info", :disabled => !link_able do %>
+        <div class="item-media">
+          <div class="icon">
+          </div>
+        </div>
+        <div class="item-inner">
+          <div class="item-title-row">
+            <div class="item-title">收货人: <span><%= delivery_address.receiver_name %></span></div>
+            <div class="item-after"><%= delivery_address.phone %></div>
+          </div>
+          <div class="item-text">
+            <span>收货地址：</span>
+            <% full_address(delivery_address).each do |att| %>
+              <span><%= att %></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </li>
+  </ul>
+</div>

@@ -1,64 +1,43 @@
-<div class="page page-current">
+<div class="page page-current" id="checkout">
       <div class="bar bar-standard bar-footer pay">
         <div class="pull-right pay-d">
-          <span class="pay-btn">提交订单</span>
+          <span class="pay-btn" id="apply-order" data-id="<%= @order.id %>" >提交订单</span>
         </div>
         <div class="pull-right real-pay">
           <div>总金额：
-            <span class="price">￥{{order.total}}</span>
+            <span class="price">￥<%= @order.total %></span>
           </div>
         </div>
       </div>
 
       <div class="content native-scroll">
 
-        <div class="list-block media-list order-address">
-          <ul>
-            <li>
-              <a href="#" class="item-link item-content address-info">
-                <div class="item-media">
-                  <div class="icon">
-                  </div>
-                </div>
-                <div class="item-inner">
-                  <div class="item-title-row">
-                    <div class="item-title">收货人: <span><%= @delivery_address.receiver_name %></span></div>
-                    <div class="item-after"><%= @delivery_address.phone %></div>
-                  </div>
-                  <div class="item-text">
-                    <span>收货地址：</span>
-                    <% full_address(@delivery_address).each do |att| %>
-                      <span><%= att %></span>
-                    <% end %>
-                  </div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </div>
+        <%= render 'checkout/shared/address_block', :delivery_address => @delivery_address, :link_able => true %>
 
-        <div class="products">
+        <div id="products" class="products">
 
           <div class="list-block media-list">
               <ul>
-                <li for="{{item.id}}" ng-repeat="item in items" >
-                  <a href="#" class="item-content">
-                    <div class="item-media"><img src="{{item.image}}" width="100"></div>
-                    <div class="item-inner">
-                      <div class="item-title-row">
-                        <div class="item-title">{{item.name}}</div>
-                        <div class="item-after">
-                          <div class='price'>￥{{item.price}}</div>
-                          <div class='quantity'>x{{item.quantity}}</div>
+                <% @order_items.each do |item| %>
+                  <li for="{{item.id}}" v-for="item in items" >
+                    <a href="#" class="item-content"  disabled >
+                      <div class="item-media"><%= image_tag item.ordered_item.default_image.path, :width => 100 %>
+                      <div class="item-inner">
+                        <div class="item-title-row">
+                          <div class="item-title"><%= item.ordered_item.name %></div>
+                          <div class="item-after">
+                            <div class='price'>￥<%= item.ordered_item.price %></div>
+                            <div class='quantity'>x<%= item.quantity %></div>
+                          </div>
+                        </div>
+                        <div class="item-text">
+                          <span><%#= item.property_name %></span>
+                          <span><%#= item.property %></span>
                         </div>
                       </div>
-                      <div class="item-text">
-                        <span>{{item.property_name}}</span>
-                        <span>{{item.property}}</span>
-                      </div>
-                    </div>
-                  </a>
-                </li>
+                    </a>
+                  </li>
+                <% end %>
               </ul>
             </div>
 
@@ -67,14 +46,14 @@
         <div class="order">
            <div class="list-block">
             <ul>
-              <li class="item-content item-link">
+              <li class="item-content">
                 <div class="item-inner">
                   <div class="item-title">配送方式</div>
-                  <div class="item-after">快递 免邮</div>
+                  <div class="item-after"><%= @order.delivery_service.name %></div>
                 </div>
               </li>
               <li class="item-content item-link">
-                <div class="item-inner">
+                <div class="item-inner" id="inSurence">
                   <div class="item-title">运费险</div>
                   <div class="item-after">请选择</div>
                 </div>
@@ -113,31 +92,33 @@
               <li class="item-content">
                 <div class="item-inner">
                   <div class="item-title">总价</div>
-                  <div class="item-after"><span class="total">￥{{order.total_before}}</span></div>
+                  <div class="item-after"><span class="total">￥<%= @order.total_before_tax %></span></div>
                 </div>
               </li>
               <li class="item-content">
                 <div class="item-inner">
                   <div class="item-title">运费</div>
-                  <div class="item-after"><span class="freight">￥{{order.delivery_price}}</span></div>
+                  <div class="item-after"><span class="freight">￥<%= @order.delivery_price %></span></div>
                 </div>
               </li>
             </ul>
           </div>
 
-          <div class="list-block order-total">
+          <div class="list-block order-total" id="paymentMethods">
             <ul>
-              <li class="item-content" ng-repeat="method in paymentMethods">
-                <div class="item-inner">
-                  <div class="item-title">{{method.name}}</div>
-                  <div class="item-after">
-                    <label class="label-switch">
-                      <input name="order[payment_method_id]" value='{{method.id}}'  data-code="{{method.code}}" type="checkbox" ng-model="method.checked" ng-click="updateSelection($index, paymentMethods)">
-                      <div class="checkbox"></div>
-                    </label>
+              <% @payment_methods.each do |method| %>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title"><%= method.name %></div>
+                    <div class="item-after">
+                      <label class="label-switch">
+                        <%= check_box_tag 'order[payment_method_id]', method.id, method.id == @order.payment_method_id, :class => "payment_method" ,:data => {:code => method.code} %>
+                        <div class="checkbox"></div>
+                      </label>
+                    </div>
                   </div>
-                </div>
-              </li>
+                </li>
+              <% end %>
             </ul>
           </div>
         </div>
@@ -146,37 +127,77 @@
 
     </div>
 
+
+
+<div class="popup popup-about">
+  <div class="content-block">
+    <div class="list-block media-list">
+      <ul>
+        <li>
+          <label class="label-checkbox item-content">
+            <input type="checkbox" name="order[insurece]" value="{{ins.id}}" ng-model="ins.checked" ng-click="updateSelection($index, insurences)">
+            <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+            <div class="item-inner">
+              <div class="item-title-row">
+                <div class="item-title">{{ins.name}}</div>
+                <div class="item-after">{{ins.price}}</div>
+              </div>
+            </div>
+          </label>
+        </li>
+      </ul>
+      <p><a href="#" class="close-popup button button-big button-fill button-success">确定</a></p>
+    </div>
+  </div>
+</div>
+
+
 <script type="text/javascript">
+$(function(){
+  $("#inSurence").click(function(){
+    $.popup('.popup-about');
+  })
 
-angular.module('checkout', []).controller("<%= params[:controller] %>", function($scope, $http) {
+  $(document).on('change', '.payment_method', function(e){
+    var $this = $(this),
+        id = $this.val(),
+        code = $this.data('code'),
+        order_id = $('#apply-order').data('id')
+    if($this.prop("checked")){
+      $(".payment_method").prop("checked", false)
+      $this.prop("checked", true)
+      $.showIndicator();
+      $.ajax({
+        type: 'POST',
+        url: '<%= update_checkout_order_path %>',
+        data: {
+          order: {
+            id: order_id,
+            payment_method_id: id
+          }
+        },
+        dataType: 'json',
+        success: function(data){
+          $.hideIndicator();
+        },
+        error: function(xhr, type){
+          $.hideIndicator();
+        }
+      })
 
-  $scope.items = [
-  {id:1, image: '//gw.alicdn.com/bao/uploaded/i2/TB1TA2nHVXXXXavXXXXXXXXXXXX_!!0-item_pic.jpg_270x270q90.jpg', name:"TOTU 三星s6手机壳 三星s6Edge手机套保护壳 透明 超薄 电镀硬壳", property_name:"颜色分类", property: "s6曲面屏 金色-送s6专用保护膜", price: '27.80', quantity: 1 }
-  ]
-
-  $scope.paymentMethods = <%= @payment_methods.to_json.html_safe %>;
-  jQuery.each($scope.paymentMethods, function(i, e){
-    if(e.code == 'wechatpayment'){
-      e.checked = true
     }
   })
 
-  $scope.updateSelection = function(position, entities) {
-    angular.forEach(entities, function(subscription, index) {
-      if (position != index)
-        subscription.checked = false;
-    });
-  }
-
-  $scope.order = {
-    comment: "ok",
-    total : "89.00",
-    total_before: "70.00",
-    delivery_price: "18.00"
-  }
-
-  $scope.upInsurence = function(){
-    console.log($scope.inSurence)
+  if(<%= Rails.env == "development" %> || window.WeixinJSBridge !== undefined ){
+    $(".payment_method").each(function(i, e) {
+      var $this = $(e),
+       id = $this.val(),
+       code = $this.data('code')
+       if(code === "wechatpayment" && !$this.prop('checked')){
+        $(".payment_method").prop("checked", false)
+        $this.trigger('click')
+       }
+    })
   }
 
 })

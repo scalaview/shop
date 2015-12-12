@@ -1,5 +1,3 @@
-//= require jquery/dist/jquery.min
+//= require zepto/zepto.min
+//= require zepto.csrf
 //= require checkout/order
-//= require angular/angular.min
-//= require angular-bootstrap/ui-bootstrap.min
-//= require angular-bootstrap/ui-bootstrap-tpls.min

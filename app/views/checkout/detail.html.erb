@@ -1,0 +1,102 @@
+<div class="page page-current">
+
+      <div class="content native-scroll">
+
+        <%= render 'checkout/shared/address_block', :delivery_address => @delivery_address, :link_able => false %>
+
+        <%= render 'checkout/shared/order_items', :order_items => @order_items, :link_able => false %>
+
+        <div class="order">
+           <div class="list-block">
+            <ul>
+              <li class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">配送方式</div>
+                  <div class="item-after"><%= @order.delivery_service.name %></div>
+                </div>
+              </li>
+              <li class="item-content item-link">
+                <div class="item-inner" id="inSurence">
+                  <div class="item-title">运费险</div>
+                  <div class="item-after">请选择</div>
+                </div>
+              </li>
+              <li class="item-content item-link">
+                <div class="item-inner">
+                  <div class="item-title">优惠券</div>
+                  <div class="item-after">请选择</div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">发票抬头</div>
+                    <div class="item-input">
+                      <input type="text" placeholder="请输抬头">
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="align-top">
+                  <div class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title label">买家留言</div>
+                      <div class="item-input">
+                        <textarea>{{order.comment}}</textarea>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+            </ul>
+          </div>
+
+          <div class="list-block order-total">
+            <ul>
+              <li class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">支付方式</div>
+                  <div class="item-after">微信安全支付</div>
+                </div>
+              </li>
+              <li class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">运费</div>
+                  <div class="item-after"><span class="freight">￥<%= @order.delivery_price %></span></div>
+                </div>
+              </li>
+              <li class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">实付(含运费)</div>
+                  <div class="item-after"><span class="freight">￥<%= @order.total %></span></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <%= order_histories_p @order %>
+
+        </div>
+      </div>
+    </div>
+
+<div class="popup popup-about">
+  <div class="content-block">
+    <div class="list-block media-list">
+      <ul>
+        <li>
+          <label class="label-checkbox item-content">
+            <input type="checkbox" name="order[insurece]" value="{{ins.id}}" ng-model="ins.checked" ng-click="updateSelection($index, insurences)">
+            <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+            <div class="item-inner">
+              <div class="item-title-row">
+                <div class="item-title">{{ins.name}}</div>
+                <div class="item-after">{{ins.price}}</div>
+              </div>
+            </div>
+          </label>
+        </li>
+      </ul>
+      <p><a href="#" class="close-popup button button-big button-fill button-success">确定</a></p>
+    </div>
+  </div>
+</div>

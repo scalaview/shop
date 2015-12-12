@@ -1,0 +1,26 @@
+<div id="products" class="products">
+  <div class="list-block media-list">
+    <ul>
+      <% order_items.each do |item| %>
+        <li for="{{item.id}}" >
+          <%= link_to "#", :class => "#{'item-link' if link_able} item-content", :disabled => !link_able do %>
+            <div class="item-media"><%= image_tag item.ordered_item.default_image.path, :width => 100 %>
+            <div class="item-inner">
+              <div class="item-title-row">
+                <div class="item-title"><%= item.ordered_item.name %></div>
+                <div class="item-after">
+                  <div class='price'>￥<%= item.ordered_item.price %></div>
+                  <div class='quantity'>x<%= item.quantity %></div>
+                </div>
+              </div>
+              <div class="item-text">
+                <span><%#= item.property_name %></span>
+                <span><%#= item.property %></span>
+              </div>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

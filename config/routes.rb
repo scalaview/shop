@@ -95,6 +95,8 @@ Rails.application.routes.draw do
   #
   # checkout
   get 'checkout/order' => 'checkout#order', :as => 'checkout_order'
+  post 'checkout/order' => 'checkout#update', :as => 'update_checkout_order'
+  get 'checkout/detail/:id' => 'checkout#detail', :as => 'checkout_order_detail'
 
   post 'checkout' => 'checkout#update', :as => 'checkout'
   #

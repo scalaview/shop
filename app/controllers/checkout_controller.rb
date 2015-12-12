@@ -9,11 +9,33 @@ class CheckoutController < ApplicationController
     @order.ip_address = request.ip
     @payment_methods = Shoppe::PaymentMethod.all_display.default_sort
     @delivery_address = @order.delivery_address
+    @order_items = @order.order_items
   end
 
 
   def update
-    binding.pry
+    @order =  current_customer.orders.find order_params[:id]
+
+    respond_to do |format|
+      if @order.update_attributes(order_params)
+        format.json {
+          render "orders/update.json"
+        }
+      else
+        format.json {
+          render :json => { :err => "update faile", :message => @order.errors.full_messages.join('; ') }.to_json
+        }
+      end
+    end
+  end
+
+
+  def detail
+    @order = current_customer.orders.find params[:id]
+    @order.ip_address = request.ip
+    @payment_methods = Shoppe::PaymentMethod.all_display.default_sort
+    @delivery_address = @order.delivery_address
+    @order_items = @order.order_items
   end
 
   private
@@ -40,6 +62,11 @@ class CheckoutController < ApplicationController
     end
 
     # order, delivery address init ok
+  end
+
+
+  def order_params
+    params[:order].permit(:payment_method_id, :id)
   end
 
 end
