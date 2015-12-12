@@ -6,13 +6,13 @@
 </style>
 <div id="page-list-card" class="page page-current">
   <header class="bar bar-nav">
-    <%= link_to "#", :class => "button button-link button-nav pull-left back" do %>
+    <%= link_to :back, :class => "button button-link button-nav pull-left back" do %>
       <span class="icon icon-left"></span>返回
     <% end %>
-    <%= link_to manage_addresses_path, :class => "button button-link button-nav pull-right" do %>
-      管理<span class="icon icon-right"></span>
+    <%= link_to new_address_path, :class => "button button-link button-nav pull-right" do %>
+      新增<span class="icon icon-right"></span>
     <% end %>
-    <h1 class="title">地址列表</h1>
+    <h1 class="title">地址管理</h1>
   </header>
   <div class="content native-scroll">
     <div class="list-block media-list">

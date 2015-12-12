@@ -89,10 +89,13 @@ Rails.application.routes.draw do
   post 'region_city' => 'regions#city', :as => 'region_city'
   post 'region_district' => 'regions#district', :as => 'region_district'
 
+  get 'addresses/manage' =>  'addresses#manage', :as  => 'manage_addresses'
   resources :addresses do
     member do
       post 'set_default'
     end
   end
+
+
 
 end

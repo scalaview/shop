@@ -7,8 +7,17 @@ class AddressesController < ApplicationController
     @addresses = current_customer.addresses
   end
 
+  def manage
+    @addresses = current_customer.addresses
+    render  "manage"
+  end
+
+  def show
+
+  end
+
   def new
-    @address = current_customer.build_address
+    @address = current_customer.addresses.build
   end
 
   def create
