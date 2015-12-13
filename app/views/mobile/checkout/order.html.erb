@@ -12,7 +12,7 @@
 
       <div class="content native-scroll">
 
-        <%= render 'checkout/shared/address_block', :delivery_address => @delivery_address, :link_able => true %>
+        <%= render 'mobile/checkout/shared/address_block', :delivery_address => @delivery_address, :link_able => true %>
 
         <div id="products" class="products">
 
@@ -169,7 +169,7 @@ $(function(){
       $.showIndicator();
       $.ajax({
         type: 'POST',
-        url: '<%= update_checkout_order_path %>',
+        url: '<%= mobile_update_checkout_order_path %>',
         data: {
           order: {
             id: order_id,

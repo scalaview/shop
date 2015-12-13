@@ -1,4 +1,4 @@
-class ProductsController < ApplicationController
+class Mobile::ProductsController < ApplicationController
 
   def index
     @products = Shoppe::Product.active.includes(:product_categories, :variants).root

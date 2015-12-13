@@ -1,4 +1,4 @@
-class CheckoutController < ApplicationController
+class Mobile::CheckoutController < ApplicationController
 
   layout "checkout"
 
@@ -14,13 +14,19 @@ class CheckoutController < ApplicationController
 
 
   def update
-    @order =  current_customer.orders.where(:id => order_params[:id])
+    @order =  current_customer.orders.where(:id => order_params[:id]).first
                               # .where("status in (?)", [Shoppe::Order::STATUS_MAP[:init], Shoppe::Order::STATUS_MAP[:payment_failed], Shoppe::Order::STATUS_MAP[:on_hold], ] )
 
     respond_to do |format|
+      unless @order.present?
+        format.json {
+          render :json => { :err => "auth fail", :message => "no such order" }.to_json
+        }
+      end
+
       if @order.update_attributes(order_params)
         format.json {
-          render "orders/update.json"
+          render "mobile/orders/update.json"
         }
       else
         format.json {
