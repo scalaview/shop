@@ -14,7 +14,8 @@ class CheckoutController < ApplicationController
 
 
   def update
-    @order =  current_customer.orders.find order_params[:id]
+    @order =  current_customer.orders.where(:id => order_params[:id])
+                              # .where("status in (?)", [Shoppe::Order::STATUS_MAP[:init], Shoppe::Order::STATUS_MAP[:payment_failed], Shoppe::Order::STATUS_MAP[:on_hold], ] )
 
     respond_to do |format|
       if @order.update_attributes(order_params)
@@ -29,6 +30,16 @@ class CheckoutController < ApplicationController
     end
   end
 
+  def confirm
+    @order =  current_customer.orders.where(:id => order_params[:id])
+
+    # update order status
+    if Rails.evn == "development"
+      Shoppe::Order.transaction do
+        @order.manage.confirming
+      end
+    end
+  end
 
   def detail
     @order = current_customer.orders.find params[:id]
@@ -36,6 +47,11 @@ class CheckoutController < ApplicationController
     @payment_methods = Shoppe::PaymentMethod.all_display.default_sort
     @delivery_address = @order.delivery_address
     @order_items = @order.order_items
+  end
+
+
+  def wechat_pay  # for test 模仿微信支付
+
   end
 
   private
