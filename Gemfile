@@ -37,9 +37,9 @@ gem "mysql2", "~> 0.3.20"
 
 gem 'shoppe', :path => '../shoppe'
 
-gem 'weixin_authorize', git: "https://github.com/lanrion/weixin_authorize.git"
+# gem 'weixin_authorize', git: "https://github.com/lanrion/weixin_authorize.git"
 
-gem 'wx_pay', git: 'https://github.com/jasl/wx_pay.git'
+# gem 'wx_pay', git: 'https://github.com/jasl/wx_pay.git'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

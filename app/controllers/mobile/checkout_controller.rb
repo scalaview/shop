@@ -1,6 +1,6 @@
 class Mobile::CheckoutController < ApplicationController
 
-  layout "checkout"
+  layout "mobile"
 
   before_filter :login_required
   before_filter :ready, :only => [:order]
