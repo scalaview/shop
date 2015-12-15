@@ -283,8 +283,8 @@ ActiveRecord::Schema.define(version: 20151208093733) do
   create_table "shoppe_product_category_translations", force: :cascade do |t|
     t.integer  "shoppe_product_category_id", limit: 4,     null: false
     t.string   "locale",                     limit: 255,   null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.string   "name",                       limit: 255
     t.string   "permalink",                  limit: 255
     t.text     "description",                limit: 65535
@@ -296,8 +296,8 @@ ActiveRecord::Schema.define(version: 20151208093733) do
   create_table "shoppe_product_translations", force: :cascade do |t|
     t.integer  "shoppe_product_id", limit: 4,     null: false
     t.string   "locale",            limit: 255,   null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "name",              limit: 255
     t.string   "permalink",         limit: 255
     t.text     "description",       limit: 65535
@@ -330,6 +330,19 @@ ActiveRecord::Schema.define(version: 20151208093733) do
   add_index "shoppe_products", ["parent_id"], name: "index_shoppe_products_on_parent_id", using: :btree
   add_index "shoppe_products", ["permalink"], name: "index_shoppe_products_on_permalink", using: :btree
   add_index "shoppe_products", ["sku"], name: "index_shoppe_products_on_sku", using: :btree
+
+  create_table "shoppe_regions", force: :cascade do |t|
+    t.string   "code",       limit: 255, null: false
+    t.string   "parentcode", limit: 255
+    t.string   "name",       limit: 255, null: false
+    t.integer  "level",      limit: 4,   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shoppe_regions", ["code"], name: "index_shoppe_regions_on_code", using: :btree
+  add_index "shoppe_regions", ["level"], name: "index_shoppe_regions_on_level", using: :btree
+  add_index "shoppe_regions", ["parentcode"], name: "index_shoppe_regions_on_parentcode", using: :btree
 
   create_table "shoppe_settings", force: :cascade do |t|
     t.string "key",        limit: 255
