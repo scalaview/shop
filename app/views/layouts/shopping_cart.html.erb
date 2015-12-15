@@ -5,12 +5,15 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <%= stylesheet_link_tag    'shopping_cart', media: 'all', 'data-turbolinks-track' => true %>
+  <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.5.7/css/sm.min.css">
+  <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.5.7/css/sm-extend.min.css">
   <%= javascript_include_tag 'shopping_cart', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+  <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+  <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.5.7/js/sm.min.js' charset='utf-8'></script>
+  <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.5.7/js/sm-extend.min.js' charset='utf-8'></script>
   <%= yield %>
 
 </body>

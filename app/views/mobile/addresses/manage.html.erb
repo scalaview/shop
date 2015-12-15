@@ -1,0 +1,65 @@
+<style type="text/css">
+.address_card_span{
+  color: red;
+  font-size: .6rem;
+}
+</style>
+<div id="page-list-card" class="page page-current">
+  <header class="bar bar-nav">
+    <%= link_to :back, :class => "button button-link button-nav pull-left back" do %>
+      <span class="icon icon-left"></span>返回
+    <% end %>
+    <%= link_to mobile_new_address_path, :class => "button button-link button-nav pull-right" do %>
+      新增<span class="icon icon-right"></span>
+    <% end %>
+    <h1 class="title">地址管理</h1>
+  </header>
+  <div class="content native-scroll">
+    <div class="list-block media-list">
+      <ul>
+        <li>
+          <label class="label-checkbox item-content">
+            <input type="radio" name="my-radio">
+            <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+            <div class="item-inner">
+              <div class="item-title-row">
+                <div class="item-subtitle">马云  12345678909</div>
+                <div class="item-after"><span class="address_card_span">默认地址</span></div>
+              </div>
+              <div class="item-text">广东 广州 荔湾 龙津 xx王xx路602号343房xx王xx路602号343房xx王xx路602号343房</div>
+            </div>
+          </label>
+        </li>
+        <li>
+          <label class="label-checkbox item-content">
+            <input type="radio" name="my-radio">
+            <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+            <div class="item-inner">
+              <div class="item-title-row">
+                <div class="item-subtitle">马云  12345678909</div>
+                <div class="item-after"><span class="address_card_span"></span></div>
+              </div>
+              <div class="item-text">广东 广州 荔湾 龙津 xx王xx路602号343房xx王xx路602号343房xx王xx路602号343房</div>
+            </div>
+          </label>
+        </li>
+        <li>
+          <label class="label-checkbox item-content">
+            <input type="radio" name="my-radio">
+            <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+            <div class="item-inner">
+              <div class="item-title-row">
+                <div class="item-subtitle">马云  12345678909</div>
+                <div class="item-after"><span class="address_card_span"></span></div>
+              </div>
+              <div class="item-text">广东 广州 荔湾 龙津 xx王xx路602号343房xx王xx路602号343房xx王xx路602号343房</div>
+            </div>
+          </label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+
+</script>

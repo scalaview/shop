@@ -1,10 +1,19 @@
-class AddressesController < ApplicationController
-
+class Mobile::AddressesController < ApplicationController
+  layout  "shopping_cart"
   # before_filter :login_required
   before_filter :init, :only => [:edit, :update, :set_default, :destroy]
 
   def index
     @addresses = current_customer.addresses
+  end
+
+  def manage
+    @addresses = current_customer.addresses
+    render  "manage"
+  end
+
+  def show
+
   end
 
   def new

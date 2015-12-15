@@ -34,6 +34,18 @@ Rails.application.routes.draw do
     put 'shopping_cart/:id' => 'shopping_cart#update', :as => 'update_shopping_cart'
     post 'checkout_prepare' => 'shopping_cart#checkout_prepare', :as => 'checkout_prepare'
     get 'shopping_cart' =>  'shopping_cart#show', :as  => 'shopping_cart'
+
+    # address
+    post 'region_city' => 'regions#city', :as => 'region_city'
+    post 'region_district' => 'regions#district', :as => 'region_district'
+
+    get 'addresses/manage' =>  'addresses#manage', :as  => 'manage_addresses'
+    resources :addresses do
+      member do
+        post 'set_default'
+      end
+    end
+
   end
 
 end
