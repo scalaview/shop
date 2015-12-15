@@ -839,12 +839,12 @@ Device/OS Detection
         var targetElement, touch, selection;
 
         // Ignore multiple touches, otherwise pinch-to-zoom is prevented if both fingers are on the FastClick element (issue #111).
-        if (event.originalEvent.touches.length > 1) {
+        if (event.targetTouches.length > 1) {
             return true;
         }
 
         targetElement = this.getTargetElementFromEventTarget(event.target);
-        touch = event.originalEvent.touches[0];
+        touch = event.targetTouches[0];
 
         if (deviceIsIOS) {
 
@@ -1243,7 +1243,7 @@ Device/OS Detection
         }
 
         // IE10 with -ms-touch-action: none or manipulation, which disables double-tap-to-zoom (issue #97)
-        if (layer &&(layer.style.msTouchAction === 'none' || layer.style.touchAction === 'manipulation')) {
+        if (layer.style.msTouchAction === 'none' || layer.style.touchAction === 'manipulation') {
             return true;
         }
 
@@ -1261,7 +1261,7 @@ Device/OS Detection
 
         // IE11: prefixed -ms-touch-action is no longer supported and it's recomended to use non-prefixed version
         // http://msdn.microsoft.com/en-us/library/windows/apps/Hh767313.aspx
-        if (layer && (layer.style.touchAction === 'none' || layer.style.touchAction === 'manipulation')) {
+        if (layer.style.touchAction === 'none' || layer.style.touchAction === 'manipulation') {
             return true;
         }
 
@@ -5839,7 +5839,7 @@ Device/OS Detection
         function handleTouchStart(e) {
             if (isTouched) {
                 if ($.device.android) {
-                    if ('originalEvent.touches' in e && e.originalEvent.touches.length > 1) return;
+                    if ('targetTouches' in e && e.targetTouches.length > 1) return;
                 } else return;
             }
             isMoved = false;

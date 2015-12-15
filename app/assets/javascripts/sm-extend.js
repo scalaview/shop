@@ -963,7 +963,7 @@ Swiper
 
             s.emit('onTouchMove', s, e);
 
-            if (e.originalEvent.touches && e.originalEvent.touches.length > 1) return;
+            if (e.targetTouches && e.targetTouches.length > 1) return;
 
             s.touches.currentX = e.type === 'touchmove' ? e.originalEvent.touches[0].pageX : e.pageX;
             s.touches.currentY = e.type === 'touchmove' ? e.originalEvent.touches[0].pageY : e.pageY;
