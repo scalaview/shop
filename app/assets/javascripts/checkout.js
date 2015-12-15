@@ -1,4 +1,7 @@
 //= require jquery/dist/jquery.min
 //= require jquery.csrf
-//= require jquery.event
+//= require sm
+//= require sm-extend
 //= require checkout/order
+
+window.$ === undefined && (window.$ = jQuery)
