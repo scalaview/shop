@@ -8,7 +8,7 @@ class AddressesController < ApplicationController
   end
 
   def new
-    @address = current_customer.build_address
+    @address = current_customer.addresses.build
   end
 
   def create

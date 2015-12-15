@@ -174,7 +174,7 @@ a:hover
                         <p>全选</p>
                     </div>
                     <div class="weui_cell_ft">
-                        <button class="weui_btn weui_btn_warn" ng-click="checkout()" >结算</button>
+                        <button class="weui_btn weui_btn_warn weui_btn_checkout" ng-click="checkout()" >结算</button>
                     </div>
                 </label>
             </div>
@@ -313,9 +313,12 @@ angular.module('show', []).controller('shopping_cart', function($scope, $http) {
         data: {
           item_ids: $scope.checked
         }
-      }).then(function(res){
-        item.num = res.data.quantity
-        $e.val(item.num)
+      }).then(function success(res){
+        if(res.data.url){
+          window.location.href = res.data.url
+        }
+      }, function error(res) {
+        // body...
       })
       console.log($scope.checked)
     }

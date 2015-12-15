@@ -1,0 +1,196 @@
+<style type="text/css">
+.page-login .signup {
+  font-size: 0.7rem;
+}
+.page-login .leader {
+  margin: 3rem 0 1rem 0;
+  padding: 0.5rem 0;
+  font-size: 0.7rem;
+  border-top: 1px dashed #ccc;
+  color: #999;
+}
+.page-login .leader:after {
+  left: auto;
+  right: 1rem;
+}
+
+.page-login .others {
+  text-align: center;
+}
+
+.page-login i.icon-form-name {
+  background: url(http://gtms01.alicdn.com/tps/i1/TB1pN89IFXXXXaPXpXX8wnlGFXX-42-46.png) no-repeat;
+  background-size: 21px 23px;
+  background-position: 5px 7px;
+}
+.page-login i.icon-form-email {
+  background: url(http://gtms04.alicdn.com/tps/i4/TB1An8TIFXXXXapXVXXlg00GFXX-38-46.png) no-repeat;
+  background-size: 19px 23px;
+  background-position: 6px 1px;
+}
+
+.page-goods .swiper-container {
+  height: 10rem;
+}
+.page-goods .swiper-slide img {
+  width: 100%;
+}
+
+
+.page-detail .swiper-container {
+  height: 35%;
+}
+.page-detail .swiper-slide img {
+  width: 100%;
+}
+
+.page-detail .goods-card {
+}
+.page-detail .goods-card h3 {
+  font-size: 0.8rem;
+}
+.page-detail .goods-card del {
+  font-size: 0.6rem;
+  color: gray;
+}
+.page-detail .goods-card .row {
+  font-size: 0.7rem;
+}
+
+.page-settings .person-card {
+  margin: .6rem 0;
+}
+.page-settings .row {
+  border: 1px solid #ccc;
+  background: white;
+  border-left: 0;
+  border-right: 0;
+}
+.page-settings .row h4 {
+  margin: 0.3rem 0;
+}
+.page-settings .row .color-gray {
+  margin: 0.3rem 0;
+  font-size: 0.7rem;
+}
+
+.page-settings .col-25 + .col-25 {
+  border-left: 1px solid #ccc;
+}
+
+.page-settings .person-card img {
+  border-radius: 100%;
+}
+
+.page-settings .person-card ul{
+  background: transparent;
+}
+.page-settings .person-card .item-text {
+  height: auto;
+}
+.page-settings .person-card ul:before,
+.page-settings .person-card ul:after {
+  display: none;
+}
+.page-settings .list .icon {
+  font-size: 1rem;
+}
+</style>
+
+<div id="detail-page" class="page no-tabbar">
+  <div class="content" id='detail-page'>
+    <!-- 这里是页面内容区 -->
+    <style>
+      .list-block, .content-block {
+        margin: 0.75rem 0;
+      }
+    </style>
+    <div class="page-detail">
+      <%= render 'mobile/shared/picture_slider', :pictures => @pictures %>
+      <div class='content-block goods-card'>
+        <h3><%= @product.name %></h3>
+        <p><strong><%= number_to_currency @product.price %></strong></p>
+      </div>
+      <div class="list-block media-list">
+        <ul>
+          <li>
+            <a href="#" class="item-link item-content">
+              <div class="item-inner">
+                <div class="item-title-row">
+                  <div class="item-title">选择颜色和尺码</div>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class='content-block'>
+        <div class="buttons-row">
+          <a href="#tab-introduction" class="tab-link active button">商品</a>
+          <a href="#tab-detail" class="tab-link button">详细参数</a>
+        </div>
+        <div class="tabs">
+          <div class="tab active" id='tab-introduction'>
+            <%= @product.description %>
+          </div>
+          <div class="tab" id='tab-detail'>
+            <div class="list-block">
+              <ul>
+                <% @attributes.each do |attribute| %>
+                  <li class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title"><%= attribute.key %></div>
+                      <div class="item-after"><%= attribute.value %></div>
+                    </div>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+$(document).on("pageInit", "#page-home", function(e, id, $page) {
+
+  $(document).on('refresh', '.page-home',function(e) {
+    setTimeout(function() {
+      $($("#index-tpl").html()).insertBefore($(".list a").eq(0));
+      $.pullToRefreshDone('.page-home');
+    }, 2000);
+  });
+
+  var loading = false;
+  $(document).on('infinite', '.page-home',function() {
+    if(loading) return;
+    loading = true;
+    setTimeout(function() {
+      $(".page-home .list").append($($("#index-tpl").html()));
+      loading = false;
+    }, 2000);
+  });
+
+});
+
+$(document).on("pageInit", "#page-goods", function(e, id, $page) {
+  var loading = false;
+  $(document).on('infinite', '.page-goods',function() {
+    if(loading) return;
+    loading = true;
+    setTimeout(function() {
+      $(".page-goods ul").append($(".page-goods ul").html());
+      loading = false;
+    }, 2000);
+  });
+});
+
+var $dark = $("#dark-switch").on("change", function() {
+  $(document.body)[$dark.is(":checked") ? "addClass" : "removeClass"]("theme-dark");
+});
+
+$.init();
+</script>

@@ -1,4 +1,5 @@
-class SessionsController < ApplicationController
+class Mobile::SessionsController < ApplicationController
+
   def login
     @customer = Shoppe::Customer.new({ :email => params[:email] })
   end

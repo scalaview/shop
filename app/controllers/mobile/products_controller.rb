@@ -1,4 +1,6 @@
-class ProductsController < ApplicationController
+class Mobile::ProductsController < ApplicationController
+
+  layout "mobile"
 
   def index
     @products = Shoppe::Product.active.includes(:product_categories, :variants).root
@@ -10,6 +12,7 @@ class ProductsController < ApplicationController
       redirect_to :root
     end
     @attributes = @product.product_attributes.public.to_a
+    @pictures = @product.attachments.pictures
   end
 
 end
