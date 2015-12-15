@@ -1,5 +1,5 @@
 <div class="product-grid love-grid">
-  <%= link_to product_path(:id => product.id, :name => product.name) do %>
+  <%= link_to mobile_product_path(:id => product.id, :name => product.name) do %>
       <div class="more-product"><span> </span></div>
       <div class="product-img b-link-stripe b-animate-go  thickbox">
          <%= image_tag product.default_image.path %>

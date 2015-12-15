@@ -46,6 +46,9 @@ Rails.application.routes.draw do
       end
     end
 
+    # user-info
+    get 'user_info' => 'user_info#show', :as => 'user_info'
+
   end
 
 end

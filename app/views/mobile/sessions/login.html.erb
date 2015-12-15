@@ -6,7 +6,7 @@
      <div class="col-md-6 log">
          <p>Welcome, please enter the folling to continue.</p>
          <p>If you have previously Login with us, <span>click here</span></p>
-         <%= form_for @customer, :url => sign_in_path, validate: true do |f| %>
+         <%= form_for @customer, :url => mobile_sign_in_path, validate: true do |f| %>
             <h5>Username:</h5>
             <%= f.text_field :email, validate: true %>
             <h5>Password:</h5>

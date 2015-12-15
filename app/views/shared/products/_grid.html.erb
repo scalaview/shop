@@ -1,5 +1,5 @@
 <div class="col-md-<%= column_size %> feature-grid <%= :jewel if jewel %> ">
-  <%= link_to product_path(:id => product.id, :name => product.name) do %>
+  <%= link_to mobile_product_path(:id => product.id, :name => product.name) do %>
     <%= image_tag product.default_image.path %>
     <div class="arrival-info">
       <h4><%= product.name %></h4>
@@ -8,12 +8,12 @@
       <span class="disc">[12% Off]</span>
     </div>
     <div class="viw">
-      <%= link_to product_path(:id => product.id, :name => product.name) do %>
+      <%= link_to mobile_product_path(:id => product.id, :name => product.name) do %>
         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Quick View
       <% end %>
     </div>
     <div class="shrt">
-      <%= link_to product_path(:id => product.id, :name => product.name) do %>
+      <%= link_to mobile_product_path(:id => product.id, :name => product.name) do %>
         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>Shortlist
       <% end %>
     </div>
