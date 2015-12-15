@@ -924,8 +924,8 @@ Swiper
             isMoved = false;
             isScrolling = undefined;
             startMoving = undefined;
-            s.touches.startX = s.touches.currentX = e.type === 'touchstart' ? e.originalEvent.touches[0].pageX : e.pageX;
-            s.touches.startY = s.touches.currentY = e.type === 'touchstart' ? e.originalEvent.touches[0].pageY : e.pageY;
+            s.touches.startX = s.touches.currentX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+            s.touches.startY = s.touches.currentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
             touchStartTime = Date.now();
             s.allowClick = true;
             s.updateContainerSize();
@@ -965,8 +965,8 @@ Swiper
 
             if (e.targetTouches && e.targetTouches.length > 1) return;
 
-            s.touches.currentX = e.type === 'touchmove' ? e.originalEvent.touches[0].pageX : e.pageX;
-            s.touches.currentY = e.type === 'touchmove' ? e.originalEvent.touches[0].pageY : e.pageY;
+            s.touches.currentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+            s.touches.currentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
 
             if (typeof isScrolling === 'undefined') {
                 var touchAngle = Math.atan2(Math.abs(s.touches.currentY - s.touches.startY), Math.abs(s.touches.currentX - s.touches.startX)) * 180 / Math.PI;
@@ -2774,7 +2774,7 @@ Swiper
         var pb = this, i;
 
         var defaults = this.defaults;
-        
+
         params = params || {};
         for (var def in defaults) {
             if (typeof params[def] === 'undefined') {
@@ -2785,8 +2785,8 @@ Swiper
         pb.params = params;
 
         var navbarTemplate = pb.params.navbarTemplate ||
-                            '<header class="bar bar-nav">' + 
-                              '<a class="icon icon-left pull-left photo-browser-close-link' + (pb.params.type === 'popup' ?  " close-popup" : "") + '"></a>' + 
+                            '<header class="bar bar-nav">' +
+                              '<a class="icon icon-left pull-left photo-browser-close-link' + (pb.params.type === 'popup' ?  " close-popup" : "") + '"></a>' +
                               '<h1 class="title"><div class="center sliding"><span class="photo-browser-current"></span> <span class="photo-browser-of">' + pb.params.ofText + '</span> <span class="photo-browser-total"></span></div></h1>' +
                             '</header>';
 
@@ -2814,8 +2814,8 @@ Swiper
                             '</div>' +
                         '</div>';
 
-        var photoTemplate = !pb.params.lazyLoading ? 
-            (pb.params.photoTemplate || '<div class="photo-browser-slide swiper-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>') : 
+        var photoTemplate = !pb.params.lazyLoading ?
+            (pb.params.photoTemplate || '<div class="photo-browser-slide swiper-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>') :
             (pb.params.photoLazyTemplate || '<div class="photo-browser-slide photo-browser-slide-lazy swiper-slide"><div class="preloader' + (pb.params.theme === 'dark' ? ' preloader-white' : '') + '"></div><span class="photo-browser-zoom-container"><img data-src="{{url}}" class="swiper-lazy"></span></div>');
 
         var captionsTheme = pb.params.captionsTheme || pb.params.theme;
@@ -2829,7 +2829,7 @@ Swiper
             var photo = pb.params.photos[i];
             var thisTemplate = '';
 
-            //check if photo is a string or string-like object, for backwards compatibility 
+            //check if photo is a string or string-like object, for backwards compatibility
             if (typeof(photo) === 'string' || photo instanceof String) {
 
                 //check if "photo" is html object
@@ -2957,7 +2957,7 @@ Swiper
             pb.container.find('.photo-browser-total').text(total);
 
             $('.photo-browser-prev, .photo-browser-next').removeClass('photo-browser-link-inactive');
-            
+
             if (swiper.isBeginning && !pb.params.loop) {
                 $('.photo-browser-prev').addClass('photo-browser-link-inactive');
             }
@@ -2991,7 +2991,7 @@ Swiper
             }
             if (pb.params.onSlideChangeEnd) pb.params.onSlideChangeEnd(swiper);
         };
-        
+
         pb.layout = function (index) {
             if (pb.params.type === 'page') {
                 pb.container = $('.photo-browser-swiper-container').parents('.view');
@@ -3008,7 +3008,7 @@ Swiper
             pb.slides = pb.container.find('.photo-browser-slide');
             pb.captionsContainer = pb.container.find('.photo-browser-captions');
             pb.captions = pb.container.find('.photo-browser-caption');
-            
+
             var sliderSettings = {
                 nextButton: pb.params.nextButton || '.photo-browser-next',
                 prevButton: pb.params.prevButton || '.photo-browser-prev',
@@ -3036,7 +3036,7 @@ Swiper
                     pb.onSliderTransitionStart(swiper);
                 },
                 onTransitionEnd: function (swiper) {
-                    pb.onSliderTransitionEnd(swiper);  
+                    pb.onSliderTransitionEnd(swiper);
                 },
                 onLazyImageLoad: function (swiper, slide, img) {
                     if (pb.params.onLazyImageLoad) pb.params.onLazyImageLoad(pb, slide, img);
@@ -3094,7 +3094,7 @@ Swiper
             if (pb.params.expositionHideCaptions) pb.captionsContainer.removeClass('photo-browser-captions-exposed');
             pb.exposed = false;
         };
-        
+
         // Gestures
         var gestureSlide, gestureImg, gestureImgWrap, scale = 1, currentScale = 1, isScaling = false;
         pb.onSlideGestureStart = function () {
@@ -3180,7 +3180,7 @@ Swiper
             imageMaxX = -imageMinX;
             imageMinY = Math.min((pb.swiper.height / 2 - scaledHeight / 2), 0);
             imageMaxY = -imageMinY;
-            
+
             imageTouchesCurrent.x = e.type === 'touchmove' ? e.originalEvent.touches[0].pageX : e.pageX;
             imageTouchesCurrent.y = e.type === 'touchmove' ? e.originalEvent.touches[0].pageY : e.pageY;
 
@@ -3198,14 +3198,14 @@ Swiper
             imageIsMoved = true;
             imageCurrentX = imageTouchesCurrent.x - imageTouchesStart.x + imageStartX;
             imageCurrentY = imageTouchesCurrent.y - imageTouchesStart.y + imageStartY;
-            
+
             if (imageCurrentX < imageMinX) {
                 imageCurrentX =  imageMinX + 1 - Math.pow((imageMinX - imageCurrentX + 1), 0.8);
             }
             if (imageCurrentX > imageMaxX) {
                 imageCurrentX = imageMaxX - 1 + Math.pow((imageCurrentX - imageMaxX + 1), 0.8);
             }
-            
+
             if (imageCurrentY < imageMinY) {
                 imageCurrentY =  imageMinY + 1 - Math.pow((imageMinY - imageCurrentY + 1), 0.8);
             }
