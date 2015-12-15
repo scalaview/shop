@@ -68,10 +68,4 @@ Rails.application.routes.draw do
 
   get 'demo' =>  'shopping_cart#demo', :as  => 'demo'
 
-  resources :addresses do
-    member do
-      post 'set_default'
-    end
-  end
-
 end
