@@ -40,19 +40,17 @@
           <div class="item-content">
             <div class="item-inner">
               <div class="item-input">
-                <select class="weui_select" name="select1" ng-change="provinceChange(current_province)" ng-model="current_province">
-                  <option disabled value=""> -- 请选择 -- </option>
+                <select id="select_provice" name="select_provice">
+                  <option value=""> -- 请选择 -- </option>
                   <%= options_for_select(Shoppe::Region.getProvice.map{|re| [re.name, re.code] }) %>
                 </select>
               </div>
               <div class="item-input">
-                <select class="weui_select" name="select2" ng-change="cityChange(current_city)" ng-model="current_city" ng-options="select_city.name for select_city in getCity">
-                  <option disabled value="">-- 请选择 --</option>
+                <select id="select_city" name="select_city">
                 </select>
               </div>
               <div class="item-input">
-                <select class="weui_select" name="select3" ng-model="current_district" ng-options="select_district.name for select_district in getDistrict">
-                  <option disabled value="">-- 请选择 --</option>
+                <select id="select_district" name="select_district">
                 </select>
               </div>
             </div>
@@ -92,44 +90,69 @@
   </div>
 </div>
 <script type="text/javascript">
-angular.module('index', []).controller('addresses', function($scope,$http) {
-  $scope.provinceChange = function(current_province){
-    $scope.getCity = [];
-    $scope.getDistrict = [];
-    $http({
-        method: 'POST',
-        url: '/region_city',
-        headers: {
-         'Accept': "application/json"
-        },
-        data: {
-          provice: current_province
-        }
-      }).then(function(res){
-        $scope.getCity = res.data
-      })
-  };
-  $scope.cityChange = function(current_city){
-    $scope.getDistrict = [];
-    if(current_city){
-      $http({
-        method: 'POST',
-        url: '/region_district',
-        headers: {
-         'Accept': "application/json"
-        },
-        data: {
-          city: current_city.code
-        }
-      }).then(function(res){
-        $scope.getDistrict = res.data
-      })
-    }
-  };
-}).config(function ($httpProvider) {
-  if(document.getElementsByName('csrf-token')[0] && document.getElementsByName('csrf-token')[0].getAttribute('content')){
-    $httpProvider.defaults.headers.common['X-CSRF-Token'] = document.getElementsByName('csrf-token')[0].getAttribute('content')
-  }
+$(document).ready(function(){
+  $("#select_provice").change(function(){
+    var selectValue = $("#select_provice").val();
+    changeProvince(selectValue);
+  });
+  $("#select_city").change(function(){
+    var selectValue = $("#select_city").val();
+    changeCity(selectValue);
+  });
+  /*清空city、district*/
+  appendSelectAhead($("#select_city"));
+  appendSelectAhead($("#select_district"));
 });
-
+function changeProvince(selectValue){
+  /*清空city、district*/
+  appendSelectAhead($("#select_city"));
+  appendSelectAhead($("#select_district"));
+  /*获取city数据*/
+  if(!selectValue){
+    return;
+  }
+  $.ajax({
+    type:"post",
+    url:"/mobile/region_city",
+    data:{"provice": selectValue},
+    dataType:"json",
+    success:function(data){
+      if(data && data.length>0){
+        for (var item in data) {
+          $("#select_city").append("<option value='"+data[item].code+"'>"+data[item].name+"</option>");
+        };
+      }
+    },
+    error:function(XMLHttpRequest, textStatus, errorThrown){
+    }
+  });
+}
+function changeCity(selectValue){
+  /*清空district*/
+  appendSelectAhead($("#select_district"));
+  /*获取district数据*/
+  if(!selectValue){
+    return;
+  }
+  $.ajax({
+    type:"post",
+    url:"/mobile/region_district",
+    data:{"city": selectValue},
+    dataType:"json",
+    success:function(data){
+      if(data && data.length>0){
+        for (var item in data) {
+          $("#select_district").append("<option value='"+data[item].code+"'>"+data[item].name+"</option>");
+        };
+      }
+    },
+    error:function(XMLHttpRequest, textStatus, errorThrown){
+    }
+  });
+}
+/*在最前面加个选项*/
+function appendSelectAhead(select){
+  select.empty();
+  select.prepend("<option value=''>-- 请选择 --</option>");
+}
 </script>
