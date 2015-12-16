@@ -18,7 +18,7 @@
     }
 
     $.extend($.ajaxSettings, {
-        beforeSend : function (xhr, settings) {console.log(settings);
+        beforeSend : function (xhr, settings) {
             if (
                 !(/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type)) &&
                 sameOrigin(settings.url)

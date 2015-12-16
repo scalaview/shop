@@ -1,7 +1,3 @@
-//= require jquery/dist/jquery.min
-//= require jquery.csrf
-//= require sm
-//= require sm-extend
+//= require zepto/zepto.min
+//= require zepto.csrf
 //= require checkout/order
-
-window.$ === undefined && (window.$ = jQuery)
