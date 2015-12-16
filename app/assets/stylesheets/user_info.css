@@ -42,3 +42,12 @@
 .page-settings .list .icon {
   font-size: 1rem;
 }
+
+/*address_manage*/
+.page-address-manage .address_card_span{
+  color: red;
+  font-size: .6rem;
+}
+.page-address-manage .list-block {
+  margin: 1.75rem 0;
+}
