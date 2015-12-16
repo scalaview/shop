@@ -1,4 +1,3 @@
-//= require jquery/dist/jquery.min
-//= require jquery.csrf
-//= require jquery.event
+//= require zepto/zepto.min
+//= require zepto.csrf
 //= require checkout/order
