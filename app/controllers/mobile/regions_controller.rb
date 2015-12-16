@@ -17,6 +17,11 @@ class Mobile::RegionsController < ApplicationController
     end
   end
 
+  def getNameByCode
+    @name = Shoppe::Region.where(code: params[:code])
+  end
+
+
   def index
   end
 end

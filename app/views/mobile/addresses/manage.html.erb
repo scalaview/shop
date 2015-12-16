@@ -11,43 +11,25 @@
   <div class="content native-scroll">
     <div class="list-block media-list">
       <ul>
-        <li>
-          <%= link_to new_mobile_address_path, :class => "item-content item-link" do %>
-            <div class="item-inner">
-              <div class="item-title-row">
-                <div class="item-subtitle">马云  12345678909</div>
-                <div class="item-after"><span class="address_card_span">默认地址</span></div>
+        <% @addresses.each do |address| %>
+          <li>
+            <%= link_to new_mobile_address_path, :class => "item-content item-link" do %>
+              <div class="item-inner">
+                <div class="item-title-row">
+                  <div class="item-subtitle"><%= address.receiver_name %>  <%= address.phone %></div>
+                  <div class="item-after"><span class="address_card_span">默认地址</span></div>
+                </div>
+                <div class="item-text"><%= Shoppe::Region.getNameByCode(address.area)[0].name %><%= address.location %></div>
               </div>
-              <div class="item-text">广东 广州 荔湾 龙津 xx王xx路602号343房xx王xx路602号343房xx王xx路602号343房</div>
-            </div>
-          <% end %>
-        </li>
-        <li>
-          <%= link_to new_mobile_address_path, :class => "item-content item-link" do %>
-            <div class="item-inner">
-              <div class="item-title-row">
-                <div class="item-subtitle">马云  12345678909</div>
-                <div class="item-after"><span class="address_card_span"></span></div>
-              </div>
-              <div class="item-text">广东 广州 荔湾 龙津 xx王xx路602号343房xx王xx路602号343房xx王xx路602号343房</div>
-            </div>
-          <% end %>
-        </li>
-        <li>
-          <%= link_to new_mobile_address_path, :class => "item-content item-link" do %>
-            <div class="item-inner">
-              <div class="item-title-row">
-                <div class="item-subtitle">马云  12345678909</div>
-                <div class="item-after"><span class="address_card_span"></span></div>
-              </div>
-              <div class="item-text">广东 广州 荔湾 龙津 xx王xx路602号343房xx王xx路602号343房xx王xx路602号343房</div>
-            </div>
-          <% end %>
-        </li>
+            <% end %>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>
 </div>
 <script type="text/javascript">
+$(document).ready(function(){
 
+});
 </script>
