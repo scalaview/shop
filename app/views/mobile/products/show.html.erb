@@ -105,25 +105,38 @@
         margin: 0.75rem 0;
       }
     </style>
+
+    <div class="bar bar-standard bar-footer pay">
+      <div class="pull-right pay-d">
+        <span class="pay-btn" id="apply-order" >Add To Cart</span>
+      </div>
+      <div class="pull-right real-pay">
+        <div>总金额：
+          <span class="price"></span>
+        </div>
+      </div>
+    </div>
     <div class="page-detail">
       <%= render 'mobile/shared/picture_slider', :pictures => @pictures %>
       <div class='content-block goods-card'>
         <h3><%= @product.name %></h3>
         <p><strong><%= number_to_currency @product.price %></strong></p>
       </div>
-      <div class="list-block media-list">
-        <ul>
-          <li>
-            <a href="#" class="item-link item-content">
-              <div class="item-inner">
-                <div class="item-title-row">
-                  <div class="item-title">选择颜色和尺码</div>
+      <% if @product.has_variants? %>
+        <div class="list-block media-list">
+          <ul>
+            <li>
+              <a href="#" class="item-link item-content open-popup" data-popup=".popup-variants" >
+                <div class="item-inner">
+                  <div class="item-title-row">
+                    <div class="item-title"><%= variant_types_title @product %></div>
+                  </div>
                 </div>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      <% end %>
       <div class='content-block'>
         <div class="buttons-row">
           <a href="#tab-introduction" class="tab-link active button">商品</a>
@@ -152,6 +165,29 @@
     </div>
   </div>
 </div>
+
+<div class="popup popup-variants">
+  <header class="bar bar-nav">
+    <a class="button button-link button-nav pull-left close-popup" href="#">
+      <span class="icon icon-left"></span>
+      返回
+    </a>
+    <h1 class="title"><%= variant_types_title @product %></h1>
+  </header>
+  <div class="content-block">
+    <div class="bar bar-standard bar-footer pay">
+      <div class="pull-right pay-d">
+        <span class="pay-btn" id="apply-order" >Add To Cart</span>
+      </div>
+      <div class="pull-right real-pay">
+        <div>总金额：
+          <span class="price"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script type="text/javascript">
 

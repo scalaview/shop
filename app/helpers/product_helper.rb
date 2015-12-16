@@ -23,4 +23,10 @@ module ProductHelper
     "$ #{price.to_f}"
   end
 
+  def variant_types_title(product)
+    (['请选择'] + product.variant_types.map do |item|
+      item.name
+    end).join(' ')
+  end
+
 end
