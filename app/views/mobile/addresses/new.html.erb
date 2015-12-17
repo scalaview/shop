@@ -92,22 +92,21 @@
 <script type="text/javascript">
 $(document).ready(function(){
   $("#select_provice").change(function(){
-    var selectValue = $("#select_provice").val();
-    changeProvince(selectValue);
+    changeProvince();
   });
   $("#select_city").change(function(){
-    var selectValue = $("#select_city").val();
-    changeCity(selectValue);
+    changeCity();
   });
   /*清空city、district*/
   appendSelectAhead($("#select_city"));
   appendSelectAhead($("#select_district"));
 });
-function changeProvince(selectValue){
+function changeProvince(){
   /*清空city、district*/
   appendSelectAhead($("#select_city"));
   appendSelectAhead($("#select_district"));
   /*获取city数据*/
+  var selectValue = $("#select_provice").val();
   if(!selectValue){
     return;
   }
@@ -127,10 +126,11 @@ function changeProvince(selectValue){
     }
   });
 }
-function changeCity(selectValue){
+function changeCity(){
   /*清空district*/
   appendSelectAhead($("#select_district"));
   /*获取district数据*/
+  var selectValue = $("#select_city").val();
   if(!selectValue){
     return;
   }
