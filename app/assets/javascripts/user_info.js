@@ -3,10 +3,10 @@ $(document).ready(function(){
     appendSelectAhead($("#select_city"));
     appendSelectAhead($("#select_district"));
   });
-  $(document).on('change', "#select_provice", function(){
+  $(document).on('change', "#page-address-new #select_province", function(){
     changeProvince();
   });
-  $(document).on('change', "#select_city", function(){
+  $(document).on('change', "#page-address-new #select_city", function(){
     changeCity();
   });
 });
@@ -15,14 +15,14 @@ function changeProvince(){
   appendSelectAhead($("#select_city"));
   appendSelectAhead($("#select_district"));
   /*获取city数据*/
-  var selectValue = $("#select_provice").val();
+  var selectValue = $("#select_province").val();
   if(!selectValue){
     return;
   }
   $.ajax({
     type:"post",
     url:"/mobile/region_city",
-    data:{"provice": selectValue},
+    data:{"province": selectValue},
     dataType:"json",
     success:function(data){
       if(data && data.length>0){

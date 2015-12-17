@@ -2,7 +2,7 @@ class Mobile::RegionsController < ApplicationController
   before_filter :login_required
 
   def city
-    @city = Shoppe::Region.getCity(params[:provice])
+    @city = Shoppe::Region.getCity(params[:province])
 
     respond_to do |format|
       format.json { render json: @city }

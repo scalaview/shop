@@ -38,9 +38,9 @@
           <div class="item-content">
             <div class="item-inner">
               <div class="item-input">
-                <select id="select_provice" name="select_provice">
+                <select id="select_province" name="select_province">
                   <option value=""> -- 请选择 -- </option>
-                  <%= options_for_select(Shoppe::Region.getProvice.map{|re| [re.name, re.code] }) %>
+                  <%= options_for_select(Shoppe::Region.getProvince.map{|re| [re.name, re.code] }) %>
                 </select>
               </div>
               <div class="item-input">
