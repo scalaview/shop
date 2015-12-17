@@ -17,9 +17,9 @@
               <div class="item-inner">
                 <div class="item-title-row">
                   <div class="item-subtitle"><%= address.receiver_name %>  <%= address.phone %></div>
-                  <div class="item-after"><span class="address_card_span">默认地址</span></div>
+                  <div class="item-after"><span class="address_card_span"><%= "默认地址" if address.default %></span></div>
                 </div>
-                <div class="item-text"><%= Shoppe::Region.getNameByCode(address.area)[0].name %><%= address.location %></div>
+                <div class="item-text"><%= address.full_name(address.province, address.city, address.area) %><%= address.location %></div>
               </div>
             <% end %>
           </li>
@@ -30,6 +30,5 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
-
 });
 </script>
