@@ -1,112 +1,5 @@
-<style type="text/css">
-.page-login .signup {
-  font-size: 0.7rem;
-}
-.page-login .leader {
-  margin: 3rem 0 1rem 0;
-  padding: 0.5rem 0;
-  font-size: 0.7rem;
-  border-top: 1px dashed #ccc;
-  color: #999;
-}
-.page-login .leader:after {
-  left: auto;
-  right: 1rem;
-}
-
-.page-login .others {
-  text-align: center;
-}
-
-.page-login i.icon-form-name {
-  background: url(http://gtms01.alicdn.com/tps/i1/TB1pN89IFXXXXaPXpXX8wnlGFXX-42-46.png) no-repeat;
-  background-size: 21px 23px;
-  background-position: 5px 7px;
-}
-.page-login i.icon-form-email {
-  background: url(http://gtms04.alicdn.com/tps/i4/TB1An8TIFXXXXapXVXXlg00GFXX-38-46.png) no-repeat;
-  background-size: 19px 23px;
-  background-position: 6px 1px;
-}
-
-.page-goods .swiper-container {
-  height: 10rem;
-}
-.page-goods .swiper-slide img {
-  width: 100%;
-}
-
-
-.page-detail .swiper-container {
-  height: 35%;
-}
-.page-detail .swiper-slide img {
-  width: 100%;
-}
-
-.page-detail .goods-card {
-}
-.page-detail .goods-card h3 {
-  font-size: 0.8rem;
-}
-.page-detail .goods-card del {
-  font-size: 0.6rem;
-  color: gray;
-}
-.page-detail .goods-card .row {
-  font-size: 0.7rem;
-}
-
-.page-settings .person-card {
-  margin: .6rem 0;
-}
-.page-settings .row {
-  border: 1px solid #ccc;
-  background: white;
-  border-left: 0;
-  border-right: 0;
-}
-.page-settings .row h4 {
-  margin: 0.3rem 0;
-}
-.page-settings .row .color-gray {
-  margin: 0.3rem 0;
-  font-size: 0.7rem;
-}
-
-.page-settings .col-25 + .col-25 {
-  border-left: 1px solid #ccc;
-}
-
-.page-settings .person-card img {
-  border-radius: 100%;
-}
-
-.page-settings .person-card ul{
-  background: transparent;
-}
-.page-settings .person-card .item-text {
-  height: auto;
-}
-.page-settings .person-card ul:before,
-.page-settings .person-card ul:after {
-  display: none;
-}
-.page-settings .list .icon {
-  font-size: 1rem;
-}
-</style>
-
 <div id="detail-page" class="page no-tabbar">
-  <div class="content" id='detail-page'>
-    <!-- 这里是页面内容区 -->
-    <style>
-      .list-block, .content-block {
-        margin: 0.75rem 0;
-      }
-    </style>
-
-    <div class="bar bar-standard bar-footer pay">
+  <div class="bar bar-standard bar-footer pay">
       <div class="pull-right pay-d">
         <span class="pay-btn" id="apply-order" >Add To Cart</span>
       </div>
@@ -116,6 +9,10 @@
         </div>
       </div>
     </div>
+
+  <div class="content" id='detail-page'>
+    <!-- 这里是页面内容区 -->
+
     <div class="page-detail">
       <%= render 'mobile/shared/picture_slider', :pictures => @pictures %>
       <div class='content-block goods-card'>
@@ -144,7 +41,7 @@
         </div>
         <div class="tabs">
           <div class="tab active" id='tab-introduction'>
-            <%= @product.description %>
+            <p><%= @product.description %></p>
           </div>
           <div class="tab" id='tab-detail'>
             <div class="list-block">
@@ -167,6 +64,16 @@
 </div>
 
 <div class="popup popup-variants">
+  <div class="bar bar-standard bar-footer pay">
+    <div class="pull-right pay-d">
+      <span class="pay-btn" id="apply-order" >Add To Cart</span>
+    </div>
+    <div class="pull-right real-pay">
+      <div>总金额：
+        <span class="price"></span>
+      </div>
+    </div>
+  </div>
   <header class="bar bar-nav">
     <a class="button button-link button-nav pull-left close-popup" href="#">
       <span class="icon icon-left"></span>
@@ -174,16 +81,45 @@
     </a>
     <h1 class="title"><%= variant_types_title @product %></h1>
   </header>
-  <div class="content-block">
-    <div class="bar bar-standard bar-footer pay">
-      <div class="pull-right pay-d">
-        <span class="pay-btn" id="apply-order" >Add To Cart</span>
-      </div>
-      <div class="pull-right real-pay">
-        <div>总金额：
-          <span class="price"></span>
-        </div>
-      </div>
+  <div class="content-block list-block list-block-no-margin">
+    <div class="media-list list-block list-block-no-margin">
+      <ul>
+        <li>
+          <a href="/examples/light7-mall/detail" class="item-link item-content">
+            <div class="item-media"><img src="//gdp.alicdn.com/bao/uploaded/i4/TB13mgfHpXXXXcVXFXXXXXXXXXX_!!2-item_pic.png_240x240.jpg" width="80"></div>
+            <div class="item-inner">
+              <div class="item-title-row">
+                <div class="item-title">Rozene</div>
+                <div class="item-after">$120</div>
+              </div>
+              <div class="item-subtitle">345 Like</div>
+              <div class="item-text">WayHomeDecor Cotton Linen Decorative Throw Pillow Case Cushion Cover Cute </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="list-block list-block-no-margin cards-list no-card-margin">
+      <ul>
+        <li class="card">
+          <div class="card-header">color</div>
+          <div class="card-content">
+            <div class="card-content-inner btn-margin">
+              <p class="buttons-row">
+                <a href="#" class="button active">Button 1</a><a href="#" class="button">Button 2</a><a href="#" class="button">Button 3</a>
+                <a href="#" class="button active">Button 1</a><a href="#" class="button">Button 2</a><a href="#" class="button">Button 3</a>
+              </p>
+            </div>
+          </div>
+        </li>
+        <li class="card">
+          <div class="card-header">size</div>
+          <div class="card-content">
+            <div class="card-content-inner">卡内容</div>
+          </div>
+        </li>
+
     </div>
   </div>
 </div>

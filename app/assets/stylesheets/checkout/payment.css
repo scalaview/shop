@@ -116,3 +116,40 @@ margin-right: 15px;
   padding-bottom: 5px;
   padding-left: 10px;
 }
+
+
+/* product detail*/
+.list-block-no-margin {
+  margin: 0px;
+  margin-top: 3em;
+}
+
+.page-detail .swiper-container {
+  height: 35%;
+}
+.page-detail .swiper-slide img {
+  width: 100%;
+}
+
+.page-detail .goods-card {
+}
+.page-detail .goods-card h3 {
+  font-size: 0.8rem;
+}
+.page-detail .goods-card del {
+  font-size: 0.6rem;
+  color: gray;
+}
+.page-detail .goods-card .row {
+  font-size: 0.7rem;
+}
+
+.no-card-margin .card{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.btn-margin .button {
+  margin: 10px;
+}
+/* product detail*/
