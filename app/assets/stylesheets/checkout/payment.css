@@ -70,6 +70,13 @@ margin-right: 15px;
   padding: 1em;
 }
 
+.pay .pay-now {
+  pointer-events: none;
+  background-color: #0894EC;
+  color: #fff;
+  padding: 1em;
+}
+
 .real-pay {
   pointer-events: none;
   padding-top: 1em;

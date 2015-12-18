@@ -4,16 +4,7 @@
 </style>
 
 <div id="detail-page" class="page no-tabbar">
-  <div class="bar bar-standard bar-footer pay">
-      <div class="pull-right pay-d">
-        <span class="pay-btn" id="apply-order" >Add To Cart</span>
-      </div>
-      <div class="pull-right real-pay">
-        <div>总金额：
-          <span class="price"></span>
-        </div>
-      </div>
-    </div>
+  <%= render "mobile/shared/add_to_cart", :product => @product %>
 
   <div class="content" id='detail-page'>
     <!-- 这里是页面内容区 -->
@@ -69,16 +60,8 @@
 </div>
 
 <div class="popup popup-variants">
-  <div class="bar bar-standard bar-footer pay">
-    <div class="pull-right pay-d">
-      <span class="pay-btn add-to-cart">Add To Cart</span>
-    </div>
-    <div class="pull-right real-pay">
-      <div>总金额：
-        <span class="price"></span>
-      </div>
-    </div>
-  </div>
+  <%= render "mobile/shared/add_to_cart", :product => @product %>
+
   <header class="bar bar-nav">
     <a class="button button-link button-nav pull-left close-popup" href="#">
       <span class="icon icon-left"></span>
@@ -140,6 +123,20 @@ $(function() {
       $this.addClass('active')
     }
   })
+
+  $(document).on('click', ".add_to_cart", function(){
+    var $this = $(this),
+        hasVariants = (this.data('has-variants') == 'true'),
+        $active = $(".variant .button.active")
+
+    if(hasVariants && $(".variant .button.active").length){
+      $(".variant .button.active").length
+    }else{
+
+    }
+
+  })
+
 })
 
 
