@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151216090107) do
+ActiveRecord::Schema.define(version: 20151216144425) do
 
   create_table "nifty_key_value_store", force: :cascade do |t|
     t.integer "parent_id",   limit: 4
@@ -413,6 +413,8 @@ ActiveRecord::Schema.define(version: 20151216090107) do
     t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "active",                 default: true
+    t.integer  "position",   limit: 4,   default: 0
   end
 
   create_table "shoppe_variant_values", force: :cascade do |t|
@@ -421,6 +423,7 @@ ActiveRecord::Schema.define(version: 20151216090107) do
     t.integer  "position",        limit: 4,   default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "active",                      default: true
   end
 
   add_index "shoppe_variant_values", ["position"], name: "index_shoppe_variant_values_on_position", using: :btree

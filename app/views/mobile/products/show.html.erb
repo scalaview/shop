@@ -71,7 +71,7 @@
 <div class="popup popup-variants">
   <div class="bar bar-standard bar-footer pay">
     <div class="pull-right pay-d">
-      <span class="pay-btn" id="apply-order" >Add To Cart</span>
+      <span class="pay-btn add-to-cart">Add To Cart</span>
     </div>
     <div class="pull-right real-pay">
       <div>总金额：
@@ -107,30 +107,41 @@
 
     <div class="list-block list-block-no-margin cards-list no-card-margin">
       <ul>
-        <li class="card">
-          <div class="card-header">color</div>
-          <div class="card-content">
-            <div class="variants card-content-inner btn-margin">
-              <p class="buttons-row">
-                <a href="#" class="button active">Button 1</a><a href="#" class="button">Button 2</a><a href="#" class="button">Button 3</a>
-                <a href="#" class="button active">Button 1</a><a href="#" class="button">Button 2</a><a href="#" class="button">Button 3</a>
-              </p>
+        <% @product.variant_types.each do |variant_type| %>
+          <% next if (variant_values = @product.variant_values(variant_type)) && variant_values.blank? %>
+          <li class="card variant">
+            <div class="card-header"><%= variant_type.name %></div>
+            <div class="card-content">
+              <div class="variants card-content-inner btn-margin">
+                <p class="buttons-row variant-group">
+                  <% variant_values.each do |variant_value| %>
+                    <a href="#" class="button" data-id="<%= variant_value.id %>" data-name="<%= variant_value.name %>" data-type-id="<%= variant_type.id %>" data-type-name="<%= variant_type.name %>"><%= variant_value.name %></a>
+                  <% end %>
+                </p>
+              </div>
             </div>
-          </div>
-        </li>
-        <li class="card">
-          <div class="card-header">size</div>
-          <div class="card-content">
-            <div class="card-content-inner">卡内容</div>
-          </div>
-        </li>
-
+          </li>
+        <% end %>
+      </ul>
     </div>
   </div>
 </div>
 
 
 <script type="text/javascript">
+$(function() {
+  $(document).on("click", ".variant .button", function(){
+    var $this = $(this),
+        $active = $this.parent().find('.button.active')
+    if($active.length > 0){
+      $active.removeClass('active')
+    }
+    if( $this.data("id") != $active.first().data("id") && !$this.hasClass('active')){
+      $this.addClass('active')
+    }
+  })
+})
+
 
 $(document).on("pageInit", "#page-home", function(e, id, $page) {
 
@@ -163,6 +174,11 @@ $(document).on("pageInit", "#page-goods", function(e, id, $page) {
       loading = false;
     }, 2000);
   });
+
+  $(document).on("click", ".variant .button", function(){
+    console.log(111)
+  })
+
 });
 
 var $dark = $("#dark-switch").on("change", function() {
