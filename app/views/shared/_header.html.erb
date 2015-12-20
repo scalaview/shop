@@ -11,13 +11,13 @@
       <div class="top_left">
         <ul>
           <% if logged_in? %>
-            <li class="top_link">Email:<a href="javascript:void(0);"><%= current_customer.email %></a></li>|
+            <li class="top_link">Email:<a href="/mobile/user_info"><%= current_customer.email %></a></li>|
           <% end %>
           <li class="top_link">
             <% if logged_in? %>
               <%= link_to current_customer.full_name, "#" %>
             <% else %>
-              <a href="/login">My Account</a>
+              <a href="/mobile/login">My Account</a>
             <% end %>
           </li>
         </ul>
