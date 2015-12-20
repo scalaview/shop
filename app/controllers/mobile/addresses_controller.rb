@@ -21,7 +21,18 @@ class Mobile::AddressesController < ApplicationController
   end
 
   def create
-
+    @address = current_customer.addresses.build(safe_params)
+    if current_customer.addresses.count == 0
+      @address.default = true
+    else
+      @address.default = false
+    end
+    @address.country_id = 1
+    if @address.save
+      render action: "manage", :flash => {:notice => "新增地址成功"}
+    else
+      render action: "new"
+    end
   end
 
   def edit
@@ -44,6 +55,10 @@ class Mobile::AddressesController < ApplicationController
 
   def init
     @address = current_customer.addresses.find params[:id]
+  end
+
+  def safe_params
+    params[:address].permit(:receiver_name, :phone, :province, :city, :area, :location, :postcode)
   end
 
 end
