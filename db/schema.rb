@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151216144425) do
+ActiveRecord::Schema.define(version: 20151221080741) do
 
   create_table "nifty_key_value_store", force: :cascade do |t|
     t.integer "parent_id",   limit: 4
@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 20151216144425) do
     t.string   "city",          limit: 255
     t.string   "area",          limit: 255
     t.string   "street",        limit: 255
-    t.string   "location",      limit: 255
     t.string   "md5",           limit: 255
+    t.string   "location",      limit: 255
     t.string   "phone",         limit: 255
     t.string   "receiver_name", limit: 255
   end
@@ -306,6 +306,13 @@ ActiveRecord::Schema.define(version: 20151216144425) do
 
   add_index "shoppe_product_translations", ["locale"], name: "index_shoppe_product_translations_on_locale", using: :btree
   add_index "shoppe_product_translations", ["shoppe_product_id"], name: "index_shoppe_product_translations_on_shoppe_product_id", using: :btree
+
+  create_table "shoppe_product_variant_types", force: :cascade do |t|
+    t.integer  "product_id",      limit: 4, null: false
+    t.integer  "variant_type_id", limit: 4, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "shoppe_product_variant_values", force: :cascade do |t|
     t.integer  "stockkeeping_unit_id", limit: 4, null: false

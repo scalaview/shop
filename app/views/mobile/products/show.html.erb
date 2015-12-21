@@ -69,7 +69,7 @@
     </a>
     <h1 class="title"><%= variant_types_title @product %></h1>
   </header>
-  <div class="content-block list-block list-block-no-margin">
+  <div id="product-sku" data-skus="<%= h product_skus_json @product %>"  data-variant-types="<%= h variant_types_json @product  %>" class="content-block list-block list-block-no-margin">
     <div class="media-list list-block list-block-no-margin">
       <ul>
         <li>
@@ -93,12 +93,12 @@
         <% @product.variant_types.each do |variant_type| %>
           <% next if (variant_values = @product.variant_values(variant_type)) && variant_values.blank? %>
           <li class="card variant">
-            <div class="card-header"><%= variant_type.name %></div>
+            <div id="variant_type_<%= variant_type.id %>" class="card-header variant_type" data-id="<%= variant_type.id %>"><%= variant_type.name %></div>
             <div class="card-content">
               <div class="variants card-content-inner btn-margin">
                 <p class="buttons-row variant-group">
                   <% variant_values.each do |variant_value| %>
-                    <a href="#" class="button" data-id="<%= variant_value.id %>" data-name="<%= variant_value.name %>" data-type-id="<%= variant_type.id %>" data-type-name="<%= variant_type.name %>"><%= variant_value.name %></a>
+                    <a href="#" class="button variant_values" id="variant_value_<%= variant_value.id %> " data-id="<%= variant_value.id %>" data-name="<%= variant_value.name %>" data-type-id="<%= variant_type.id %>" data-type-name="<%= variant_type.name %>"><%= variant_value.name %></a>
                   <% end %>
                 </p>
               </div>
@@ -113,8 +113,45 @@
 
 <script type="text/javascript">
 $(function() {
+  function variantInit(typeId, valueId){
+    var skus = $("#product-sku").data("skus"),
+        variantTypes = $("#product-sku").data("variant-types")
+
+    for (var i = 0; i < variantTypes.length; i++) {
+      debugger
+      if(variantTypes[i].id == typeId){
+        var type = variantTypes[i]
+        for (var j = 0; j < type.length; j++) {
+          if(type[j].id == valueId){
+            var skus = type[j].skus
+          }
+        };
+      }
+    };
+  }
+
+  function skusInit(skuIds){
+    var skus = $("#product-sku").data("skus"),
+        selectAbled = []
+
+    for (var i = 0; i < skus.length; i++) {
+      if(skuIds.indexOf(skus[i].id) != -1){
+        var variantValues = skus[i].variant_values
+        for (var j = 0; j < variantValues.length; j++) {
+          $("#variant_value_" + variantValues[j]
+        };
+        skus[i].variant_values
+        selectAbled.push(skus[i])
+      }
+    };
+
+  }
+
+
   $(document).on("click", ".variant .button", function(){
     var $this = $(this),
+        $variantType = $this.parents("variant_type"),
+        $typeId = $variantType.data("id"),
         $active = $this.parent().find('.button.active')
     if($active.length > 0){
       $active.removeClass('active')
@@ -122,6 +159,7 @@ $(function() {
     if( $this.data("id") != $active.first().data("id") && !$this.hasClass('active')){
       $this.addClass('active')
     }
+
   })
 
   $(document).on('click', ".add_to_cart", function(){

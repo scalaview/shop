@@ -29,4 +29,27 @@ module ProductHelper
     end).join(' ')
   end
 
+
+  def variant_types_json(product)
+    product.variant_types.map do |type|
+      {
+        id: type.id,
+        name: type.name,
+        variant_values: product.variant_values(type).map do |v|
+          { id: v.id, name: v.name, skus: v.stockkeeping_unit.where("shoppe_product_variant_values.variant_type_id = ? ", type.id).map{|sku| sku.id } }
+        end
+      }
+    end
+  end
+
+  def product_skus_json(product)
+    product.variants.map do |variant|
+      {
+        id: variant.id,
+        sku: variant.sku,
+        variant_values: variant.variant_values.active.map{|v| v.id }
+      }
+    end
+  end
+
 end
