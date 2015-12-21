@@ -13,7 +13,7 @@
       <ul>
         <% @addresses.each do |address| %>
           <li>
-            <%= link_to new_mobile_address_path, :class => "item-content item-link" do %>
+            <%= link_to edit_mobile_address_path(address.id), :class => "item-content item-link" do %>
               <div class="item-inner">
                 <div class="item-title-row">
                   <div class="item-subtitle"><%= address.receiver_name %>  <%= address.phone %></div>
