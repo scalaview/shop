@@ -29,7 +29,7 @@ class Mobile::AddressesController < ApplicationController
     end
     @address.country_id = 1
     if @address.save
-      render action: "manage", :flash => {:notice => "新增地址成功"}
+      redirect_to action: "manage", :flash => {:notice => "新增地址成功"}
     else
       render action: "new"
     end
