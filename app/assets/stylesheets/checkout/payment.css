@@ -166,4 +166,7 @@ margin-right: 15px;
 .variants .buttons-row .button {
   width:auto
 }
+
+.disabled {opacity: .3;}
+
 /* product detail*/

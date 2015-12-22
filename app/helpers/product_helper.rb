@@ -39,7 +39,7 @@ module ProductHelper
           { id: v.id, name: v.name, skus: v.stockkeeping_unit.where("shoppe_product_variant_values.variant_type_id = ? ", type.id).map{|sku| sku.id } }
         end
       }
-    end
+    end.to_json
   end
 
   def product_skus_json(product)
@@ -49,7 +49,7 @@ module ProductHelper
         sku: variant.sku,
         variant_values: variant.variant_values.active.map{|v| v.id }
       }
-    end
+    end.to_json
   end
 
 end

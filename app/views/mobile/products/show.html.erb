@@ -1,6 +1,5 @@
 <style type="text/css">
-.variants .buttons-row{flex-wrap:wrap}
-.variants .buttons-row .button{width:auto}
+
 </style>
 
 <div id="detail-page" class="page no-tabbar">
@@ -69,7 +68,7 @@
     </a>
     <h1 class="title"><%= variant_types_title @product %></h1>
   </header>
-  <div id="product-sku" data-skus="<%= h product_skus_json @product %>"  data-variant-types="<%= h variant_types_json @product  %>" class="content-block list-block list-block-no-margin">
+  <div id="product-sku" data-skus="<%= product_skus_json @product %>"  data-variant-types="<%= variant_types_json @product  %>" class="content-block list-block list-block-no-margin">
     <div class="media-list list-block list-block-no-margin">
       <ul>
         <li>
@@ -93,12 +92,12 @@
         <% @product.variant_types.each do |variant_type| %>
           <% next if (variant_values = @product.variant_values(variant_type)) && variant_values.blank? %>
           <li class="card variant">
-            <div id="variant_type_<%= variant_type.id %>" class="card-header variant_type" data-id="<%= variant_type.id %>"><%= variant_type.name %></div>
-            <div class="card-content">
+            <div class="card-header"><%= variant_type.name %></div>
+            <div id="variant_type_<%= variant_type.id %>" class="card-content variant_type" data-id="<%= variant_type.id %>" data-name="<%= variant_type.name %>">
               <div class="variants card-content-inner btn-margin">
                 <p class="buttons-row variant-group">
                   <% variant_values.each do |variant_value| %>
-                    <a href="#" class="button variant_values" id="variant_value_<%= variant_value.id %> " data-id="<%= variant_value.id %>" data-name="<%= variant_value.name %>" data-type-id="<%= variant_type.id %>" data-type-name="<%= variant_type.name %>"><%= variant_value.name %></a>
+                    <a href="#" class="button variant_values" id="variant_value_<%= variant_value.id %>" data-id="<%= variant_value.id %>" data-name="<%= variant_value.name %>" data-type-id="<%= variant_type.id %>" data-type-name="<%= variant_type.name %>"><%= variant_value.name %></a>
                   <% end %>
                 </p>
               </div>
@@ -112,54 +111,168 @@
 
 
 <script type="text/javascript">
-$(function() {
-  function variantInit(typeId, valueId){
-    var skus = $("#product-sku").data("skus"),
-        variantTypes = $("#product-sku").data("variant-types")
 
-    for (var i = 0; i < variantTypes.length; i++) {
-      debugger
-      if(variantTypes[i].id == typeId){
-        var type = variantTypes[i]
-        for (var j = 0; j < type.length; j++) {
-          if(type[j].id == valueId){
-            var skus = type[j].skus
+function union_arrays (x, y) {
+  var obj = {};
+  for (var i = x.length-1; i >= 0; -- i)
+     obj[x[i]] = x[i];
+  for (var i = y.length-1; i >= 0; -- i)
+     obj[y[i]] = y[i];
+  var res = []
+  for (var k in obj) {
+    if (obj.hasOwnProperty(k))  // <-- optional
+      res.push(obj[k]);
+  }
+  return res;
+}
+
+Array.prototype.compact = function (array) {
+  if(this instanceof Array && array == undefined){
+    array = this
+  }
+
+  var index = -1,
+      length = array ? array.length : 0,
+      resIndex = -1,
+      result = [];
+
+  while (++index < length) {
+    var value = array[index];
+    if (value !== undefined && value !== null && value !== '' ) {
+      result[++resIndex] = value;
+    }
+  }
+  return result;
+}
+
+function intersect(a, b)
+{
+  var ai=0, bi=0;
+  var result = new Array();
+
+  while( ai < a.length && bi < b.length )
+  {
+     if      (a[ai] < b[bi] ){ ai++; }
+     else if (a[ai] > b[bi] ){ bi++; }
+     else /* they're equal */
+     {
+       result.push(a[ai]);
+       ai++;
+       bi++;
+     }
+  }
+
+  return result;
+}
+
+function VariantManager(){
+  if ( !(this instanceof VariantManager) ) {
+    return new VariantManager();
+  }
+  this.product_skus = JSON.parse($("#product-sku").data("skus"));
+  this.variant_types = JSON.parse($("#product-sku").data("variant-types"))
+
+}
+
+VariantManager.prototype.setDisabled = function(){
+  var selected = VariantManager.getSelected(),
+      last = selected.length > 0 ? selected[selected.length - 1] : null,
+      sameLevel = $("#variant_value_" + last).parents(".variant_type").find(".variant_values").map(function(i, e) {return parseInt($(e).data("id")) }),
+      can_select = [],
+      product_skus = this.product_skus,
+      variant_types = this.variant_types
+  if(selected.length <= 0){
+    $(".variant_values.disabled").removeClass("disabled")
+    return
+  }
+  $.each(selected, function(i, e){
+    var variant_valueId = e,
+        typeId = parseInt($("#variant_value_" + variant_valueId).parents(".variant_type").data("id"))
+
+        $.each(variant_types, function(i, variant_type) {
+          if(variant_type.id == typeId){
+            $.each(variant_type.variant_values, function(i, variant_value) {
+              if(variant_value.id == variant_valueId ){
+                $.each(product_skus, function(i, sku) {
+                  if(variant_value.skus.indexOf(sku.id) != -1){
+                    if(can_select.length < 1){
+                      can_select = union_arrays(sku.variant_values, sameLevel)
+                    }else{
+                      can_select = intersect(can_select, sku.variant_values)
+                    }
+                  }
+                })
+              }
+            })
           }
-        };
-      }
-    };
+        })
+  })
+  // disable
+  $(".variant_values").each(function(i, e){
+    var $this = $(e)
+    if(can_select.indexOf(parseInt($this.data("id"))) != -1){
+      $this.removeClass("disabled")
+    }else{
+      $this.removeClass("active").addClass("disabled")
+    }
+  })
+}
+
+VariantManager.getSelected = function(){
+  try {
+    return JSON.parse($("#product-sku").data("selected"));
+  } catch (e) {
+    return []
   }
+}
 
-  function skusInit(skuIds){
-    var skus = $("#product-sku").data("skus"),
-        selectAbled = []
-
-    for (var i = 0; i < skus.length; i++) {
-      if(skuIds.indexOf(skus[i].id) != -1){
-        var variantValues = skus[i].variant_values
-        for (var j = 0; j < variantValues.length; j++) {
-          $("#variant_value_" + variantValues[j]
-        };
-        skus[i].variant_values
-        selectAbled.push(skus[i])
-      }
-    };
-
+VariantManager.setSelected = function(selected){
+  try {
+    $("#product-sku").data("selected", JSON.stringify(selected))
+  } catch (e) {
+    $("#product-sku").data("selected", "[]")
   }
+}
 
+VariantManager.removeSelected = function(active){
+  var selected = VariantManager.getSelected(),
+      index = selected.indexOf(active)
+  if (index > -1) {
+    selected.splice(index, 1);
+  }
+  VariantManager.setSelected(selected)
+}
+
+VariantManager.addSelected = function(active){
+  var selected = VariantManager.getSelected(),
+      index = selected.indexOf(active)
+  if (index <= -1) {
+    selected.push(active)
+  }
+  VariantManager.setSelected(selected.compact())
+}
+
+$(function() {
+  window.variantManager = new VariantManager();
 
   $(document).on("click", ".variant .button", function(){
     var $this = $(this),
-        $variantType = $this.parents("variant_type"),
+        $variantType = $this.parents(".variant_type"),
         $typeId = $variantType.data("id"),
         $active = $this.parent().find('.button.active')
+    if($this.hasClass("disabled")){
+      return
+    }
     if($active.length > 0){
       $active.removeClass('active')
+      VariantManager.removeSelected(parseInt($active.data("id")))
     }
     if( $this.data("id") != $active.first().data("id") && !$this.hasClass('active')){
       $this.addClass('active')
+      VariantManager.addSelected(parseInt($this.data("id")))
     }
 
+    variantManager.setDisabled()
   })
 
   $(document).on('click', ".add_to_cart", function(){
