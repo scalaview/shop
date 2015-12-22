@@ -50,6 +50,14 @@ class Mobile::AddressesController < ApplicationController
   end
 
   def destroy
+    @address.destroy
+    redirect_to action: "manage", :flash => {:notice => "删除成功"}
+  end
+
+  def reset_default
+    if self.default?
+      Shoppe::Address.update_all 'default=0', ['customer_id = ? and id <> ?', self.customer_id, self.id]
+    end
 
   end
 

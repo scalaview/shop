@@ -1,7 +1,10 @@
-<div id="page-address-new" class="page page-address-new page-current">
+<div id="page-address-edit" class="page page-address-edit page-current">
   <header class="bar bar-nav">
     <%= link_to mobile_manage_addresses_path, :class => "button button-link button-nav pull-left back" do %>
       <span class="icon icon-left"></span>返回
+    <% end %>
+    <%= link_to mobile_address_path(@address.id), :method => :DELETE, :class => "button button-link button-nav pull-right confirm-ok" do %>
+      删除
     <% end %>
     <h1 class="title">修改地址</h1>
   </header>
