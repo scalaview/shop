@@ -19,6 +19,10 @@ $(document).ready(function(){
   $(document).on('change', "#page-address-edit #address_city", function(){
     changeCity();
   });
+  $(document).on("click", "a[data-method='delete']", function(){
+    toConfirmDelete();
+    toAjaxAction();
+  })
 });
 function changeProvince(){
   /*清空city、district*/
@@ -73,4 +77,13 @@ function changeCity(){
 function appendSelectAhead(select){
   select.empty();
   select.prepend("<option value=''>-- 请选择 --</option>");
+}
+//处理弹窗
+function toConfirmDelete(){
+  $.confirm('确定删除?', function () {
+    $.alert('你点击了确定按钮!');
+  });
+}
+  //处理请求
+function toAjaxAction(){
 }
