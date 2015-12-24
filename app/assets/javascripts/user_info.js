@@ -3,22 +3,29 @@ $(document).ready(function(){
     appendSelectAhead($("#address_city"));
     appendSelectAhead($("#address_area"));
   });
+
   $(document).on('change', "#page-address-new #address_province", function(){
     changeProvince();
   });
+
   $(document).on('change', "#page-address-new #address_city", function(){
     changeCity();
   });
+
   $(document).on("pageInit", "#page-address-edit", function(e, pageId, $page) {
     appendSelectAhead($("#address_city"));
     appendSelectAhead($("#address_area"));
   });
+
   $(document).on('change', "#page-address-edit #address_province", function(){
     changeProvince();
   });
+
+
   $(document).on('change', "#page-address-edit #address_city", function(){
     changeCity();
   });
+
   $(document).on("click", "a[data-method='delete']", function(e){
     return false;
     var the_href = this.href;

@@ -39,14 +39,17 @@ class Mobile::AddressesController < ApplicationController
 
   def update
     if @address.update(safe_params)
-      redirect_to action: "manage", :flash => {:notice => "修改地址成功"}
+      flash[:notice] = "修改地址成功"
+      redirect_to action: "manage"
     else
+      flash[:error] = @address.errors.full_messages.join("; ")
       render action: "edit"
     end
   end
 
   def set_default
     @address = current_customer.addresses.find params[:id]
+
   end
 
   def destroy

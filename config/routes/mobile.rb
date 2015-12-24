@@ -41,7 +41,7 @@ Rails.application.routes.draw do
 
     get 'addresses/manage' =>  'addresses#manage', :as  => 'manage_addresses'
     resources :addresses do
-      member do
+      collection do
         post 'set_default'
       end
     end
