@@ -19,10 +19,14 @@ $(document).ready(function(){
   $(document).on('change', "#page-address-edit #address_city", function(){
     changeCity();
   });
-  $(document).on("click", "a[data-method='delete']", function(){
+  $(document).on("click", "a[data-method='delete']", function(e){
+    return false;
+    var the_href = this.href;
+    this.href = "#";
+    e.preventDefault();
     toConfirmDelete();
     toAjaxAction();
-  })
+  });
 });
 function changeProvince(){
   /*清空city、district*/
