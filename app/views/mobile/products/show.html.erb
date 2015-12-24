@@ -177,57 +177,40 @@ function VariantManager(){
 
 VariantManager.prototype.setDisabled = function(){
   var selected = VariantManager.getSelected(),
-      last = selected.length > 0 ? selected[selected.length - 1] : null,
-      sameLevel = $("#variant_value_" + last).parents(".variant_type").find(".variant_values").map(function(i, e) {return parseInt($(e).data("id")) }),
       can_select = [],
       product_skus = this.product_skus,
-      variant_types = this.variant_types
+      variant_types = this.variant_types,
       variant_values = this.variant_values
-
-      var candidateProducs = []
-
       if(selected.length <= 0){
         $(".variant_values.disabled").removeClass("disabled")
         return
       }
 
-      $.each(selected, function(i, e){
-        var variantValueId = e
-        $.each(variant_values, function(i, variant_value){
-          if(variant_value.id == variantValueId){
-            if(candidateProducs.length < 1){
-              candidateProducs = union_arrays(variant_value.skus, candidateProducs)
-            }else{
-              candidateProducs = intersect(variant_value.skus, candidateProducs)
-            }
+      $.each(selected, function(i, variant_value) {
+        var set = []
+        $.each(product_skus, function(i, sku){
+          if(sku.variant_values.indexOf(variant_value) != -1){
+            set = union_arrays(set, sku.variant_values)
           }
         })
-      })
-
-      console.log(candidateProducs)
-
-      $.each(product_skus, function(i, sku){
-        if(candidateProducs.indexOf(sku.id) != -1){
-          if(can_select.length < 1){
-            // can_select = union_arrays(sku.variant_values, sameLevel)
-            can_select = sku.variant_values
-          }else{
-            can_select = intersect(can_select, sku.variant_values)
-          }
+        var sameLevel = $("#variant_value_" + variant_value).parents(".variant_type").find(".variant_values").map(function(i, e) {return parseInt($(e).data("id")) })
+        set = union_arrays(set, sameLevel)
+        if(can_select.length <= 0){
+          can_select = set
+        }else{
+          can_select = intersect(can_select, set)
         }
       })
 
-      console.log(can_select)
-
-  // disable
-  $(".variant_values").each(function(i, e){
-    var $this = $(e)
-    if(can_select.indexOf(parseInt($this.data("id"))) != -1){
-      $this.removeClass("disabled")
-    }else{
-      $this.removeClass("active").addClass("disabled")
-    }
-  })
+      // disable
+      $(".variant_values").each(function(i, e){
+        var $this = $(e)
+        if(can_select.indexOf(parseInt($this.data("id"))) != -1){
+          $this.removeClass("disabled")
+        }else{
+          $this.removeClass("active").addClass("disabled")
+        }
+      })
 }
 
 VariantManager.getSelected = function(){
