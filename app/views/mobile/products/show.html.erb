@@ -68,7 +68,7 @@
     </a>
     <h1 class="title"><%= variant_types_title @product %></h1>
   </header>
-  <div id="product-sku" data-variant-values="<%= variant_values_json @product %>" data-skus="<%= product_skus_json @product %>"  data-variant-types="<%= variant_types_json @product  %>" class="content-block list-block list-block-no-margin">
+  <div id="product-sku" data-skus="<%= product_skus_json @product %>" class="content-block list-block list-block-no-margin">
     <div class="media-list list-block list-block-no-margin">
       <ul>
         <li>
@@ -170,8 +170,6 @@ function VariantManager(){
     return new VariantManager();
   }
   this.product_skus = JSON.parse($("#product-sku").data("skus"));
-  this.variant_types = JSON.parse($("#product-sku").data("variant-types"))
-  this.variant_values = JSON.parse($("#product-sku").data("variant-values"))
 
 }
 
@@ -179,8 +177,7 @@ VariantManager.prototype.setDisabled = function(){
   var selected = VariantManager.getSelected(),
       can_select = [],
       product_skus = this.product_skus,
-      variant_types = this.variant_types,
-      variant_values = this.variant_values
+      skus = []
       if(selected.length <= 0){
         $(".variant_values.disabled").removeClass("disabled")
         return
@@ -190,6 +187,7 @@ VariantManager.prototype.setDisabled = function(){
         var set = []
         $.each(product_skus, function(i, sku){
           if(sku.variant_values.indexOf(variant_value) != -1){
+            skus.push(sku.id)
             set = union_arrays(set, sku.variant_values)
           }
         })
@@ -211,6 +209,23 @@ VariantManager.prototype.setDisabled = function(){
           $this.removeClass("active").addClass("disabled")
         }
       })
+      VariantManager.setAddSku(skus)
+}
+
+VariantManager.setAddSku = function(skus){
+  try {
+    $("#product-sku").data("add-skus", JSON.stringify(skus))
+  } catch (e) {
+    $("#product-sku").data("add-skus", "[]")
+  }
+}
+
+VariantManager.gerAddSku = function(){
+  try {
+    return JSON.parse($("#product-sku").data("add-skus"));
+  } catch (e) {
+    return []
+  }
 }
 
 VariantManager.getSelected = function(){
@@ -270,15 +285,16 @@ $(function() {
     variantManager.setDisabled()
   })
 
-  $(document).on('click', ".add_to_cart", function(){
+  $(document).on('click', ".pay .pay-btn.add-to-cart", function(){
     var $this = $(this),
-        hasVariants = (this.data('has-variants') == 'true'),
-        $active = $(".variant .button.active")
+        hasVariants = ($this.data('has-variants') == 'true'),
+        skus = VariantManager.gerAddSku
 
-    if(hasVariants && $(".variant .button.active").length){
-      $(".variant .button.active").length
+    if(skus.length == 1){
+      // $.ajax()
+      $.toast(skus);
     }else{
-
+      $.toast("请选择变种产品");
     }
 
   })
