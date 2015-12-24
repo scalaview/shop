@@ -36,7 +36,7 @@ module ProductHelper
         id: type.id,
         name: type.name,
         variant_values: product.variant_values(type).map do |v|
-          { id: v.id, name: v.name, skus: v.stockkeeping_unit.where("shoppe_product_variant_values.variant_type_id = ? ", type.id).map{|sku| sku.id } }
+          { id: v.id, name: v.name, skus: v.stockkeeping_units.where("shoppe_product_variant_values.variant_type_id = ? ", type.id).map{|sku| sku.id } }
         end
       }
     end.to_json
@@ -48,6 +48,16 @@ module ProductHelper
         id: variant.id,
         sku: variant.sku,
         variant_values: variant.variant_values.active.map{|v| v.id }
+      }
+    end.to_json
+  end
+
+  def variant_values_json(product)
+    product.variant_values.map do |value|
+      {
+        id: value.id,
+        name: value.name,
+        skus: value.stockkeeping_units.where("stockkeeping_unit_id in (?) ", product.variants.pluck(:id)).map{|p| p.id }
       }
     end.to_json
   end
