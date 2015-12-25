@@ -1,5 +1,30 @@
 <style type="text/css">
-
+.cart_edit_button {
+  text-align: center;
+  width: 23px;
+  height: 23px;
+  padding: 3px;
+  line-height: 16px;
+  float: left;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 100;
+  color: #646464;
+  margin: 4px;
+  background-color: #FFFFFF;
+}
+.cart_div_number{
+    float: left;
+}
+.cart_div_number_input{
+    border:0;
+    border-radius:0;
+    padding:0;
+    height: 23px;
+    margin-top: 4px;
+    box-shadow:none;
+    text-align: center;
+}
 </style>
 
 <div id="detail-page" class="page no-tabbar">
@@ -104,6 +129,21 @@
             </div>
           </li>
         <% end %>
+        <li class="card">
+          <div class="card-content">
+            <div class="variants card-content-inner btn-margin">
+              <p class="buttons-row">
+                <div>
+                    <div class="cart_edit_button" >-</div>
+                    <div class="numbers-row cart_div_number">
+                      <input type="number" name="quantity" value="1" class="form-control cart_div_number_input">
+                    </div>
+                    <div class="cart_edit_button">+</div>
+                </div>
+              </p>
+            </div>
+          </div>
+        </li>
       </ul>
     </div>
   </div>
@@ -295,7 +335,24 @@ $(function() {
         skus = VariantManager.gerAddSku()
 
     if(skus.length == 1){
-      // $.ajax()
+      $.ajax({
+        url: '/mobile/add_to_cart',
+
+      })
+      $.ajax({
+        type: 'POST',
+        url: '/mobile/add_to_cart',
+        data: {
+          sku_id: skus[0]
+        },
+        dataType: 'json',
+        success: function(data){
+
+        },
+        error: function(xhr, type){
+          alert('Ajax error!')
+        }
+      })
       $.toast(skus);
     }else{
       $.toast("请选择变种产品");
