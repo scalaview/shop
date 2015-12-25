@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 20151225080444) do
     t.string   "city",          limit: 255
     t.string   "area",          limit: 255
     t.string   "street",        limit: 255
-    t.string   "location",      limit: 255
     t.string   "md5",           limit: 255
+    t.string   "location",      limit: 255
     t.string   "phone",         limit: 255
     t.string   "receiver_name", limit: 255
   end

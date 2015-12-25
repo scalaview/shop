@@ -157,7 +157,7 @@
                   </div>
                   <div class="col-80 cart-quantity">
                     <div class="numbers-row ">
-                      <input type="number" name="quantity" value="1" class="form-control cart_div_number_input">
+                      <input type="number" id="sku-quantity" name="quantity" value="1" class="form-control cart_div_number_input">
                     </div>
                   </div>
                 </div>
@@ -244,10 +244,15 @@ VariantManager.prototype.setDisabled = function(){
       }
 
       $.each(selected, function(i, variant_value) {
-        var set = []
+        var set = [],
+            sku_set = []
         $.each(product_skus, function(i, sku){
           if(sku.variant_values.indexOf(variant_value) != -1){
-            skus.push(sku.id)
+            if(sku_set.length <= 0){
+              sku_set = [sku.id]
+            }else{
+              sku_set.push(sku.id)
+            }
             set = union_arrays(set, sku.variant_values)
           }
         })
@@ -257,6 +262,11 @@ VariantManager.prototype.setDisabled = function(){
           can_select = set
         }else{
           can_select = intersect(can_select, set)
+        }
+        if(skus.length <= 0){
+          skus = sku_set
+        }else{
+          skus = intersect(skus, sku_set)
         }
       })
 
@@ -339,10 +349,10 @@ function addToCartBinding() {
       var newVal = parseFloat(oldValue) + 1;
     } else {
      // Don't allow decrementing below zero
-      if (oldValue > 0) {
+      if (oldValue > 1) {
         var newVal = parseFloat(oldValue) - 1;
       } else {
-        newVal = 0;
+        newVal = 1;
       }
     }
 
@@ -382,24 +392,21 @@ $(function() {
 
     if(skus.length == 1){
       $.ajax({
-        url: '/mobile/add_to_cart',
-
-      })
-      $.ajax({
         type: 'POST',
         url: '/mobile/add_to_cart',
         data: {
-          sku_id: skus[0]
+          sku_id: skus[0],
+          quantity: $("#sku-quantity").val()
         },
         dataType: 'json',
         success: function(data){
-
+          $.toast(data.msg)
         },
         error: function(xhr, type){
-          alert('Ajax error!')
+          $.toast("添加产品出错");
         }
       })
-      $.toast(skus);
+
     }else{
       $.toast("请选择变种产品");
     }

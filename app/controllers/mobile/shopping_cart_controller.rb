@@ -18,7 +18,7 @@ class Mobile::ShoppingCartController < ApplicationController
       @message = "add item success"
     end
     respond_to do |format|
-      format.js
+      format.json { render json: { :code => @is_done, :msg => @message } }
     end
   end
 
