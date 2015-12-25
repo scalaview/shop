@@ -1,30 +1,49 @@
 <style type="text/css">
-.cart_edit_button {
+.cart-quantity {
+  padding-bottom: 20px;
+}
+
+.cart-quantity .btn-on {
+  background: #b3b3b3;
+  border-radius: 0;
+  border: none;
+  color: #000;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-shadow: none;
   text-align: center;
-  width: 23px;
-  height: 23px;
-  padding: 3px;
-  line-height: 16px;
+  padding: 0;
   float: left;
   cursor: pointer;
-  font-size: 20px;
-  font-weight: 100;
-  color: #646464;
-  margin: 4px;
-  background-color: #FFFFFF;
 }
-.cart_div_number{
-    float: left;
+
+.numbers-row input[type=number] {
+  height: 100%;
+  vertical-align: middle;
+  display: inline-block;
 }
-.cart_div_number_input{
-    border:0;
-    border-radius:0;
-    padding:0;
-    height: 23px;
-    margin-top: 4px;
-    box-shadow:none;
-    text-align: center;
+
+.numbers-row {
+  width: 50%;
+  height: 30px;
+  border: 1px solid #b3b3b3;
+  border-radius: 0;
+  text-align: center;
+  color: #666;
+  padding: 0;
+  float: left;
+  margin: 0 5px;
+  text-align: center;
+  background-color: inherit;
 }
+.quantity-text label {
+  font-size: 16px;
+}
+.dec {
+  background-position: 0 -29px;
+}
+
 </style>
 
 <div id="detail-page" class="page no-tabbar">
@@ -93,7 +112,7 @@
     </a>
     <h1 class="title"><%= variant_types_title @product %></h1>
   </header>
-  <div id="product-sku" data-skus="<%= product_skus_json @product %>" data-sku="<%= @product.default_stockkeeping_unit_id %>" class="content-block list-block list-block-no-margin">
+  <div id="product-sku" data-skus="<%= product_skus_json @product %>" data-sku="<%= @product.default_stockkeeping_unit_id %>" class="content-block list-block list-block-no-margin ">
     <div class="media-list list-block list-block-no-margin">
       <ul>
         <li>
@@ -132,15 +151,16 @@
         <li class="card">
           <div class="card-content">
             <div class="variants card-content-inner btn-margin">
-              <p class="buttons-row">
-                <div>
-                    <div class="cart_edit_button" >-</div>
-                    <div class="numbers-row cart_div_number">
+                <div class="row">
+                  <div class="col-20 quantity-text">
+                    <label>数量</label>
+                  </div>
+                  <div class="col-80 cart-quantity">
+                    <div class="numbers-row ">
                       <input type="number" name="quantity" value="1" class="form-control cart_div_number_input">
                     </div>
-                    <div class="cart_edit_button">+</div>
+                  </div>
                 </div>
-              </p>
             </div>
           </div>
         </li>
@@ -306,7 +326,33 @@ VariantManager.addSelected = function(active){
   VariantManager.setSelected(selected.compact())
 }
 
+
+function addToCartBinding() {
+  $(".numbers-row").before('<div class="dec btn-on">-</div>')
+  $(".numbers-row").after('<div class="inc btn-on">+</div>')
+  $(".cart-quantity .btn-on").on("click", function() {
+
+    var $button = $(this);
+    var oldValue = $button.parent().find("input").val();
+
+    if ($button.text() == "+") {
+      var newVal = parseFloat(oldValue) + 1;
+    } else {
+     // Don't allow decrementing below zero
+      if (oldValue > 0) {
+        var newVal = parseFloat(oldValue) - 1;
+      } else {
+        newVal = 0;
+      }
+    }
+
+    $button.parent().find("input").val(newVal);
+
+  });
+}
+
 $(function() {
+  addToCartBinding();
   window.variantManager = new VariantManager();
 
   $(document).on("click", ".variant .button", function(){
