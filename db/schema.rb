@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151221080741) do
+ActiveRecord::Schema.define(version: 20151225080444) do
 
   create_table "nifty_key_value_store", force: :cascade do |t|
     t.integer "parent_id",   limit: 4
@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 20151221080741) do
     t.string   "city",          limit: 255
     t.string   "area",          limit: 255
     t.string   "street",        limit: 255
-    t.string   "md5",           limit: 255
     t.string   "location",      limit: 255
+    t.string   "md5",           limit: 255
     t.string   "phone",         limit: 255
     t.string   "receiver_name", limit: 255
   end
@@ -59,15 +59,15 @@ ActiveRecord::Schema.define(version: 20151221080741) do
   end
 
   create_table "shoppe_basket_items", force: :cascade do |t|
-    t.integer  "customer_id", limit: 4,             null: false
-    t.integer  "product_id",  limit: 4,             null: false
-    t.integer  "quantity",    limit: 4, default: 0
+    t.integer  "customer_id",          limit: 4,             null: false
+    t.integer  "stockkeeping_unit_id", limit: 4,             null: false
+    t.integer  "quantity",             limit: 4, default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "shoppe_basket_items", ["customer_id"], name: "index_shoppe_basket_items_on_customer_id", using: :btree
-  add_index "shoppe_basket_items", ["product_id"], name: "index_shoppe_basket_items_on_product_id", using: :btree
+  add_index "shoppe_basket_items", ["stockkeeping_unit_id"], name: "index_shoppe_basket_items_on_stockkeeping_unit_id", using: :btree
 
   create_table "shoppe_countries", force: :cascade do |t|
     t.string  "name",      limit: 255
@@ -378,7 +378,7 @@ ActiveRecord::Schema.define(version: 20151221080741) do
   add_index "shoppe_stock_level_adjustments", ["parent_id", "parent_type"], name: "index_shoppe_stock_level_adjustments_parent", using: :btree
 
   create_table "shoppe_stockkeeping_units", force: :cascade do |t|
-    t.string   "product_id",    limit: 255,                                        null: false
+    t.integer  "product_id",    limit: 4,                                          null: false
     t.string   "sku",           limit: 255
     t.boolean  "active",                                            default: true
     t.boolean  "stock_control",                                     default: true

@@ -64,7 +64,6 @@ margin-right: 15px;
 }
 
 .pay .pay-d {
-  pointer-events: none;
   background-color: #f50;
   color: #fff;
   padding: 1em;

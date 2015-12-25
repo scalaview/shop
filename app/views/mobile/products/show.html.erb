@@ -68,7 +68,7 @@
     </a>
     <h1 class="title"><%= variant_types_title @product %></h1>
   </header>
-  <div id="product-sku" data-skus="<%= product_skus_json @product %>" class="content-block list-block list-block-no-margin">
+  <div id="product-sku" data-skus="<%= product_skus_json @product %>" data-sku="<%= @product.default_stockkeeping_unit_id %>" class="content-block list-block list-block-no-margin">
     <div class="media-list list-block list-block-no-margin">
       <ul>
         <li>
@@ -222,7 +222,11 @@ VariantManager.setAddSku = function(skus){
 
 VariantManager.gerAddSku = function(){
   try {
-    return JSON.parse($("#product-sku").data("add-skus"));
+    if($(".pay-btn.add-to-cart").data('has-variants') == 'true'){
+      return JSON.parse($("#product-sku").data("add-skus"));
+    }else{
+      return [parseInt($("#product-sku").data("sku"))]
+    }
   } catch (e) {
     return []
   }
@@ -288,7 +292,7 @@ $(function() {
   $(document).on('click', ".pay .pay-btn.add-to-cart", function(){
     var $this = $(this),
         hasVariants = ($this.data('has-variants') == 'true'),
-        skus = VariantManager.gerAddSku
+        skus = VariantManager.gerAddSku()
 
     if(skus.length == 1){
       // $.ajax()
