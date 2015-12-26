@@ -8,16 +8,18 @@
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
 
   <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.5.7/css/??sm.min.css,sm-extend.min.css">
+  <%= stylesheet_link_tag 'checkout', media: 'all', 'data-turbolinks-track' => true %>
 
-  <%= stylesheet_link_tag   'checkout', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <%= javascript_include_tag 'checkout', 'data-turbolinks-track' => true %>
-  <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.5.7/js/??sm.min.js,sm-extend.min.js' charset='utf-8'></script>
-  <%= yield %>
 
+  <%= yield %>
+  <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+  <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.5.8/js/??sm.min.js,sm-extend.min.js' charset='utf-8'></script>
+  <%= javascript_include_tag 'checkout', 'data-turbolinks-track' => true %>
 </body>
 </html>
