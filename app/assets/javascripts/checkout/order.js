@@ -187,11 +187,6 @@ function addToCartBinding() {
   });
 }
 
-$(function() {
-
-
-})
-
 $(document).on("pageInit", "#detail-page", function(e, id, $page) {
   addToCartBinding();
   window.variantManager = new VariantManager();

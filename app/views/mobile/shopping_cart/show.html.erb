@@ -45,7 +45,7 @@
             <div class="item-media" ><i class="icon icon-form-checkbox"></i></div>
             <div class="item-media img-padding" style="padding-top: 15px;padding-bottom: 15px;"><img src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="120"></div>
             <div class="item-inner">
-              <div class="item-subtitle">好厉害的裙子 可以飞的裙子，超重力裙子 看到就爆的裙子</div>
+              <!-- <div class="item-subtitle">好厉害的裙子 可以飞的裙子，超重力裙子 看到就爆的裙子</div>
               <div class="item-text">颜色： 红 尺寸：15ct，材料：木头，红色厉害</div>
               <div class="item-bottom">
                 <div class="row">
@@ -56,7 +56,10 @@
                     x2
                   </div>
                 </div>
-              </div>
+              </div> -->
+              <div class="numbers-row ">
+                      <input type="number" id="sku-quantity" name="quantity" value="1" class="form-control cart_div_number_input">
+                    </div>
             </div>
           </label>
         </li>
@@ -64,3 +67,33 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+
+function addToCartBinding() {
+  $(".numbers-row").before('<div class="dec btn-on">-</div>')
+  $(".numbers-row").after('<div class="inc btn-on">+</div>')
+  $(".cart-quantity .btn-on").on("click", function() {
+
+    var $button = $(this);
+    var oldValue = $button.parent().find("input").val();
+
+    if ($button.text() == "+") {
+      var newVal = parseFloat(oldValue) + 1;
+    } else {
+     // Don't allow decrementing below zero
+      if (oldValue > 1) {
+        var newVal = parseFloat(oldValue) - 1;
+      } else {
+        newVal = 1;
+      }
+    }
+
+    $button.parent().find("input").val(newVal);
+
+  });
+}
+$(document).ready(function(){
+  addToCartBinding();
+
+})
+</script>
