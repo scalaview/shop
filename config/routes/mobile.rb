@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   namespace :mobile do
 
+    get "/" => "pages#index"
 
     # customer
     get 'register' => 'sessions#register', :as => 'register'

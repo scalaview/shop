@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151225080444) do
+ActiveRecord::Schema.define(version: 20151229155530) do
 
   create_table "nifty_key_value_store", force: :cascade do |t|
     t.integer "parent_id",   limit: 4
@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 20151225080444) do
     t.string   "city",          limit: 255
     t.string   "area",          limit: 255
     t.string   "street",        limit: 255
-    t.string   "md5",           limit: 255
     t.string   "location",      limit: 255
+    t.string   "md5",           limit: 255
     t.string   "phone",         limit: 255
     t.string   "receiver_name", limit: 255
   end
@@ -260,17 +260,14 @@ ActiveRecord::Schema.define(version: 20151225080444) do
     t.text     "description",                  limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "parent_id",                    limit: 4
-    t.integer  "lft",                          limit: 4
-    t.integer  "rgt",                          limit: 4
     t.integer  "depth",                        limit: 4
     t.string   "ancestral_permalink",          limit: 255
     t.boolean  "permalink_includes_ancestors",               default: false
+    t.string   "ancestry",                     limit: 255
   end
 
-  add_index "shoppe_product_categories", ["lft"], name: "index_shoppe_product_categories_on_lft", using: :btree
+  add_index "shoppe_product_categories", ["ancestry"], name: "index_shoppe_product_categories_on_ancestry", using: :btree
   add_index "shoppe_product_categories", ["permalink"], name: "index_shoppe_product_categories_on_permalink", using: :btree
-  add_index "shoppe_product_categories", ["rgt"], name: "index_shoppe_product_categories_on_rgt", using: :btree
 
   create_table "shoppe_product_categorizations", force: :cascade do |t|
     t.integer "product_id",          limit: 4, null: false
