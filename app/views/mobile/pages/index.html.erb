@@ -120,30 +120,32 @@
 
       <div class="product-list">
         <div class="row no-gutter">
-          <div class="card col-50">
-            <div class="card-content">
-              <div class="card-content-inner">
-                <div class="custom-image">
-                  <img class="goods-photo js-goods-lazy" data-src="https://dn-kdt-img.qbox.me/upload_files/2015/11/06/Fv-5hULzVEHuedGskgccF7G4vZUh.jpeg?imageView2/2/w/280/h/280/q/75/format/webp" src="https://dn-kdt-img.qbox.me/upload_files/2015/11/06/Fv-5hULzVEHuedGskgccF7G4vZUh.jpeg?imageView2/2/w/280/h/280/q/75/format/webp">
-                </div>
+          <% @products.each do |product| %>
+            <div class="card col-50">
+              <div class="card-content">
+                <div class="card-content-inner">
+                  <div class="custom-image">
+                    <%= img_tag product.default_image.path, :class => "goods-photo js-goods-lazy" %>
+                  </div>
 
-                <div class="pro-title">
-                      【大众点评与美团网合并 王兴张涛担任联席CEO】大众点评网与美团网今天联合发布声明，宣布达成战略合作，双方已共同成立一家新公司。新公司将实施Co-CEO制度，美团CEO王兴和大众点评CEO张涛将同时担任联席CEO和联席董事长，重大决策将在联席CEO和董事会层面完成。
-                </div>
+                  <div class="pro-title">
+                    <%= product.full_name %>
+                  </div>
 
+                </div>
+              </div>
+              <div class="card-footer">
+                <span class="goods-price">
+                  <em>￥2799.00</em>
+                </span>
+                <span class="goods-buy"></span>
               </div>
             </div>
-            <div class="card-footer">
-              <span class="goods-price">
-                <em>￥2799.00</em>
-              </span>
-              <span class="goods-buy"></span>
-            </div>
-          </div>
+          <% end %>
         </div>
       </div>
 
-      <div class="product-list list-block media-list">
+      <div class="product-list list-block media-list hide">
         <ul>
           <li>
             <a href="/examples/light7-mall/detail" class="item-link item-content">
